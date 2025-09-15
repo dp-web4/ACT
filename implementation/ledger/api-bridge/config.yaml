@@ -1,0 +1,67 @@
+blockchain:
+  rest_endpoint: "http://0.0.0.0:1317"
+  grpc_endpoint: "localhost:9090"
+  chain_id: "racecarweb"
+  timeout: 30
+
+server:
+  port: 8080
+  host: "0.0.0.0"
+  read_timeout: 30
+  write_timeout: 30
+
+logging:
+  level: "info"
+  format: "json"
+
+# Event queue configuration - disabled by default
+# Enable by setting events.enabled: true and configuring endpoints
+events:
+  enabled: false  # Set to true to enable event emission
+  max_retries: 3
+  retry_delay: 5  # seconds
+  queue_size: 1000
+  endpoints:
+    # Configure webhook endpoints for each event type
+    # Multiple endpoints can be specified per event type
+    component_registered:
+      # - "http://localhost:3000/webhooks/component-registered"
+      # - "http://audit-service:8080/events"
+    component_verified:
+      # - "http://localhost:3000/webhooks/component-verified"
+    pairing_initiated:
+      # - "http://localhost:3000/webhooks/pairing-initiated"
+    pairing_completed:
+      # - "http://localhost:3000/webhooks/pairing-completed"
+    lct_created:
+      # - "http://localhost:3000/webhooks/lct-created"
+    trust_tensor_created:
+      # - "http://localhost:3000/webhooks/trust-tensor-created"
+    energy_transfer:
+      # - "http://localhost:3000/webhooks/energy-transfer"
+      # - "http://sql-audit-service:8080/events"
+
+# Security configuration - Laravel integration
+# Enable by setting security.enabled: true and configuring Laravel backend
+security:
+  enabled: false  # Set to true to enable authentication and authorization
+  
+  # Laravel backend integration
+  laravel:
+    base_url: "https://your-laravel-app.com"  # Update with your Laravel app URL
+    api_key: "your-laravel-api-key"           # Update with your Laravel API key
+    timeout: "10s"
+    endpoints:
+      validate_key: "/api/auth/validate-key"
+      check_authorization: "/api/auth/check-authorization"
+      log_usage: "/api/auth/log-usage"
+  
+  # Authentication caching
+  cache:
+    duration: "5m"           # Cache API key validation for 5 minutes
+    cleanup_interval: "1m"   # Clean expired entries every minute
+  
+  # Rate limiting
+  rate_limiting:
+    enabled: true
+    cleanup_interval: "1h"   # Clean old rate limit data every hour 

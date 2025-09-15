@@ -1,0 +1,351 @@
+{
+  "battery_packs": [
+    {
+      "component_id": "comp_battery_pack_001",
+      "component_type": "battery_pack",
+      "manufacturer_data": {
+        "manufacturer_id": "MODBATT_CORP",
+        "model": "BP-5000",
+        "serial_number": "BP001-2024-001",
+        "capacity_wh": 5000,
+        "voltage_nominal": 400,
+        "chemistry": "lithium_ion",
+        "cell_count": 96,
+        "max_charge_rate_c": 2.0,
+        "max_discharge_rate_c": 5.0,
+        "operating_temperature_min": -20,
+        "operating_temperature_max": 60,
+        "weight_kg": 45.5,
+        "dimensions_mm": {
+          "length": 600,
+          "width": 400,
+          "height": 200
+        },
+        "certifications": [
+          "UN38.3",
+          "IEC 62133",
+          "CE",
+          "UL 2271"
+        ],
+        "manufacturing_date": "2024-01-15",
+        "warranty_years": 5
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_module", "battery_controller", "gateway"],
+        "max_energy_transfer_wh": 5000,
+        "requires_trust_score": 0.8,
+        "allowed_operations": ["read", "write", "energy_transfer", "status_monitoring"],
+        "priority_level": "high"
+      }
+    },
+    {
+      "component_id": "comp_battery_pack_002",
+      "component_type": "battery_pack",
+      "manufacturer_data": {
+        "manufacturer_id": "POWERCELL_TECH",
+        "model": "RACEPACK-3000",
+        "serial_number": "PC002-2024-002",
+        "capacity_wh": 3000,
+        "voltage_nominal": 300,
+        "chemistry": "lithium_polymer",
+        "cell_count": 72,
+        "max_charge_rate_c": 3.0,
+        "max_discharge_rate_c": 10.0,
+        "operating_temperature_min": -30,
+        "operating_temperature_max": 70,
+        "weight_kg": 28.3,
+        "dimensions_mm": {
+          "length": 500,
+          "width": 300,
+          "height": 150
+        },
+        "certifications": [
+          "UN38.3",
+          "IEC 62133",
+          "CE",
+          "UL 2271",
+          "FIA_APPROVED"
+        ],
+        "manufacturing_date": "2024-02-20",
+        "warranty_years": 3
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_module", "battery_controller"],
+        "max_energy_transfer_wh": 3000,
+        "requires_trust_score": 0.9,
+        "allowed_operations": ["read", "write", "energy_transfer", "status_monitoring", "emergency_shutdown"],
+        "priority_level": "critical"
+      }
+    }
+  ],
+  "battery_modules": [
+    {
+      "component_id": "comp_battery_module_001",
+      "component_type": "battery_module",
+      "manufacturer_data": {
+        "manufacturer_id": "MODBATT_CORP",
+        "model": "BM-2000",
+        "serial_number": "BM001-2024-001",
+        "capacity_wh": 2000,
+        "voltage_nominal": 48,
+        "chemistry": "lithium_ion",
+        "cell_count": 12,
+        "max_charge_rate_c": 2.5,
+        "max_discharge_rate_c": 8.0,
+        "operating_temperature_min": -20,
+        "operating_temperature_max": 60,
+        "weight_kg": 18.2,
+        "dimensions_mm": {
+          "length": 300,
+          "width": 200,
+          "height": 100
+        },
+        "certifications": [
+          "UN38.3",
+          "IEC 62133",
+          "CE"
+        ],
+        "manufacturing_date": "2024-01-10",
+        "warranty_years": 3
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_pack", "battery_controller"],
+        "max_energy_transfer_wh": 2000,
+        "requires_trust_score": 0.7,
+        "allowed_operations": ["read", "write", "energy_transfer"],
+        "priority_level": "normal"
+      }
+    },
+    {
+      "component_id": "comp_battery_module_002",
+      "component_type": "battery_module",
+      "manufacturer_data": {
+        "manufacturer_id": "POWERCELL_TECH",
+        "model": "RACEMOD-1500",
+        "serial_number": "PC003-2024-003",
+        "capacity_wh": 1500,
+        "voltage_nominal": 36,
+        "chemistry": "lithium_polymer",
+        "cell_count": 10,
+        "max_charge_rate_c": 3.0,
+        "max_discharge_rate_c": 12.0,
+        "operating_temperature_min": -30,
+        "operating_temperature_max": 70,
+        "weight_kg": 12.8,
+        "dimensions_mm": {
+          "length": 250,
+          "width": 180,
+          "height": 80
+        },
+        "certifications": [
+          "UN38.3",
+          "IEC 62133",
+          "CE",
+          "FIA_APPROVED"
+        ],
+        "manufacturing_date": "2024-02-15",
+        "warranty_years": 2
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_pack", "battery_controller"],
+        "max_energy_transfer_wh": 1500,
+        "requires_trust_score": 0.8,
+        "allowed_operations": ["read", "write", "energy_transfer"],
+        "priority_level": "high"
+      }
+    }
+  ],
+  "battery_controllers": [
+    {
+      "component_id": "comp_battery_controller_001",
+      "component_type": "battery_controller",
+      "manufacturer_data": {
+        "manufacturer_id": "CONTROL_SYSTEMS_LTD",
+        "model": "BC-2000",
+        "serial_number": "CS001-2024-001",
+        "firmware_version": "2.1.4",
+        "hardware_version": "1.2",
+        "communication_protocols": ["CAN", "RS485", "Ethernet", "WiFi"],
+        "operating_temperature_min": -40,
+        "operating_temperature_max": 85,
+        "power_consumption_w": 15,
+        "dimensions_mm": {
+          "length": 150,
+          "width": 100,
+          "height": 50
+        },
+        "certifications": [
+          "CE",
+          "UL",
+          "IEC 61508",
+          "ISO 26262"
+        ],
+        "manufacturing_date": "2024-01-05",
+        "warranty_years": 5
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_pack", "battery_module", "gateway", "sensor"],
+        "max_energy_transfer_wh": 10000,
+        "requires_trust_score": 0.9,
+        "allowed_operations": ["read", "write", "energy_transfer", "status_monitoring", "configuration", "emergency_control"],
+        "priority_level": "critical"
+      }
+    }
+  ],
+  "gateways": [
+    {
+      "component_id": "comp_gateway_001",
+      "component_type": "gateway",
+      "manufacturer_data": {
+        "manufacturer_id": "NETWORK_TECH",
+        "model": "GW-1000",
+        "serial_number": "NT001-2024-001",
+        "firmware_version": "1.5.2",
+        "hardware_version": "2.0",
+        "communication_protocols": ["WiFi", "Bluetooth", "Ethernet", "CAN", "RS485"],
+        "supported_transports": ["sd_card", "bluetooth", "wifi", "canbus", "plc"],
+        "operating_temperature_min": -40,
+        "operating_temperature_max": 85,
+        "power_consumption_w": 8,
+        "dimensions_mm": {
+          "length": 120,
+          "width": 80,
+          "height": 30
+        },
+        "certifications": [
+          "CE",
+          "UL",
+          "FCC",
+          "IC"
+        ],
+        "manufacturing_date": "2024-01-20",
+        "warranty_years": 3
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_pack", "battery_module", "battery_controller", "sensor"],
+        "max_energy_transfer_wh": 0,
+        "requires_trust_score": 0.8,
+        "allowed_operations": ["read", "write", "data_transfer", "configuration"],
+        "priority_level": "high"
+      }
+    }
+  ],
+  "sensors": [
+    {
+      "component_id": "comp_temperature_sensor_001",
+      "component_type": "sensor",
+      "manufacturer_data": {
+        "manufacturer_id": "SENSOR_TECH",
+        "model": "TS-100",
+        "serial_number": "ST001-2024-001",
+        "sensor_type": "temperature",
+        "measurement_range": {
+          "min": -40,
+          "max": 125
+        },
+        "accuracy": 0.5,
+        "communication_protocols": ["I2C", "SPI", "CAN"],
+        "operating_temperature_min": -40,
+        "operating_temperature_max": 125,
+        "power_consumption_w": 0.1,
+        "dimensions_mm": {
+          "length": 20,
+          "width": 15,
+          "height": 5
+        },
+        "certifications": [
+          "CE",
+          "UL"
+        ],
+        "manufacturing_date": "2024-01-25",
+        "warranty_years": 2
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_controller", "gateway"],
+        "max_energy_transfer_wh": 0,
+        "requires_trust_score": 0.6,
+        "allowed_operations": ["read", "configuration"],
+        "priority_level": "normal"
+      }
+    },
+    {
+      "component_id": "comp_voltage_sensor_001",
+      "component_type": "sensor",
+      "manufacturer_data": {
+        "manufacturer_id": "SENSOR_TECH",
+        "model": "VS-200",
+        "serial_number": "ST002-2024-002",
+        "sensor_type": "voltage",
+        "measurement_range": {
+          "min": 0,
+          "max": 500
+        },
+        "accuracy": 0.1,
+        "communication_protocols": ["I2C", "SPI", "CAN"],
+        "operating_temperature_min": -40,
+        "operating_temperature_max": 85,
+        "power_consumption_w": 0.05,
+        "dimensions_mm": {
+          "length": 25,
+          "width": 20,
+          "height": 8
+        },
+        "certifications": [
+          "CE",
+          "UL"
+        ],
+        "manufacturing_date": "2024-01-30",
+        "warranty_years": 2
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_controller", "gateway"],
+        "max_energy_transfer_wh": 0,
+        "requires_trust_score": 0.6,
+        "allowed_operations": ["read", "configuration"],
+        "priority_level": "normal"
+      }
+    }
+  ],
+  "offline_devices": [
+    {
+      "component_id": "comp_offline_module_001",
+      "component_type": "battery_module",
+      "manufacturer_data": {
+        "manufacturer_id": "MODBATT_CORP",
+        "model": "BM-1000",
+        "serial_number": "BM003-2024-004",
+        "capacity_wh": 1000,
+        "voltage_nominal": 24,
+        "chemistry": "lithium_ion",
+        "cell_count": 6,
+        "max_charge_rate_c": 2.0,
+        "max_discharge_rate_c": 5.0,
+        "operating_temperature_min": -20,
+        "operating_temperature_max": 60,
+        "weight_kg": 9.5,
+        "dimensions_mm": {
+          "length": 200,
+          "width": 150,
+          "height": 75
+        },
+        "certifications": [
+          "UN38.3",
+          "IEC 62133",
+          "CE"
+        ],
+        "manufacturing_date": "2024-03-01",
+        "warranty_years": 2,
+        "offline_capable": true,
+        "storage_media": "sd_card"
+      },
+      "authorization_rules": {
+        "allowed_pairing_types": ["battery_pack", "battery_controller"],
+        "max_energy_transfer_wh": 1000,
+        "requires_trust_score": 0.7,
+        "allowed_operations": ["read", "write", "energy_transfer"],
+        "priority_level": "normal",
+        "offline_operations": ["pairing", "unpairing", "status_update"]
+      }
+    }
+  ]
+} 

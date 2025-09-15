@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package racecarweb.lctmanager.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "racecarweb/lctmanager/v1/params.proto";
+
+option go_package = "racecar-web/x/lctmanager/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/racecar-web/lctmanager/v1/params";
+  }
+
+  // GetLct Queries a list of GetLct items.
+  rpc GetLct(QueryGetLctRequest) returns (QueryGetLctResponse) {
+    option (google.api.http).get = "/racecar-web/lctmanager/v1/get_lct/{lct_id}";
+  }
+
+  // GetComponentRelationships Queries a list of GetComponentRelationships items.
+  rpc GetComponentRelationships(QueryGetComponentRelationshipsRequest) returns (QueryGetComponentRelationshipsResponse) {
+    option (google.api.http).get = "/racecar-web/lctmanager/v1/get_component_relationships/{component_id}";
+  }
+
+  // ValidateLctAccess Queries a list of ValidateLctAccess items.
+  rpc ValidateLctAccess(QueryValidateLctAccessRequest) returns (QueryValidateLctAccessResponse) {
+    option (google.api.http).get = "/racecar-web/lctmanager/v1/validate_lct_access/{lct_id}/{requestor_id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetLctRequest defines the QueryGetLctRequest message.
+message QueryGetLctRequest {
+  string lct_id = 1;
+}
+
+// QueryGetLctResponse defines the QueryGetLctResponse message.
+message QueryGetLctResponse {
+  string linked_context_token = 1;
+}
+
+// QueryGetComponentRelationshipsRequest defines the QueryGetComponentRelationshipsRequest message.
+message QueryGetComponentRelationshipsRequest {
+  string component_id = 1;
+}
+
+// QueryGetComponentRelationshipsResponse defines the QueryGetComponentRelationshipsResponse message.
+message QueryGetComponentRelationshipsResponse {
+  string component_relationships = 1;
+  int64 lct_count = 2;
+}
+
+// QueryValidateLctAccessRequest defines the QueryValidateLctAccessRequest message.
+message QueryValidateLctAccessRequest {
+  string lct_id = 1;
+  string requestor_id = 2;
+}
+
+// QueryValidateLctAccessResponse defines the QueryValidateLctAccessResponse message.
+message QueryValidateLctAccessResponse {
+  bool has_access = 1;
+  string access_level = 2;
+}

@@ -1,0 +1,228 @@
+syntax = "proto3";
+
+package racecarweb.componentregistry.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/componentregistry/v1/params.proto";
+
+option go_package = "racecar-web/x/componentregistry/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // RegisterComponent defines the RegisterComponent RPC.
+  rpc RegisterComponent(MsgRegisterComponent) returns (MsgRegisterComponentResponse);
+
+  // UpdateAuthorization defines the UpdateAuthorization RPC.
+  rpc UpdateAuthorization(MsgUpdateAuthorization) returns (MsgUpdateAuthorizationResponse);
+
+  // VerifyComponent defines the VerifyComponent RPC.
+  rpc VerifyComponent(MsgVerifyComponent) returns (MsgVerifyComponentResponse);
+
+  // Privacy-focused message types
+  rpc RegisterAnonymousComponent(MsgRegisterAnonymousComponent) returns (MsgRegisterAnonymousComponentResponse);
+  rpc VerifyComponentPairingWithHashes(MsgVerifyComponentPairingWithHashes) returns (MsgVerifyComponentPairingWithHashesResponse);
+  rpc CreateAnonymousPairingAuthorization(MsgCreateAnonymousPairingAuthorization) returns (MsgCreateAnonymousPairingAuthorizationResponse);
+  rpc CreateAnonymousRevocationEvent(MsgCreateAnonymousRevocationEvent) returns (MsgCreateAnonymousRevocationEventResponse);
+  rpc GetAnonymousComponentMetadata(MsgGetAnonymousComponentMetadata) returns (MsgGetAnonymousComponentMetadataResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "racecarweb/x/componentregistry/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgRegisterComponent defines the MsgRegisterComponent message.
+message MsgRegisterComponent {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_id = 2;
+  string component_type = 3;
+  string manufacturer_data = 4;
+}
+
+// MsgRegisterComponentResponse defines the MsgRegisterComponentResponse message.
+message MsgRegisterComponentResponse {
+  string component_identity = 1;
+  string lct_id = 2;
+  string status = 3;
+}
+
+// MsgUpdateAuthorization defines the MsgUpdateAuthorization message.
+message MsgUpdateAuthorization {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_id = 2;
+  string auth_rules = 3;
+}
+
+// MsgUpdateAuthorizationResponse defines the MsgUpdateAuthorizationResponse message.
+message MsgUpdateAuthorizationResponse {}
+
+// MsgVerifyComponent defines the MsgVerifyComponent message.
+message MsgVerifyComponent {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_id = 2;
+}
+
+// MsgVerifyComponentResponse defines the MsgVerifyComponentResponse message.
+message MsgVerifyComponentResponse {
+  bool is_valid = 1;
+  string component_data = 2;
+}
+
+// Privacy-focused message types
+
+// MsgRegisterAnonymousComponent defines anonymous component registration
+message MsgRegisterAnonymousComponent {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string real_component_id = 2;      // Real component ID (will be hashed)
+  string manufacturer_id = 3;        // Manufacturer ID (will be hashed)
+  string component_type = 4;         // Component type (will be hashed)
+  string context = 5;                // Registration context
+}
+
+// MsgRegisterAnonymousComponentResponse defines the response for anonymous registration
+message MsgRegisterAnonymousComponentResponse {
+  string component_hash = 1;         // Anonymous component hash
+  string manufacturer_hash = 2;      // Anonymous manufacturer hash
+  string category_hash = 3;          // Anonymous category hash
+  string status = 4;                 // Registration status
+  string trust_anchor = 5;           // Cryptographic trust anchor
+}
+
+// MsgVerifyComponentPairingWithHashes defines hash-based pairing verification
+message MsgVerifyComponentPairingWithHashes {
+  option (cosmos.msg.v1.signer) = "verifier";
+  string verifier = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_hash_a = 2;       // Hash of component A
+  string component_hash_b = 3;       // Hash of component B
+  string context = 4;                // Verification context
+}
+
+// MsgVerifyComponentPairingWithHashesResponse defines the response for hash-based pairing
+message MsgVerifyComponentPairingWithHashesResponse {
+  bool can_pair = 1;                 // Whether components can pair
+  string reason = 2;                 // Reason for decision
+  string trust_score = 3;            // Trust score (if applicable)
+}
+
+// MsgCreateAnonymousPairingAuthorization defines anonymous pairing authorization
+message MsgCreateAnonymousPairingAuthorization {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_hash_a = 2;       // Hash of component A
+  string component_hash_b = 3;       // Hash of component B
+  string rule_hash = 4;              // Hash of authorization rules
+  string trust_score_requirement = 5; // Minimum trust score required
+  string authorization_level = 6;    // Authorization level
+}
+
+// MsgCreateAnonymousPairingAuthorizationResponse defines the response for anonymous authorization
+message MsgCreateAnonymousPairingAuthorizationResponse {
+  string auth_id = 1;                // Anonymous authorization ID
+  string status = 2;                 // Authorization status
+  string expires_at = 3;             // Expiration timestamp
+}
+
+// MsgCreateAnonymousRevocationEvent defines anonymous revocation events
+message MsgCreateAnonymousRevocationEvent {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string target_hash = 2;            // Hash of revoked target
+  string revocation_type = 3;        // Type of revocation
+  string urgency_level = 4;          // Urgency level
+  string reason_category = 5;        // Reason category (no details)
+  string context = 6;                // Revocation context
+}
+
+// MsgCreateAnonymousRevocationEventResponse defines the response for anonymous revocation
+message MsgCreateAnonymousRevocationEventResponse {
+  string revocation_id = 1;          // Anonymous revocation ID
+  string status = 2;                 // Revocation status
+  string effective_at = 3;           // When revocation takes effect
+}
+
+// MsgGetAnonymousComponentMetadata defines anonymous metadata retrieval
+message MsgGetAnonymousComponentMetadata {
+  option (cosmos.msg.v1.signer) = "requester";
+  string requester = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_hash = 2;         // Component hash to query
+}
+
+// MsgGetAnonymousComponentMetadataResponse defines the response for anonymous metadata
+message MsgGetAnonymousComponentMetadataResponse {
+  string component_hash = 1;         // Component hash
+  string type = 2;                   // Generic type only
+  string status = 3;                 // Component status
+  string trust_anchor = 4;           // Trust anchor
+  string last_verified = 5;          // Last verification timestamp
+}
+
+// Event types for component registry
+message EventComponentRegistered {
+  string component_id = 1;
+  string component_type = 2;
+  string manufacturer_id = 3;
+  string creator = 4;
+}
+
+message EventComponentVerified {
+  string component_id = 1;
+  string status = 2;
+  string verifier = 3;
+}
+
+message EventAuthorizationUpdated {
+  string component_id = 1;
+  string updater = 2;
+}
+
+// Privacy-focused event types
+message EventAnonymousComponentRegistered {
+  string component_hash = 1;         // Anonymous component hash
+  string category_hash = 2;          // Anonymous category hash
+  string manufacturer_hash = 3;      // Anonymous manufacturer hash
+  string creator = 4;                // Creator address
+}
+
+message EventAnonymousPairingAuthorized {
+  string auth_id = 1;                // Anonymous authorization ID
+  string component_hash_a = 2;       // Hash of component A
+  string component_hash_b = 3;       // Hash of component B
+  string creator = 4;                // Creator address
+}
+
+message EventAnonymousRevocationCreated {
+  string revocation_id = 1;          // Anonymous revocation ID
+  string target_hash = 2;            // Hash of revoked target
+  string revocation_type = 3;        // Type of revocation
+  string urgency_level = 4;          // Urgency level
+  string creator = 5;                // Creator address
+}

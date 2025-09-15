@@ -1,0 +1,523 @@
+syntax = "proto3";
+
+package api_bridge.v1;
+
+option go_package = "api-bridge/proto";
+
+import "google/protobuf/timestamp.proto";
+
+// API Bridge Service provides gRPC interface for blockchain operations
+service APIBridgeService {
+  // Account Management
+  rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
+  
+  // Component Registry
+  rpc RegisterComponent(RegisterComponentRequest) returns (RegisterComponentResponse);
+  rpc GetComponent(GetComponentRequest) returns (GetComponentResponse);
+  rpc GetComponentIdentity(GetComponentIdentityRequest) returns (GetComponentIdentityResponse);
+  rpc VerifyComponent(VerifyComponentRequest) returns (VerifyComponentResponse);
+  
+  // LCT Management
+  rpc CreateLCT(CreateLCTRequest) returns (CreateLCTResponse);
+  rpc GetLCT(GetLCTRequest) returns (GetLCTResponse);
+  rpc UpdateLCTStatus(UpdateLCTStatusRequest) returns (UpdateLCTStatusResponse);
+  
+  // Pairing
+  rpc InitiatePairing(InitiatePairingRequest) returns (InitiatePairingResponse);
+  rpc CompletePairing(CompletePairingRequest) returns (CompletePairingResponse);
+  rpc RevokePairing(RevokePairingRequest) returns (RevokePairingResponse);
+  rpc GetPairingStatus(GetPairingStatusRequest) returns (GetPairingStatusResponse);
+  
+  // Trust Tensor
+  rpc CreateTrustTensor(CreateTrustTensorRequest) returns (CreateTrustTensorResponse);
+  rpc GetTrustTensor(GetTrustTensorRequest) returns (GetTrustTensorResponse);
+  rpc UpdateTrustScore(UpdateTrustScoreRequest) returns (UpdateTrustScoreResponse);
+  
+  // Energy Operations
+  rpc CreateEnergyOperation(CreateEnergyOperationRequest) returns (CreateEnergyOperationResponse);
+  rpc ExecuteEnergyTransfer(ExecuteEnergyTransferRequest) returns (ExecuteEnergyTransferResponse);
+  rpc GetEnergyBalance(GetEnergyBalanceRequest) returns (GetEnergyBalanceResponse);
+  
+  // Queue Management
+  rpc QueuePairingRequest(QueuePairingRequestRequest) returns (QueuePairingRequestResponse);
+  rpc GetQueueStatus(GetQueueStatusRequest) returns (GetQueueStatusResponse);
+  rpc ProcessOfflineQueue(ProcessOfflineQueueRequest) returns (ProcessOfflineQueueResponse);
+  rpc CancelRequest(CancelRequestRequest) returns (CancelRequestResponse);
+  rpc GetQueuedRequests(GetQueuedRequestsRequest) returns (GetQueuedRequestsResponse);
+  rpc ListProxyQueue(ListProxyQueueRequest) returns (ListProxyQueueResponse);
+  
+  // Authorization Management
+  rpc CreatePairingAuthorization(CreatePairingAuthorizationRequest) returns (CreatePairingAuthorizationResponse);
+  rpc GetComponentAuthorizations(GetComponentAuthorizationsRequest) returns (GetComponentAuthorizationsResponse);
+  rpc UpdateAuthorization(UpdateAuthorizationRequest) returns (UpdateAuthorizationResponse);
+  rpc RevokeAuthorization(RevokeAuthorizationRequest) returns (RevokeAuthorizationResponse);
+  rpc CheckPairingAuthorization(CheckPairingAuthorizationRequest) returns (CheckPairingAuthorizationResponse);
+  
+  // Trust Tensor Enhanced Operations
+  rpc CalculateRelationshipTrust(CalculateRelationshipTrustRequest) returns (CalculateRelationshipTrustResponse);
+  rpc GetRelationshipTensor(GetRelationshipTensorRequest) returns (GetRelationshipTensorResponse);
+  rpc UpdateTensorScore(UpdateTensorScoreRequest) returns (UpdateTensorScoreResponse);
+  
+  // Real-time streaming for battery monitoring
+  rpc StreamBatteryStatus(StreamBatteryStatusRequest) returns (stream BatteryStatusUpdate);
+}
+
+// Account Management
+message GetAccountsRequest {}
+
+message GetAccountsResponse {
+  repeated Account accounts = 1;
+  int32 count = 2;
+}
+
+message Account {
+  string name = 1;
+  string address = 2;
+  string key_type = 3;
+}
+
+// Component Registry
+message RegisterComponentRequest {
+  string creator = 1;
+  string component_data = 2;
+  string context = 3;
+}
+
+message RegisterComponentResponse {
+  string component_id = 1;
+  string component_identity = 2;
+  string component_data = 3;
+  string context = 4;
+  string creator = 5;
+  string lct_id = 6;
+  string status = 7;
+  string txhash = 8;
+}
+
+message GetComponentRequest {
+  string component_id = 1;
+}
+
+message GetComponentResponse {
+  string component_id = 1;
+  string component_data = 2;
+  string context = 3;
+  string creator = 4;
+  string status = 5;
+  string txhash = 6;
+}
+
+message GetComponentIdentityRequest {
+  string component_id = 1;
+}
+
+message GetComponentIdentityResponse {
+  string component_id = 1;
+  string identity = 2;
+  string status = 3;
+}
+
+message VerifyComponentRequest {
+  string verifier = 1;
+  string component_id = 2;
+  string context = 3;
+}
+
+message VerifyComponentResponse {
+  string component_id = 1;
+  string verifier = 2;
+  string status = 3;
+  string txhash = 4;
+}
+
+// LCT Management
+message CreateLCTRequest {
+  string creator = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string context = 4;
+  string proxy_id = 5;
+}
+
+message CreateLCTResponse {
+  string lct_id = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string context = 4;
+  string proxy_id = 5;
+  string status = 6;
+  int64 created_at = 7;
+  string creator = 8;
+  string txhash = 9;
+  string lct_key_half = 10;
+  string device_key_half = 11;
+}
+
+message GetLCTRequest {
+  string lct_id = 1;
+}
+
+message GetLCTResponse {
+  string lct_id = 1;
+  string component_a_id = 2;
+  string component_b_id = 3;
+  string lct_key_half = 4;
+  string pairing_status = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+  int64 last_contact_at = 8;
+  string trust_anchor = 9;
+  string operational_context = 10;
+  string proxy_component_id = 11;
+  string authorization_rules = 12;
+}
+
+message UpdateLCTStatusRequest {
+  string creator = 1;
+  string lct_id = 2;
+  string status = 3;
+  string context = 4;
+}
+
+message UpdateLCTStatusResponse {
+  string lct_id = 1;
+  string status = 2;
+  int64 updated_at = 3;
+}
+
+// Pairing
+message InitiatePairingRequest {
+  string creator = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string operational_context = 4;
+  string proxy_id = 5;
+  bool force_immediate = 6;
+}
+
+message InitiatePairingResponse {
+  string challenge_id = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string operational_context = 4;
+  string proxy_id = 5;
+  bool force_immediate = 6;
+  string status = 7;
+  int64 created_at = 8;
+  string creator = 9;
+  string txhash = 10;
+}
+
+message CompletePairingRequest {
+  string creator = 1;
+  string challenge_id = 2;
+  string component_a_auth = 3;
+  string component_b_auth = 4;
+  string session_context = 5;
+}
+
+message CompletePairingResponse {
+  string lct_id = 1;
+  string session_keys = 2;
+  string trust_summary = 3;
+  string txhash = 4;
+  string split_key_a = 5; // 32 bytes for component A
+  string split_key_b = 6; // 32 bytes for component B
+}
+
+message RevokePairingRequest {
+  string creator = 1;
+  string lct_id = 2;
+  string reason = 3;
+  bool notify_offline = 4;
+}
+
+message RevokePairingResponse {
+  string lct_id = 1;
+  string status = 2;
+  string reason = 3;
+}
+
+message GetPairingStatusRequest {
+  string challenge_id = 1;
+}
+
+message GetPairingStatusResponse {
+  string challenge_id = 1;
+  string status = 2;
+  int64 created_at = 3;
+}
+
+// Trust Tensor
+message CreateTrustTensorRequest {
+  string creator = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string context = 4;
+  double initial_score = 5;
+}
+
+message CreateTrustTensorResponse {
+  string tensor_id = 1;
+  double score = 2;
+  string status = 3;
+  string txhash = 4;
+}
+
+message GetTrustTensorRequest {
+  string tensor_id = 1;
+}
+
+message GetTrustTensorResponse {
+  string tensor_id = 1;
+  double score = 2;
+  string status = 3;
+}
+
+message UpdateTrustScoreRequest {
+  string creator = 1;
+  string tensor_id = 2;
+  double score = 3;
+  string context = 4;
+}
+
+message UpdateTrustScoreResponse {
+  string tensor_id = 1;
+  double score = 2;
+  int64 updated_at = 3;
+}
+
+// Energy Operations
+message CreateEnergyOperationRequest {
+  string creator = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string operation_type = 4;
+  double amount = 5;
+  string context = 6;
+}
+
+message CreateEnergyOperationResponse {
+  string operation_id = 1;
+  string operation_type = 2;
+  double amount = 3;
+  string status = 4;
+  string txhash = 5;
+}
+
+message ExecuteEnergyTransferRequest {
+  string creator = 1;
+  string operation_id = 2;
+  double amount = 3;
+  string context = 4;
+}
+
+message ExecuteEnergyTransferResponse {
+  string operation_id = 1;
+  double amount = 2;
+  string status = 3;
+  string txhash = 4;
+}
+
+message GetEnergyBalanceRequest {
+  string component_id = 1;
+}
+
+message GetEnergyBalanceResponse {
+  string component_id = 1;
+  double balance = 2;
+  string unit = 3;
+  int64 last_updated = 4;
+}
+
+// Queue Management
+message QueuePairingRequestRequest {
+  string component_a = 1;
+  string component_b = 2;
+  string operational_context = 3;
+  string proxy_id = 4;
+}
+
+message QueuePairingRequestResponse {
+  string request_id = 1;
+  string status = 2;
+  int64 created_at = 3;
+}
+
+message GetQueueStatusRequest {
+  string request_id = 1;
+}
+
+message GetQueueStatusResponse {
+  string request_id = 1;
+  string status = 2;
+  int64 created_at = 3;
+}
+
+message ProcessOfflineQueueRequest {
+  string component_id = 1;
+}
+
+message ProcessOfflineQueueResponse {
+  string request_id = 1;
+  string status = 2;
+  int64 processed_at = 3;
+}
+
+message CancelRequestRequest {
+  string request_id = 1;
+}
+
+message CancelRequestResponse {
+  string request_id = 1;
+  string status = 2;
+  int64 cancelled_at = 3;
+}
+
+message GetQueuedRequestsRequest {
+  string component_id = 1;
+}
+
+message GetQueuedRequestsResponse {
+  repeated QueuedRequest requests = 1;
+  int32 count = 2;
+}
+
+message ListProxyQueueRequest {
+  string proxy_id = 1;
+}
+
+message ListProxyQueueResponse {
+  repeated QueuedRequest requests = 1;
+  int32 count = 2;
+}
+
+message QueuedRequest {
+  string request_id = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string operational_context = 4;
+  string status = 5;
+  int64 created_at = 6;
+}
+
+// Authorization Management
+message CreatePairingAuthorizationRequest {
+  string component_a = 1;
+  string component_b = 2;
+  string operational_context = 3;
+  string authorization_rules = 4;
+}
+
+message CreatePairingAuthorizationResponse {
+  string authorization_id = 1;
+  string status = 2;
+  string txhash = 3;
+}
+
+message GetComponentAuthorizationsRequest {
+  string component_id = 1;
+}
+
+message GetComponentAuthorizationsResponse {
+  repeated Authorization authorization = 1;
+  int32 count = 2;
+}
+
+message Authorization {
+  string authorization_id = 1;
+  string component_a = 2;
+  string component_b = 3;
+  string operational_context = 4;
+  string authorization_rules = 5;
+  string status = 6;
+  int64 created_at = 7;
+}
+
+message UpdateAuthorizationRequest {
+  string authorization_id = 1;
+  string operational_context = 2;
+  string authorization_rules = 3;
+}
+
+message UpdateAuthorizationResponse {
+  string authorization_id = 1;
+  string status = 2;
+  int64 updated_at = 3;
+}
+
+message RevokeAuthorizationRequest {
+  string authorization_id = 1;
+  string reason = 2;
+}
+
+message RevokeAuthorizationResponse {
+  string authorization_id = 1;
+  string status = 2;
+  string reason = 3;
+}
+
+message CheckPairingAuthorizationRequest {
+  string component_a = 1;
+  string component_b = 2;
+  string operational_context = 3;
+}
+
+message CheckPairingAuthorizationResponse {
+  string authorization_id = 1;
+  string status = 2;
+  int64 created_at = 3;
+}
+
+// Trust Tensor Enhanced Operations
+message CalculateRelationshipTrustRequest {
+  string component_a = 1;
+  string component_b = 2;
+  string operational_context = 3;
+}
+
+message CalculateRelationshipTrustResponse {
+  string tensor_id = 1;
+  double trust_score = 2;
+  string status = 3;
+  string txhash = 4;
+}
+
+message GetRelationshipTensorRequest {
+  string tensor_id = 1;
+}
+
+message GetRelationshipTensorResponse {
+  string tensor_id = 1;
+  double score = 2;
+  string status = 3;
+}
+
+message UpdateTensorScoreRequest {
+  string creator = 1;
+  string tensor_id = 2;
+  double score = 3;
+  string context = 4;
+}
+
+message UpdateTensorScoreResponse {
+  string tensor_id = 1;
+  double score = 2;
+  int64 updated_at = 3;
+  string txhash = 4;
+}
+
+// Real-time Battery Monitoring
+message StreamBatteryStatusRequest {
+  string component_id = 1;
+  int32 interval_seconds = 2;
+}
+
+message BatteryStatusUpdate {
+  string component_id = 1;
+  double voltage = 2;
+  double current = 3;
+  double temperature = 4;
+  double state_of_charge = 5;
+  int64 timestamp = 6;
+} 

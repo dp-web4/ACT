@@ -1,0 +1,20 @@
+syntax = "proto3";
+package racecarweb.lctmanager.v1;
+
+option go_package = "racecar-web/x/lctmanager/types";
+
+// LinkedContextToken defines the LinkedContextToken message.
+message LinkedContextToken {
+  string lct_id = 1;
+  string component_a_id = 2;
+  string component_b_id = 3;
+  string lct_key_half = 4;
+  string pairing_status = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+  int64 last_contact_at = 8;
+  string trust_anchor = 9;
+  string operational_context = 10;
+  string proxy_component_id = 11;
+  string authorization_rules = 12;
+}

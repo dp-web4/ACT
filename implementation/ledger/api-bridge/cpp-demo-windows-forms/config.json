@@ -1,0 +1,88 @@
+{
+  "api": {
+    "rest": {
+      "endpoint": "http://localhost:8080",
+      "timeout": 30,
+      "retry_attempts": 3,
+      "retry_delay": 1000
+    },
+    "grpc": {
+      "endpoint": "localhost:9092",
+      "timeout": 30,
+      "max_message_size": 1048576,
+      "keepalive_time": 30000,
+      "keepalive_timeout": 5000
+    }
+  },
+  "ui": {
+    "window": {
+      "width": 1200,
+      "height": 800,
+      "min_width": 800,
+      "min_height": 600,
+      "maximize_on_start": false,
+      "remember_position": true,
+      "remember_size": true
+    },
+    "theme": {
+      "use_dark_theme": false,
+      "accent_color": "#0078D4",
+      "background_color": "#F0F0F0",
+      "text_color": "#000000"
+    },
+    "behavior": {
+      "auto_connect": false,
+      "auto_refresh": false,
+      "refresh_interval": 5000,
+      "show_tooltips": true,
+      "confirm_exit": true,
+      "minimize_to_tray": false
+    }
+  },
+  "demo": {
+    "default_creator": "demo-user",
+    "default_context": "demo-context",
+    "component_prefix": "demo-component",
+    "lct_prefix": "demo-lct",
+    "pairing_prefix": "demo-pairing",
+    "trust_prefix": "demo-trust",
+    "energy_prefix": "demo-energy"
+  },
+  "logging": {
+    "level": "info",
+    "file": "apibridge_demo_windows.log",
+    "max_size": 10485760,
+    "max_files": 5,
+    "console_output": true,
+    "file_output": true,
+    "auto_flush": true,
+    "include_timestamp": true,
+    "include_level": true,
+    "include_source": true
+  },
+  "testing": {
+    "performance_test_iterations": 10,
+    "concurrent_requests": 5,
+    "streaming_duration": 30,
+    "mock_data_enabled": true,
+    "auto_run_tests": false
+  },
+  "security": {
+    "verify_ssl": true,
+    "ca_cert_path": "",
+    "client_cert_path": "",
+    "client_key_path": "",
+    "auth_token": "",
+    "enable_encryption": false
+  },
+  "advanced": {
+    "debug_mode": false,
+    "profiling_enabled": false,
+    "memory_tracking": false,
+    "thread_pool_size": 4,
+    "connection_pool_size": 10,
+    "cache_enabled": true,
+    "cache_size": 1000,
+    "cache_ttl": 300
+  }
+} 

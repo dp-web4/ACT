@@ -1,0 +1,53 @@
+{
+  "api": {
+    "rest": {
+      "endpoint": "http://localhost:8080",
+      "timeout": 30,
+      "retry_attempts": 3,
+      "retry_delay": 1000
+    },
+    "grpc": {
+      "endpoint": "localhost:9092",
+      "timeout": 30,
+      "max_message_size": 1048576,
+      "keepalive_time": 30000,
+      "keepalive_timeout": 5000
+    }
+  },
+  "demo": {
+    "default_creator": "demo-user",
+    "default_context": "demo-context",
+    "component_prefix": "demo-component",
+    "lct_prefix": "demo-lct",
+    "pairing_prefix": "demo-pairing",
+    "trust_prefix": "demo-trust",
+    "energy_prefix": "demo-energy"
+  },
+  "logging": {
+    "level": "info",
+    "file": "apibridge_demo.log",
+    "max_size": 10485760,
+    "max_files": 5,
+    "console_output": true
+  },
+  "ui": {
+    "clear_screen": true,
+    "show_progress": true,
+    "color_output": true,
+    "auto_continue": false,
+    "pause_duration": 2000
+  },
+  "testing": {
+    "performance_test_iterations": 10,
+    "concurrent_requests": 5,
+    "streaming_duration": 30,
+    "mock_data_enabled": true
+  },
+  "security": {
+    "verify_ssl": true,
+    "ca_cert_path": "",
+    "client_cert_path": "",
+    "client_key_path": "",
+    "auth_token": ""
+  }
+} 

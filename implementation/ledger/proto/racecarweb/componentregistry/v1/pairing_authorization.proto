@@ -1,0 +1,22 @@
+syntax = "proto3";
+package racecarweb.componentregistry.v1;
+
+option go_package = "racecar-web/x/componentregistry/types";
+
+// PairingAuthorization defines the PairingAuthorization message.
+message PairingAuthorization {
+  string auth_id = 1;
+  string component_id = 2;
+  string allowed_partner_types = 3;
+  string allowed_partner_ids = 4;
+  string parent_child_rules = 5;
+  string application_context = 6;
+  int64 expires_at = 7;
+  string status = 8;
+  string trust_score = 9;        // Trust score at authorization time
+  string authorization_level = 10; // Level of authorization (basic, enhanced, critical)
+  int64 created_at = 11;         // Authorization creation timestamp
+  int64 updated_at = 12;         // Last update timestamp
+  string lct_id = 13;            // Associated LCT relationship
+  int64 version = 14;            // Version for updates
+}

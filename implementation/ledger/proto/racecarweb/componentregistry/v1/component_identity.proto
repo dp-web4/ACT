@@ -1,0 +1,13 @@
+syntax = "proto3";
+package racecarweb.componentregistry.v1;
+
+option go_package = "racecar-web/x/componentregistry/types";
+
+// ComponentIdentity defines the ComponentIdentity message.
+message ComponentIdentity {
+  string component_id = 1;
+  string component_type = 2;
+  string manufacturer_data = 3;
+  string status = 4;
+  int64 last_seen = 5;
+}

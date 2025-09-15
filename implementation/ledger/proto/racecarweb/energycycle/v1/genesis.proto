@@ -1,0 +1,17 @@
+syntax = "proto3";
+package racecarweb.energycycle.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/energycycle/v1/params.proto";
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// GenesisState defines the energycycle module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

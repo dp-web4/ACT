@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package racecarweb.energycycle.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "racecarweb/energycycle/v1/params.proto";
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/racecar-web/energycycle/v1/params";
+  }
+
+  // GetRelationshipEnergyBalance Queries a list of GetRelationshipEnergyBalance items.
+  rpc GetRelationshipEnergyBalance(QueryGetRelationshipEnergyBalanceRequest) returns (QueryGetRelationshipEnergyBalanceResponse) {
+    option (google.api.http).get = "/racecar-web/energycycle/v1/get_relationship_energy_balance/{lct_id}";
+  }
+
+  // CalculateRelationshipV3 Queries a list of CalculateRelationshipV3 items.
+  rpc CalculateRelationshipV3(QueryCalculateRelationshipV3Request) returns (QueryCalculateRelationshipV3Response) {
+    option (google.api.http).get = "/racecar-web/energycycle/v1/calculate_relationship_v_3/{operation_id}";
+  }
+
+  // GetEnergyFlowHistory Queries a list of GetEnergyFlowHistory items.
+  rpc GetEnergyFlowHistory(QueryGetEnergyFlowHistoryRequest) returns (QueryGetEnergyFlowHistoryResponse) {
+    option (google.api.http).get = "/racecar-web/energycycle/v1/get_energy_flow_history/{lct_id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetRelationshipEnergyBalanceRequest defines the QueryGetRelationshipEnergyBalanceRequest message.
+message QueryGetRelationshipEnergyBalanceRequest {
+  string lct_id = 1;
+}
+
+// QueryGetRelationshipEnergyBalanceResponse defines the QueryGetRelationshipEnergyBalanceResponse message.
+message QueryGetRelationshipEnergyBalanceResponse {
+  string atp_balance = 1;
+  string adp_balance = 2;
+  string total_energy = 3;
+  string trust_weighted_balance = 4;
+}
+
+// QueryCalculateRelationshipV3Request defines the QueryCalculateRelationshipV3Request message.
+message QueryCalculateRelationshipV3Request {
+  string operation_id = 1;
+}
+
+// QueryCalculateRelationshipV3Response defines the QueryCalculateRelationshipV3Response message.
+message QueryCalculateRelationshipV3Response {
+  string v_3_tensor = 1;
+}
+
+// QueryGetEnergyFlowHistoryRequest defines the QueryGetEnergyFlowHistoryRequest message.
+message QueryGetEnergyFlowHistoryRequest {
+  string lct_id = 1;
+}
+
+// QueryGetEnergyFlowHistoryResponse defines the QueryGetEnergyFlowHistoryResponse message.
+message QueryGetEnergyFlowHistoryResponse {
+  string energy_operations = 1;
+}

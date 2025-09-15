@@ -1,0 +1,22 @@
+syntax = "proto3";
+package racecarweb.energycycle.v1;
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// EnergyOperation defines the EnergyOperation message.
+message EnergyOperation {
+  string operation_id = 1;
+  string source_lct = 2;
+  string target_lct = 3;
+  string energy_amount = 4;
+  string operation_type = 5;
+  string status = 6;
+  int64 timestamp = 7;
+  int64 block_height = 8;
+  string trust_score = 9;
+  string atp_token_id = 10;      // Associated ATP token ID
+  string adp_token_id = 11;      // Associated ADP token ID (if discharged)
+  string energy_efficiency = 12; // Energy efficiency achieved
+  string validation_data = 13;   // Validation data for the operation
+  int64 version = 14;            // Version for updates
+}

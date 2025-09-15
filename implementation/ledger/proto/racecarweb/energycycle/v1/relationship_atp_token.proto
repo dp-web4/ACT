@@ -1,0 +1,19 @@
+syntax = "proto3";
+package racecarweb.energycycle.v1;
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// RelationshipAtpToken defines the RelationshipAtpToken message.
+message RelationshipAtpToken {
+  string token_id = 1;
+  string lct_id = 2;
+  string energy_amount = 3;
+  int64 created_at = 4;
+  string operation_id = 5;
+  string status = 6;
+  string relationship_context = 7;
+  int64 expiration_block = 8;  // Block height when ATP expires
+  string trust_score = 9;      // Trust score at creation time
+  string efficiency_rating = 10; // Energy efficiency rating
+  int64 version = 11;          // Version for updates
+}

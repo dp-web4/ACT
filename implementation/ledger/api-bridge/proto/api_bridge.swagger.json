@@ -1,0 +1,754 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/api_bridge.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "APIBridgeService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Account": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "keyType": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Authorization": {
+      "type": "object",
+      "properties": {
+        "authorizationId": {
+          "type": "string"
+        },
+        "componentA": {
+          "type": "string"
+        },
+        "componentB": {
+          "type": "string"
+        },
+        "operationalContext": {
+          "type": "string"
+        },
+        "authorizationRules": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1BatteryStatusUpdate": {
+      "type": "object",
+      "properties": {
+        "componentId": {
+          "type": "string"
+        },
+        "voltage": {
+          "type": "number",
+          "format": "double"
+        },
+        "current": {
+          "type": "number",
+          "format": "double"
+        },
+        "temperature": {
+          "type": "number",
+          "format": "double"
+        },
+        "stateOfCharge": {
+          "type": "number",
+          "format": "double"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1CalculateRelationshipTrustResponse": {
+      "type": "object",
+      "properties": {
+        "tensorId": {
+          "type": "string"
+        },
+        "trustScore": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CancelRequestResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "cancelledAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1CheckPairingAuthorizationResponse": {
+      "type": "object",
+      "properties": {
+        "authorizationId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1CompletePairingResponse": {
+      "type": "object",
+      "properties": {
+        "lctId": {
+          "type": "string"
+        },
+        "sessionKeys": {
+          "type": "string"
+        },
+        "trustSummary": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        },
+        "splitKeyA": {
+          "type": "string",
+          "title": "32 bytes for component A"
+        },
+        "splitKeyB": {
+          "type": "string",
+          "title": "32 bytes for component B"
+        }
+      }
+    },
+    "v1CreateEnergyOperationResponse": {
+      "type": "object",
+      "properties": {
+        "operationId": {
+          "type": "string"
+        },
+        "operationType": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CreateLCTResponse": {
+      "type": "object",
+      "properties": {
+        "lctId": {
+          "type": "string"
+        },
+        "componentA": {
+          "type": "string"
+        },
+        "componentB": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "proxyId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        },
+        "lctKeyHalf": {
+          "type": "string"
+        },
+        "deviceKeyHalf": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CreatePairingAuthorizationResponse": {
+      "type": "object",
+      "properties": {
+        "authorizationId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CreateTrustTensorResponse": {
+      "type": "object",
+      "properties": {
+        "tensorId": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1ExecuteEnergyTransferResponse": {
+      "type": "object",
+      "properties": {
+        "operationId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetAccountsResponse": {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Account"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GetComponentAuthorizationsResponse": {
+      "type": "object",
+      "properties": {
+        "authorization": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Authorization"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GetComponentIdentityResponse": {
+      "type": "object",
+      "properties": {
+        "componentId": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetComponentResponse": {
+      "type": "object",
+      "properties": {
+        "componentId": {
+          "type": "string"
+        },
+        "componentData": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetEnergyBalanceResponse": {
+      "type": "object",
+      "properties": {
+        "componentId": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetLCTResponse": {
+      "type": "object",
+      "properties": {
+        "lctId": {
+          "type": "string"
+        },
+        "componentAId": {
+          "type": "string"
+        },
+        "componentBId": {
+          "type": "string"
+        },
+        "lctKeyHalf": {
+          "type": "string"
+        },
+        "pairingStatus": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lastContactAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "trustAnchor": {
+          "type": "string"
+        },
+        "operationalContext": {
+          "type": "string"
+        },
+        "proxyComponentId": {
+          "type": "string"
+        },
+        "authorizationRules": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetPairingStatusResponse": {
+      "type": "object",
+      "properties": {
+        "challengeId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetQueueStatusResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetQueuedRequestsResponse": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1QueuedRequest"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GetRelationshipTensorResponse": {
+      "type": "object",
+      "properties": {
+        "tensorId": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetTrustTensorResponse": {
+      "type": "object",
+      "properties": {
+        "tensorId": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v1InitiatePairingResponse": {
+      "type": "object",
+      "properties": {
+        "challengeId": {
+          "type": "string"
+        },
+        "componentA": {
+          "type": "string"
+        },
+        "componentB": {
+          "type": "string"
+        },
+        "operationalContext": {
+          "type": "string"
+        },
+        "proxyId": {
+          "type": "string"
+        },
+        "forceImmediate": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1ListProxyQueueResponse": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1QueuedRequest"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1ProcessOfflineQueueResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "processedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1QueuePairingRequestResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1QueuedRequest": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "componentA": {
+          "type": "string"
+        },
+        "componentB": {
+          "type": "string"
+        },
+        "operationalContext": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1RegisterComponentResponse": {
+      "type": "object",
+      "properties": {
+        "componentId": {
+          "type": "string"
+        },
+        "componentIdentity": {
+          "type": "string"
+        },
+        "componentData": {
+          "type": "string"
+        },
+        "context": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "lctId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1RevokeAuthorizationResponse": {
+      "type": "object",
+      "properties": {
+        "authorizationId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "v1RevokePairingResponse": {
+      "type": "object",
+      "properties": {
+        "lctId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateAuthorizationResponse": {
+      "type": "object",
+      "properties": {
+        "authorizationId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1UpdateLCTStatusResponse": {
+      "type": "object",
+      "properties": {
+        "lctId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1UpdateTensorScoreResponse": {
+      "type": "object",
+      "properties": {
+        "tensorId": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "format": "double"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateTrustScoreResponse": {
+      "type": "object",
+      "properties": {
+        "tensorId": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "format": "double"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1VerifyComponentResponse": {
+      "type": "object",
+      "properties": {
+        "componentId": {
+          "type": "string"
+        },
+        "verifier": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "txhash": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

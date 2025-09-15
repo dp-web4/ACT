@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package racecarweb.componentregistry.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "racecarweb/componentregistry/v1/params.proto";
+import "racecarweb/componentregistry/v1/component.proto";
+
+option go_package = "racecar-web/x/componentregistry/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/racecar-web/componentregistry/v1/params";
+  }
+
+  // GetComponent Queries a list of GetComponent items.
+  rpc GetComponent(QueryGetComponentRequest) returns (QueryGetComponentResponse) {
+    option (google.api.http).get = "/racecar-web/componentregistry/v1/get_component/{component_id}";
+  }
+
+  // GetComponentVerification Queries the verification status of a component.
+  rpc GetComponentVerification(QueryGetComponentVerificationRequest) returns (QueryGetComponentVerificationResponse) {
+    option (google.api.http).get = "/racecar-web/componentregistry/v1/get_component_verification/{component_id}";
+  }
+
+  // CheckPairingAuth Queries a list of CheckPairingAuth items.
+  rpc CheckPairingAuth(QueryCheckPairingAuthRequest) returns (QueryCheckPairingAuthResponse) {
+    option (google.api.http).get = "/racecar-web/componentregistry/v1/check_pairing_auth/{component_a}/{component_b}";
+  }
+
+  // ListAuthorizedPartners Queries a list of ListAuthorizedPartners items.
+  rpc ListAuthorizedPartners(QueryListAuthorizedPartnersRequest) returns (QueryListAuthorizedPartnersResponse) {
+    option (google.api.http).get = "/racecar-web/componentregistry/v1/list_authorized_partners/{component_id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetComponentRequest defines the QueryGetComponentRequest message.
+message QueryGetComponentRequest {
+  string component_id = 1;
+}
+
+// QueryGetComponentResponse defines the QueryGetComponentResponse message.
+message QueryGetComponentResponse {
+  Component component = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryGetComponentVerificationRequest defines the QueryGetComponentVerificationRequest message.
+message QueryGetComponentVerificationRequest {
+  string component_id = 1;
+}
+
+// QueryGetComponentVerificationResponse defines the QueryGetComponentVerificationResponse message.
+message QueryGetComponentVerificationResponse {
+  ComponentVerification verification = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryCheckPairingAuthRequest defines the QueryCheckPairingAuthRequest message.
+message QueryCheckPairingAuthRequest {
+  string component_a = 1;
+  string component_b = 2;
+}
+
+// QueryCheckPairingAuthResponse defines the QueryCheckPairingAuthResponse message.
+message QueryCheckPairingAuthResponse {
+  bool a_can_pair_b = 1;
+  bool b_can_pair_a = 2;
+  string reason = 3;
+}
+
+// QueryListAuthorizedPartnersRequest defines the QueryListAuthorizedPartnersRequest message.
+message QueryListAuthorizedPartnersRequest {
+  string component_id = 1;
+}
+
+// QueryListAuthorizedPartnersResponse defines the QueryListAuthorizedPartnersResponse message.
+message QueryListAuthorizedPartnersResponse {
+  string authorized_components = 1;
+}

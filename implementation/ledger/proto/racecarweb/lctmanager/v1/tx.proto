@@ -1,0 +1,192 @@
+syntax = "proto3";
+
+package racecarweb.lctmanager.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/lctmanager/v1/params.proto";
+
+option go_package = "racecar-web/x/lctmanager/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // CreateLctRelationship defines the CreateLctRelationship RPC.
+  rpc CreateLctRelationship(MsgCreateLctRelationship) returns (MsgCreateLctRelationshipResponse);
+
+  // UpdateLctStatus defines the UpdateLctStatus RPC.
+  rpc UpdateLctStatus(MsgUpdateLctStatus) returns (MsgUpdateLctStatusResponse);
+
+  // TerminateLctRelationship defines the TerminateLctRelationship RPC.
+  rpc TerminateLctRelationship(MsgTerminateLctRelationship) returns (MsgTerminateLctRelationshipResponse);
+
+  // InitiateLCTMediatedPairing defines the InitiateLCTMediatedPairing RPC.
+  rpc InitiateLCTMediatedPairing(MsgInitiateLCTMediatedPairing) returns (MsgInitiateLCTMediatedPairingResponse);
+
+  // CompleteLCTMediatedPairing defines the CompleteLCTMediatedPairing RPC.
+  rpc CompleteLCTMediatedPairing(MsgCompleteLCTMediatedPairing) returns (MsgCompleteLCTMediatedPairingResponse);
+
+  // EncryptLCTMessage defines the EncryptLCTMessage RPC.
+  rpc EncryptLCTMessage(MsgEncryptLCTMessage) returns (MsgEncryptLCTMessageResponse);
+
+  // GenerateLCTChallenge defines the GenerateLCTChallenge RPC.
+  rpc GenerateLCTChallenge(MsgGenerateLCTChallenge) returns (MsgGenerateLCTChallengeResponse);
+
+  // VerifyLCTChallenge defines the VerifyLCTChallenge RPC.
+  rpc VerifyLCTChallenge(MsgVerifyLCTChallenge) returns (MsgVerifyLCTChallengeResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "racecarweb/x/lctmanager/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgCreateLctRelationship defines the MsgCreateLctRelationship message.
+message MsgCreateLctRelationship {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_a = 2;
+  string component_b = 3;
+  string context = 4;
+  string proxy_id = 5;
+}
+
+// MsgCreateLctRelationshipResponse defines the MsgCreateLctRelationshipResponse message.
+message MsgCreateLctRelationshipResponse {
+  string lct_id = 1;
+  string key_exchange = 2;
+  string status = 3;
+}
+
+// MsgUpdateLctStatus defines the MsgUpdateLctStatus message.
+message MsgUpdateLctStatus {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  string new_status = 3;
+  string reason = 4;
+}
+
+// MsgUpdateLctStatusResponse defines the MsgUpdateLctStatusResponse message.
+message MsgUpdateLctStatusResponse {}
+
+// MsgTerminateLctRelationship defines the MsgTerminateLctRelationship message.
+message MsgTerminateLctRelationship {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  string reason = 3;
+  bool notify_offline = 4;
+}
+
+// MsgTerminateLctRelationshipResponse defines the MsgTerminateLctRelationshipResponse message.
+message MsgTerminateLctRelationshipResponse {}
+
+// MsgInitiateLCTMediatedPairing defines the MsgInitiateLCTMediatedPairing message.
+message MsgInitiateLCTMediatedPairing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string initiator_lct_id = 2;
+  string target_lct_id = 3;
+  string context = 4;
+  string proxy_lct_id = 5;
+  int64 expires_at = 6;
+}
+
+// MsgInitiateLCTMediatedPairingResponse defines the MsgInitiateLCTMediatedPairingResponse message.
+message MsgInitiateLCTMediatedPairingResponse {
+  string pairing_id = 1;
+  string status = 2;
+  string challenge_id = 3;
+  bytes challenge_data = 4;
+  string lct_relationship_id = 5;
+}
+
+// MsgCompleteLCTMediatedPairing defines the MsgCompleteLCTMediatedPairing message.
+message MsgCompleteLCTMediatedPairing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string pairing_id = 2;
+  string initiator_response = 3;
+  string target_response = 4;
+  bytes session_key_data = 5;
+}
+
+// MsgCompleteLCTMediatedPairingResponse defines the MsgCompleteLCTMediatedPairingResponse message.
+message MsgCompleteLCTMediatedPairingResponse {
+  string pairing_id = 1;
+  string status = 2;
+  string lct_relationship_id = 3;
+  bytes encrypted_session_key_initiator = 4;
+  bytes encrypted_session_key_target = 5;
+  bytes hashed_combined_session_key = 6;
+  string trust_score = 7;
+}
+
+// MsgEncryptLCTMessage defines the MsgEncryptLCTMessage message.
+message MsgEncryptLCTMessage {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  bytes message = 3;
+}
+
+// MsgEncryptLCTMessageResponse defines the MsgEncryptLCTMessageResponse message.
+message MsgEncryptLCTMessageResponse {
+  string lct_id = 1;
+  bytes encrypted_message = 2;
+  string status = 3;
+}
+
+// MsgGenerateLCTChallenge defines the MsgGenerateLCTChallenge message.
+message MsgGenerateLCTChallenge {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+}
+
+// MsgGenerateLCTChallengeResponse defines the MsgGenerateLCTChallengeResponse message.
+message MsgGenerateLCTChallengeResponse {
+  string lct_id = 1;
+  bytes challenge = 2;
+  string status = 3;
+}
+
+// MsgVerifyLCTChallenge defines the MsgVerifyLCTChallenge message.
+message MsgVerifyLCTChallenge {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  bytes challenge = 3;
+  bytes response = 4;
+}
+
+// MsgVerifyLCTChallengeResponse defines the MsgVerifyLCTChallengeResponse message.
+message MsgVerifyLCTChallengeResponse {
+  string lct_id = 1;
+  bool verified = 2;
+  string status = 3;
+}

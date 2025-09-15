@@ -1,0 +1,16 @@
+syntax = "proto3";
+package racecarweb.trusttensor.v1;
+
+option go_package = "racecar-web/x/trusttensor/types";
+
+// TensorEntry defines the TensorEntry message.
+message TensorEntry {
+  string entry_id = 1;
+  string tensor_id = 2;
+  string dimension = 3;
+  string entry_type = 4;
+  string score_value = 5;
+  string witness_chain = 6;
+  string witness_confidence = 7;
+  int64 timestamp = 8;
+}

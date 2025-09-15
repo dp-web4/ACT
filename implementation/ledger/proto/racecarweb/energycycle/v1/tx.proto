@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package racecarweb.energycycle.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/energycycle/v1/params.proto";
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // CreateRelationshipEnergyOperation defines the CreateRelationshipEnergyOperation RPC.
+  rpc CreateRelationshipEnergyOperation(MsgCreateRelationshipEnergyOperation) returns (MsgCreateRelationshipEnergyOperationResponse);
+
+  // ExecuteEnergyTransfer defines the ExecuteEnergyTransfer RPC.
+  rpc ExecuteEnergyTransfer(MsgExecuteEnergyTransfer) returns (MsgExecuteEnergyTransferResponse);
+
+  // ValidateRelationshipValue defines the ValidateRelationshipValue RPC.
+  rpc ValidateRelationshipValue(MsgValidateRelationshipValue) returns (MsgValidateRelationshipValueResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "racecarweb/x/energycycle/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgCreateRelationshipEnergyOperation defines the MsgCreateRelationshipEnergyOperation message.
+message MsgCreateRelationshipEnergyOperation {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string source_lct = 2;
+  string target_lct = 3;
+  string energy_amount = 4;
+  string operation_type = 5;
+}
+
+// MsgCreateRelationshipEnergyOperationResponse defines the MsgCreateRelationshipEnergyOperationResponse message.
+message MsgCreateRelationshipEnergyOperationResponse {
+  string operation_id = 1;
+  string atp_tokens = 2;
+  bool trust_validated = 3;
+}
+
+// MsgExecuteEnergyTransfer defines the MsgExecuteEnergyTransfer message.
+message MsgExecuteEnergyTransfer {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string operation_id = 2;
+  string transfer_data = 3;
+}
+
+// MsgExecuteEnergyTransferResponse defines the MsgExecuteEnergyTransferResponse message.
+message MsgExecuteEnergyTransferResponse {}
+
+// MsgValidateRelationshipValue defines the MsgValidateRelationshipValue message.
+message MsgValidateRelationshipValue {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string operation_id = 2;
+  string recipient_validation = 3;
+  string utility_rating = 4;
+  string trust_context = 5;
+}
+
+// MsgValidateRelationshipValueResponse defines the MsgValidateRelationshipValueResponse message.
+message MsgValidateRelationshipValueResponse {
+  string v_3_score = 1;
+  string adp_tokens = 2;
+}

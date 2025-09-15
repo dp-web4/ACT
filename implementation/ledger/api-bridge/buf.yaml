@@ -1,0 +1,11 @@
+version: v1
+name: buf.build/your-org/api-bridge
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
+lint:
+  use:
+    - DEFAULT
+breaking:
+  use:
+    - FILE 

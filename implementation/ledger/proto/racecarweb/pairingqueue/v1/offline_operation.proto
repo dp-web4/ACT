@@ -1,0 +1,17 @@
+syntax = "proto3";
+package racecarweb.pairingqueue.v1;
+
+option go_package = "racecar-web/x/pairingqueue/types";
+
+// OfflineOperation defines the OfflineOperation message.
+message OfflineOperation {
+  string operation_id = 1;
+  string component_id = 2;
+  string operation_type = 3;
+  int64 queued_at = 4;
+  int32 retry_count = 5;
+  int32 max_retries = 6;
+  int64 last_attempt_at = 7;
+  int64 next_retry_at = 8;
+  string failure_reason = 9;
+}

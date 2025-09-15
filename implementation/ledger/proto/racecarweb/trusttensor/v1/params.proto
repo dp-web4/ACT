@@ -1,0 +1,13 @@
+syntax = "proto3";
+package racecarweb.trusttensor.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "racecar-web/x/trusttensor/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "racecarweb/x/trusttensor/Params";
+  option (gogoproto.equal) = true;
+}

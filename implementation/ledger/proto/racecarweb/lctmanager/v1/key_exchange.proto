@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package racecarweb.lctmanager.v1;
+
+option go_package = "racecar-web/x/lctmanager/types";
+
+// LCTMediatedPairing defines the LCT-mediated pairing process
+message LCTMediatedPairing {
+  string pairing_id = 1;
+  string initiator_lct_id = 2;
+  string target_lct_id = 3;
+  string context = 4;
+  string proxy_lct_id = 5;
+  string status = 6;  // initiated, challenged, completed, failed
+  int64 created_at = 7;
+  int64 expires_at = 8;
+}
+
+// SessionKeyExchange defines the session key exchange for paired devices
+message SessionKeyExchange {
+  string pairing_id = 1;
+  string lct_relationship_id = 2;
+  bytes encrypted_session_key_initiator = 3;  // Encrypted by initiator LCT
+  bytes encrypted_session_key_target = 4;     // Encrypted by target LCT
+  bytes hashed_combined_session_key = 5;     // Hash for audit (never stored)
+  string status = 6;                         // pending, active, expired
+  int64 created_at = 7;
+  int64 last_used = 8;
+}
+
+// PairingChallenge defines a challenge for LCT-mediated authentication
+message PairingChallenge {
+  string challenge_id = 1;
+  string pairing_id = 2;
+  bytes challenge_data = 3;  // Encrypted challenge from LCT
+  bytes expected_response = 4;  // Hash of expected response
+  int64 expires_at = 5;
+  string status = 6;  // pending, completed, expired
+}
+
+// PairingRequest defines a request to initiate LCT-mediated pairing
+message PairingRequest {
+  string initiator_lct_id = 1;
+  string target_lct_id = 2;
+  string context = 3;
+  string proxy_lct_id = 4;
+  int64 expires_at = 5;
+}
+
+// PairingResponse defines the response to a pairing request
+message PairingResponse {
+  string pairing_id = 1;
+  string status = 2;
+  string challenge_id = 3;
+  bytes challenge_data = 4;
+  string lct_relationship_id = 5;
+  string error = 6;
+}
+
+// CompletePairingRequest defines the completion of LCT-mediated pairing
+message CompletePairingRequest {
+  string pairing_id = 1;
+  string initiator_response = 2;
+  string target_response = 3;
+  bytes session_key_data = 4;  // Session keys to be encrypted by LCTs
+}
+
+// CompletePairingResponse defines the response to pairing completion
+message CompletePairingResponse {
+  string pairing_id = 1;
+  string status = 2;
+  string lct_relationship_id = 3;
+  bytes encrypted_session_key_initiator = 4;
+  bytes encrypted_session_key_target = 5;
+  bytes hashed_combined_session_key = 6;
+  string trust_score = 7;
+  string error = 8;
+}
+
+// SplitKey represents the metadata for an LCT cryptographic relationship
+// NOTE: No cryptographic secrets are stored on-chain - only public metadata
+// Key halves are ephemeral and only exist in memory during operations
+message SplitKey {
+  string lct_id = 1;
+  string status = 2;            // pending, active, revoked
+  int64 created_at = 3;
+  int64 activated_at = 4;
+} 
