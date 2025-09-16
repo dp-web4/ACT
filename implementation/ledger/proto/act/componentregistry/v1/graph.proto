@@ -1,0 +1,60 @@
+syntax = "proto3";
+package act.componentregistry.v1;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dp-web4/act/x/componentregistry/types";
+
+// RDFTriple represents a relationship in the MRH graph
+message RDFTriple {
+  string subject = 1;
+  string predicate = 2;
+  string object = 3;
+  
+  // Optional metadata
+  map<string, string> metadata = 4;
+  google.protobuf.Timestamp created_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// ContextHorizon defines the relevancy boundary
+message ContextHorizon {
+  string center_lct = 1;
+  uint32 radius = 2;
+  repeated string included_lcts = 3;
+  repeated string boundary_lcts = 4;
+  
+  // Fractal properties
+  uint32 fractal_depth = 5;
+  repeated ContextHorizon sub_horizons = 6;
+}
+
+// WitnessNetwork topology
+message WitnessNetwork {
+  repeated WitnessNode nodes = 1 [(gogoproto.nullable) = false];
+  repeated WitnessEdge edges = 2 [(gogoproto.nullable) = false];
+}
+
+message WitnessNode {
+  string lct_id = 1;
+  uint32 witness_count = 2;
+  uint32 witnessed_by_count = 3;
+  double reputation_score = 4;
+}
+
+message WitnessEdge {
+  string from_lct = 1;
+  string to_lct = 2;
+  uint32 witness_events = 3;
+  double confidence = 4;
+}
+
+// BroadcastMessage for MRH propagation
+message BroadcastMessage {
+  string sender_lct = 1;
+  repeated string recipients = 2;
+  string message_type = 3;
+  bytes payload = 4;
+  uint32 ttl = 5; // Time to live (hop count)
+  google.protobuf.Timestamp sent_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}

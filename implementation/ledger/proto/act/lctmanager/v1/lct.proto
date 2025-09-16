@@ -1,0 +1,124 @@
+syntax = "proto3";
+package act.lctmanager.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dp-web4/act/x/lctmanager/types";
+
+// LCT represents a Linked Context Token with Web4 compliance
+message LCT {
+  // Unique identifier for the LCT
+  string id = 1;
+  
+  // Entity type: human, ai, role, society, dictionary
+  string entity_type = 2;
+  
+  // Cryptographic identity
+  LCTIdentity identity = 3 [(gogoproto.nullable) = false];
+  
+  // Markov Relevancy Horizon
+  MRH mrh = 4 [(gogoproto.nullable) = false];
+  
+  // Birth certificate (optional)
+  BirthCertificate birth_certificate = 5;
+  
+  // Timestamps
+  google.protobuf.Timestamp created_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp updated_at = 7 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Owner address (Cosmos SDK)
+  string owner = 8 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  
+  // Status
+  LCTStatus status = 9;
+}
+
+// Cryptographic identity for Web4
+message LCTIdentity {
+  // Ed25519 public key for signing
+  bytes ed25519_public_key = 1;
+  
+  // X25519 public key for encryption
+  bytes x25519_public_key = 2;
+  
+  // Binding signature proving ownership
+  bytes binding_signature = 3;
+  
+  // DID (Decentralized Identifier) if applicable
+  string did = 4;
+}
+
+// Markov Relevancy Horizon
+message MRH {
+  // Entities bound to this LCT
+  repeated string bound = 1;
+  
+  // Entities paired with this LCT
+  repeated string paired = 2;
+  
+  // Entities witnessing this LCT
+  repeated string witnessing = 3;
+  
+  // Entities receiving broadcasts from this LCT
+  repeated string broadcast = 4;
+  
+  // Fractal depth level
+  uint32 fractal_depth = 5;
+  
+  // Context horizon radius
+  uint32 context_radius = 6;
+}
+
+// Birth certificate for entity creation
+message BirthCertificate {
+  // Society that issued the certificate
+  string society = 1;
+  
+  // Rights granted to the entity
+  repeated string rights = 2;
+  
+  // Responsibilities of the entity
+  repeated string responsibilities = 3;
+  
+  // Initial ATP allocation
+  string initial_atp = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Issued timestamp
+  google.protobuf.Timestamp issued_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Issuer LCT ID
+  string issuer = 6;
+  
+  // Witness signatures
+  repeated WitnessSignature witnesses = 7 [(gogoproto.nullable) = false];
+}
+
+// Witness signature for validation
+message WitnessSignature {
+  // LCT ID of witness
+  string lct_id = 1;
+  
+  // Signature bytes
+  bytes signature = 2;
+  
+  // Timestamp of witnessing
+  google.protobuf.Timestamp timestamp = 3 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Confidence score (0-100)
+  uint32 confidence = 4;
+}
+
+// LCT Status enumeration
+enum LCTStatus {
+  LCT_STATUS_UNSPECIFIED = 0;
+  LCT_STATUS_ACTIVE = 1;
+  LCT_STATUS_SUSPENDED = 2;
+  LCT_STATUS_REVOKED = 3;
+  LCT_STATUS_EXPIRED = 4;
+}

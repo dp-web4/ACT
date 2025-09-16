@@ -1,0 +1,69 @@
+syntax = "proto3";
+package act.lctmanager.v1;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "act/lctmanager/v1/lct.proto";
+
+option go_package = "github.com/dp-web4/act/x/lctmanager/types";
+
+// Query defines the lctmanager Query service
+service Query {
+  // GetLCT retrieves an LCT by ID
+  rpc GetLCT(QueryGetLCTRequest) returns (QueryGetLCTResponse) {
+    option (google.api.http).get = "/act/lctmanager/v1/lct/{lct_id}";
+  }
+  
+  // ListLCTs lists all LCTs with pagination
+  rpc ListLCTs(QueryListLCTsRequest) returns (QueryListLCTsResponse) {
+    option (google.api.http).get = "/act/lctmanager/v1/lcts";
+  }
+  
+  // GetMRH retrieves MRH for an LCT
+  rpc GetMRH(QueryGetMRHRequest) returns (QueryGetMRHResponse) {
+    option (google.api.http).get = "/act/lctmanager/v1/mrh/{lct_id}";
+  }
+  
+  // GetRelationships retrieves all relationships for an LCT
+  rpc GetRelationships(QueryGetRelationshipsRequest) returns (QueryGetRelationshipsResponse) {
+    option (google.api.http).get = "/act/lctmanager/v1/relationships/{lct_id}";
+  }
+}
+
+message QueryGetLCTRequest {
+  string lct_id = 1;
+}
+
+message QueryGetLCTResponse {
+  LCT lct = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryListLCTsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+  string entity_type = 2; // Optional filter
+}
+
+message QueryListLCTsResponse {
+  repeated LCT lcts = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetMRHRequest {
+  string lct_id = 1;
+}
+
+message QueryGetMRHResponse {
+  MRH mrh = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetRelationshipsRequest {
+  string lct_id = 1;
+}
+
+message QueryGetRelationshipsResponse {
+  repeated string bound = 1;
+  repeated string paired = 2;
+  repeated string witnessing = 3;
+  repeated string broadcast = 4;
+}

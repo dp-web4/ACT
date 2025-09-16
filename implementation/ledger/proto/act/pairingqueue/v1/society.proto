@@ -1,0 +1,124 @@
+syntax = "proto3";
+package act.pairingqueue.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dp-web4/act/x/pairingqueue/types";
+
+// Society represents a Web4 society
+message Society {
+  string lct_id = 1;
+  string name = 2;
+  string law_oracle_lct = 3;
+  
+  // Constitution
+  Constitution constitution = 4 [(gogoproto.nullable) = false];
+  
+  // Members
+  repeated SocietyMember members = 5 [(gogoproto.nullable) = false];
+  
+  // Treasury
+  string atp_treasury = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  
+  google.protobuf.Timestamp created_at = 7 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// Constitution defines society rules
+message Constitution {
+  string version = 1;
+  repeated string principles = 2;
+  repeated Right citizen_rights = 3 [(gogoproto.nullable) = false];
+  repeated Responsibility citizen_responsibilities = 4 [(gogoproto.nullable) = false];
+  repeated GovernanceRule governance_rules = 5 [(gogoproto.nullable) = false];
+  repeated EconomicRule economic_rules = 6 [(gogoproto.nullable) = false];
+}
+
+// Right represents a citizen right
+message Right {
+  string name = 1;
+  string description = 2;
+  repeated string required_roles = 3;
+}
+
+// Responsibility represents a citizen duty
+message Responsibility {
+  string name = 1;
+  string description = 2;
+  bool mandatory = 3;
+}
+
+// GovernanceRule for society decisions
+message GovernanceRule {
+  string name = 1;
+  uint32 quorum_percentage = 2;
+  repeated string veto_rights = 3;
+  uint32 voting_period_days = 4;
+}
+
+// EconomicRule for ATP/ADP management
+message EconomicRule {
+  string name = 1;
+  string parameter = 2;
+  string value = 3;
+  bool strict_enforcement = 4;
+}
+
+// SocietyMember represents membership
+message SocietyMember {
+  string lct_id = 1;
+  string citizen_role = 2;
+  repeated string rights = 3;
+  repeated string responsibilities = 4;
+  google.protobuf.Timestamp joined_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  string atp_allocated = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// LawOracleDecision for transaction validation
+message LawOracleDecision {
+  string id = 1;
+  string transaction_id = 2;
+  Decision decision = 3;
+  string reason = 4;
+  repeated string conditions = 5;
+  string oracle_lct = 6;
+  bytes signature = 7;
+  google.protobuf.Timestamp timestamp = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+enum Decision {
+  DECISION_UNSPECIFIED = 0;
+  DECISION_APPROVE = 1;
+  DECISION_REJECT = 2;
+  DECISION_CONDITIONAL = 3;
+}
+
+// Dispute for conflict resolution
+message Dispute {
+  string id = 1;
+  string plaintiff_lct = 2;
+  string defendant_lct = 3;
+  string claim = 4;
+  repeated bytes evidence = 5;
+  DisputeStatus status = 6;
+  string resolution = 7;
+  google.protobuf.Timestamp filed_at = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp resolved_at = 9 [(gogoproto.stdtime) = true];
+}
+
+enum DisputeStatus {
+  DISPUTE_STATUS_UNSPECIFIED = 0;
+  DISPUTE_STATUS_PENDING = 1;
+  DISPUTE_STATUS_INVESTIGATING = 2;
+  DISPUTE_STATUS_RESOLVED = 3;
+  DISPUTE_STATUS_DISMISSED = 4;
+}

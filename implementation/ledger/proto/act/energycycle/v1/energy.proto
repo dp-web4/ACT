@@ -1,0 +1,86 @@
+syntax = "proto3";
+package act.energycycle.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dp-web4/act/x/energycycle/types";
+
+// ATP represents Agentic Transaction Points
+message ATP {
+  string owner_lct = 1;
+  string amount = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string allocated = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string available = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// ADP represents Agentic Decision Points (proof of performance)
+message ADP {
+  string generator_lct = 1;
+  string amount = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string task_completed = 3;
+  string atp_consumed = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  R6Validation r6_proof = 5 [(gogoproto.nullable) = false];
+  google.protobuf.Timestamp generated_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// R6 Framework validation
+message R6Validation {
+  bool rules_compliant = 1;
+  bool roles_verified = 2;
+  bool request_valid = 3;
+  bool reference_checked = 4;
+  bool resource_consumed = 5;
+  bool result_delivered = 6;
+  
+  repeated string rule_violations = 7;
+  string compliance_score = 8 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// Energy cycle transaction
+message EnergyCycle {
+  string id = 1;
+  string from_lct = 2;
+  string to_lct = 3;
+  string atp_amount = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string adp_generated = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string trust_impact = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  google.protobuf.Timestamp timestamp = 7 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
