@@ -1,0 +1,203 @@
+{
+  "project": "ACT",
+  "mode": "fractal",
+  "topology": "hierarchical",
+  "genesis": {
+    "name": "ACT-Genesis",
+    "type": "hierarchical-coordinator",
+    "knowledge": [
+      "Web4 Protocol Specification",
+      "Linked Context Tokens (LCT)",
+      "Agentic Context Protocol (ACP)",
+      "Model Context Protocol (MCP)",
+      "Trust-Native Systems",
+      "ATP/ADP Economics",
+      "Claude-Flow Orchestration"
+    ],
+    "objectives": [
+      "Build complete ACT platform",
+      "Establish trust-native infrastructure",
+      "Create human-friendly interfaces",
+      "Implement secure agent delegation",
+      "Deploy demo society"
+    ],
+    "budget": {
+      "daily": 1000,
+      "strategic_decision": 10,
+      "spawn_queen": 50,
+      "integration_test": 100
+    }
+  },
+  "queens": [
+    {
+      "name": "LCT-Infrastructure-Queen",
+      "type": "system-architect",
+      "domain": "identity",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "coder",
+          "role": "LCT implementation"
+        },
+        {
+          "type": "backend-dev",
+          "role": "Registry service"
+        },
+        {
+          "type": "security-auditor",
+          "role": "Crypto validation"
+        },
+        {
+          "type": "tester",
+          "role": "Identity testing"
+        }
+      ]
+    },
+    {
+      "name": "ACP-Protocol-Queen",
+      "type": "planner",
+      "domain": "protocol",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "protocol-designer",
+          "role": "ACP specification"
+        },
+        {
+          "type": "coder",
+          "role": "Protocol engine"
+        },
+        {
+          "type": "api-designer",
+          "role": "Interface design"
+        },
+        {
+          "type": "integration-tester",
+          "role": "E2E testing"
+        }
+      ]
+    },
+    {
+      "name": "Demo-Society-Queen",
+      "type": "collective-intelligence-coordinator",
+      "domain": "governance",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "backend-dev",
+          "role": "Law Oracle"
+        },
+        {
+          "type": "database-architect",
+          "role": "Ledger design"
+        },
+        {
+          "type": "coder",
+          "role": "Witness network"
+        },
+        {
+          "type": "performance-benchmarker",
+          "role": "Optimization"
+        }
+      ]
+    },
+    {
+      "name": "MCP-Bridge-Queen",
+      "type": "mesh-coordinator",
+      "domain": "integration",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "integration-specialist",
+          "role": "Claude MCP"
+        },
+        {
+          "type": "api-connector",
+          "role": "OpenAI bridge"
+        },
+        {
+          "type": "coder",
+          "role": "Generic adapter"
+        },
+        {
+          "type": "compatibility-tester",
+          "role": "Cross-platform"
+        }
+      ]
+    },
+    {
+      "name": "Client-Interface-Queen",
+      "type": "frontend-architect",
+      "domain": "interface",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "ui-designer",
+          "role": "Dashboard design"
+        },
+        {
+          "type": "react-developer",
+          "role": "Web app"
+        },
+        {
+          "type": "mobile-dev",
+          "role": "Mobile interface"
+        },
+        {
+          "type": "ux-researcher",
+          "role": "User experience"
+        }
+      ]
+    },
+    {
+      "name": "ATP-Economy-Queen",
+      "type": "economic-modeler",
+      "domain": "economy",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "tokenomics-designer",
+          "role": "ATP/ADP design"
+        },
+        {
+          "type": "coder",
+          "role": "Wallet implementation"
+        },
+        {
+          "type": "game-theorist",
+          "role": "Incentive design"
+        },
+        {
+          "type": "economic-validator",
+          "role": "Economy testing"
+        }
+      ]
+    }
+  ],
+  "memory": {
+    "type": "persistent",
+    "location": "./swarm-memory",
+    "structure": {
+      "architecture": "System design decisions",
+      "implementation": "Code and progress tracking",
+      "decisions": "Swarm consensus records",
+      "learnings": "Patterns and optimizations",
+      "witness": "Complete action history"
+    }
+  },
+  "evolution": {
+    "daily_standup": "09:00",
+    "midday_review": "12:00",
+    "evening_retro": "18:00",
+    "weekly_evolution": "friday",
+    "auto_improve": true,
+    "learning_rate": 0.1
+  },
+  "metrics": {
+    "velocity": "tasks_per_day",
+    "quality": "test_pass_rate",
+    "integration": "components_connected",
+    "learning": "optimizations_found",
+    "economy": "atp_efficiency"
+  }
+}

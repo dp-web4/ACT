@@ -1,0 +1,128 @@
+{
+  "treasury": 10000,
+  "allocated": 0,
+  "spent": 232,
+  "adp_generated": 81,
+  "recent_transactions": [
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "security-auditor: Add cryptographic validation",
+      "timestamp": 1758055722872
+    },
+    {
+      "type": "spend",
+      "amount": 3,
+      "description": "tester: Complete LCT testing",
+      "timestamp": 1758055721181
+    },
+    {
+      "type": "spend",
+      "amount": 3,
+      "description": "backend-dev: Create society management",
+      "timestamp": 1758055721692
+    },
+    {
+      "type": "spend",
+      "amount": 1,
+      "description": "database-architect: Build ATP wallet",
+      "timestamp": 1758055722233
+    },
+    {
+      "type": "spend",
+      "amount": 1,
+      "description": "coder: Implement ADP generation",
+      "timestamp": 1758055722764
+    },
+    {
+      "type": "spend",
+      "amount": 1,
+      "description": "performance-benchmarker: Create token economics",
+      "timestamp": 1758055723312
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "integration-specialist: Build cross-platform support",
+      "timestamp": 1758055723823
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "api-connector: Complete integration testing",
+      "timestamp": 1758055724339
+    },
+    {
+      "type": "spend",
+      "amount": 10,
+      "description": "Genesis orchestrator activation",
+      "timestamp": 1758055734886
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "backend-dev: Implement ADP generation",
+      "timestamp": 1758055734898
+    },
+    {
+      "type": "spend",
+      "amount": 3,
+      "description": "database-architect: Create token economics",
+      "timestamp": 1758055735447
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "coder: Build cross-platform support",
+      "timestamp": 1758055735958
+    },
+    {
+      "type": "spend",
+      "amount": 3,
+      "description": "performance-benchmarker: Complete integration testing",
+      "timestamp": 1758055736479
+    },
+    {
+      "type": "spend",
+      "amount": 10,
+      "description": "Genesis orchestrator activation",
+      "timestamp": 1758055747029
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "backend-dev: Create token economics",
+      "timestamp": 1758055747043
+    },
+    {
+      "type": "spend",
+      "amount": 3,
+      "description": "database-architect: Build cross-platform support",
+      "timestamp": 1758055747587
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "coder: Complete integration testing",
+      "timestamp": 1758055748130
+    },
+    {
+      "type": "spend",
+      "amount": 10,
+      "description": "Genesis orchestrator activation",
+      "timestamp": 1758055756452
+    },
+    {
+      "type": "spend",
+      "amount": 2,
+      "description": "backend-dev: Complete integration testing",
+      "timestamp": 1758055756466
+    },
+    {
+      "type": "spend",
+      "amount": 10,
+      "description": "Genesis orchestrator activation",
+      "timestamp": 1758055767051
+    }
+  ]
+}
