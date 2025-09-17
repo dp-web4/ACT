@@ -67,7 +67,15 @@ failed to generate openapi spec
 plugin go tool github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2: signal: killed
 ```
 
-**Status:** ❌ UNRESOLVED - Appears to be memory/resource issue
+**Solution Progress:**
+- Installed missing protoc plugins:
+  - `protoc-gen-openapiv2@latest`
+  - `protoc-gen-grpc-gateway@latest`
+  - `protoc-gen-go@latest`
+  - `protoc-gen-go-grpc@latest`
+- Proto generation (`ignite generate proto-go`) now works successfully
+
+**Status:** ⚠️ PARTIALLY RESOLVED - Proto generation works but full serve still causes system instability
 
 ## Current Build Status
 
@@ -77,11 +85,13 @@ plugin go tool github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2: s
 - ✅ All modules compile without errors
 - ✅ Genesis initialization works
 - ✅ Test accounts created
+- ✅ Proto generation works with `ignite generate proto-go`
+- ✅ All protoc plugins installed and working
 
 ### What Doesn't Work:
-- ❌ Full `ignite chain serve` fails on OpenAPI generation
+- ❌ Full `ignite chain serve` causes system instability/crashes
 - ❌ Direct `racecar-webd start` fails with validator issues
-- ❌ Proto generation seems to crash (possibly memory issues)
+- ❌ System becomes unstable during heavy Ignite operations (possible WSL2 memory issue)
 
 ## Next Steps Required
 
@@ -103,6 +113,15 @@ plugin go tool github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2: s
 ## Commands That Work
 
 ```bash
+# Install protoc plugins (required first)
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+# Generate proto files
+ignite generate proto-go
+
 # Build the binary
 ignite chain build --skip-proto
 
@@ -120,6 +139,9 @@ racecar-webd genesis add-genesis-account bob 1000000000stake --keyring-backend t
 # Create validator
 racecar-webd genesis gentx alice 100000000stake --keyring-backend test --chain-id racecarweb
 racecar-webd genesis collect-gentxs
+
+# Set minimum gas price
+sed -i 's/minimum-gas-prices = ""/minimum-gas-prices = "0stake"/' ~/.racecar-web/config/app.toml
 ```
 
 ## Environment Details
