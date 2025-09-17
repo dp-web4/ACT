@@ -6,6 +6,14 @@
 
 ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
 
+## Attribution & Licensing
+
+### Swarm Architecture
+The fractal swarm orchestration system is based on [Claude-Flow](https://github.com/ruvnet/claude-flow) (MIT Licensed), adapted for Web4 compliance and ATP economy tracking.
+
+### Patent Notice
+LCT (Linked Context Token) technology is covered by U.S. Patents 11,477,027 and 12,278,913, owned by Metalinxx Inc. The license to use this technology is granted under the terms of the GNU Affero General Public License v3.0 (AGPL-3.0).
+
 ## Vision
 
 ACT enables humans to:
