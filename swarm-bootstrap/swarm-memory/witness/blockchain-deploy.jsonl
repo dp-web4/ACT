@@ -1,0 +1,18 @@
+{"timestamp":1758088982952,"action":"SWARM_START","name":"Blockchain Build & Deploy Swarm","mission":"Build and deploy working Web4 blockchain with LCT and ATP/ADP"}
+{"timestamp":1758088982956,"action":"BUILD_FIXER_START","queen":"Build-Fixer-Queen"}
+{"timestamp":1758088982967,"action":"REMOVING_DUPLICATE","file":"x/lctmanager/types/types.go"}
+{"timestamp":1758088982979,"action":"REMOVING_DUPLICATE","file":"x/lctmanager/types/lct_web4.go"}
+{"timestamp":1758088982987,"action":"REMOVING_DUPLICATE","file":"x/lctmanager/types/status.go"}
+{"timestamp":1758088982992,"action":"REMOVING_DUPLICATE","file":"x/pairingqueue/keeper/pairingqueue_keeper.go"}
+{"timestamp":1758088982999,"action":"REMOVING_DUPLICATE","file":"x/trusttensor/keeper/trusttensor_keeper.go"}
+{"timestamp":1758088983008,"action":"REMOVING_DUPLICATE","file":"x/energycycle/keeper/energycycle_keeper.go"}
+{"timestamp":1758088983014,"action":"REMOVING_DUPLICATE","file":"x/componentregistry/keeper/componentregistry_keeper.go"}
+{"timestamp":1758088985230,"action":"BUILD_FIXER_COMPLETE","duplicates_removed":7,"files_fixed":224}
+{"timestamp":1758088985234,"action":"ATP_SPENT","amount":500,"description":"Build Fixing","total_spent":500}
+{"timestamp":1758088985242,"action":"BUILDER_START","queen":"Binary-Builder-Queen"}
+{"timestamp":1758088985251,"action":"DOWNLOADING_DEPS"}
+{"timestamp":1758088985645,"action":"TIDYING_MODULES"}
+{"timestamp":1758088986847,"action":"BUILDING_BINARY"}
+{"timestamp":1758088991385,"action":"BUILD_FAILED","error":"Command failed: /home/dp/go/bin/go build -o actd ./cmd/racecar-webd"}
+{"timestamp":1758088991389,"action":"ATP_SPENT","amount":400,"description":"Binary Building","total_spent":900}
+{"timestamp":1758088991398,"action":"SWARM_FAILED","error":"Failed to build binary"}

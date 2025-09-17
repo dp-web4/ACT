@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/suite"
 	"github.com/stretchr/testify/require"
 	
-	lctTypes "racecarweb/x/lctmanager/types"
-	mrhTypes "racecarweb/x/mrh/types"
-	mrhKeeper "racecarweb/x/mrh/keeper"
+	lctTypes "racecar-web/x/lctmanager/types"
+	mrhTypes "racecar-web/x/mrh/types"
+	mrhKeeper "racecar-web/x/mrh/keeper"
 )
 
 // Phase1TestSuite tests Phase 1 Web4 implementation

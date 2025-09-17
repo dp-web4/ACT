@@ -1,26 +1,22 @@
 package types
 
 import (
-	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/msgservice"
+  "github.com/cosmos/cosmos-sdk/codec"
+  cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+  sdk "github.com/cosmos/cosmos-sdk/types"
+  "github.com/cosmos/cosmos-sdk/types/msgservice"
 )
 
-func RegisterInterfaces(registrar codectypes.InterfaceRegistry) {
-	registrar.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgRevokePairing{},
-	)
+func RegisterCodec(cdc *codec.LegacyAmino) {}
 
-	registrar.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgCompletePairing{},
-	)
+func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
+  registry.RegisterImplementations((*sdk.Msg)(nil),
+    &MsgUpdateParams{},
+  )
 
-	registrar.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgInitiateBidirectionalPairing{},
-	)
-
-	registrar.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgUpdateParams{},
-	)
-	msgservice.RegisterMsgServiceDesc(registrar, &_Msg_serviceDesc)
+  msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }
+
+var (
+  ModuleCdc = codec.NewProtoCodec(cdctypes.NewInterfaceRegistry())
+)

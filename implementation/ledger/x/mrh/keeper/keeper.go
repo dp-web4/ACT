@@ -10,7 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	
-	"racecarweb/x/mrh/types"
+	"racecar-web/x/mrh/types"
 )
 
 // Keeper maintains the MRH module state

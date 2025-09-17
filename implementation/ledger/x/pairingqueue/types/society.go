@@ -1,6 +1,8 @@
 package types
 
-import sdk "github.com/cosmos/cosmos-sdk/types"
+import (
+    "cosmossdk.io/math"
+)
 
 // Society membership for Web4 ACT
 type SocietyMembership struct {
@@ -10,7 +12,7 @@ type SocietyMembership struct {
     Rights        []string `json:"rights"`
     Responsibilities []string `json:"responsibilities"`
     JoinedAt      int64    `json:"joined_at"`
-    ATP_Allocated sdk.Int  `json:"atp_allocated"`
+    ATP_Allocated math.Int  `json:"atp_allocated"`
 }
 
 // Birth certificate for new entities

@@ -1,0 +1,16 @@
+{"timestamp":1758089480697,"action":"SWARM_START","name":"Veracity-Aware Blockchain Swarm","mission":"Build blockchain with verified functionality only"}
+{"timestamp":1758089480703,"action":"TRUTH_SEEKER_START","queen":"Truth-Seeker-Queen"}
+{"timestamp":1758089482418,"action":"TRUTH_REPORT","veracityScore":0.2413793103448276,"verified":7,"failed":22}
+{"timestamp":1758089482423,"action":"ATP_SPENT","amount":300,"description":"Truth Seeking","total_spent":300}
+{"timestamp":1758089482430,"action":"TYPE_CREATOR_START","queen":"Type-Creator-Queen"}
+{"timestamp":1758089482443,"action":"FILE_CREATED","file":"energy_types.go"}
+{"timestamp":1758089482455,"action":"FILE_CREATED","file":"trust_types.go"}
+{"timestamp":1758089482475,"action":"FILE_UPDATED","file":"lct.go","added":"tensor fields"}
+{"timestamp":1758089482480,"action":"TYPES_CREATED","created":["EnergyPool","ATPToken","ADPToken","R6Action","TrustRecord","T3Tensor","V3Tensor","Outcome","LCT.T3Tensor","LCT.V3Tensor"]}
+{"timestamp":1758089482490,"action":"ATP_SPENT","amount":500,"description":"Type Creation","total_spent":800}
+{"timestamp":1758089482497,"action":"BUILD_START","queen":"Build-Queen"}
+{"timestamp":1758089482508,"action":"TIDYING_MODULES"}
+{"timestamp":1758089483622,"action":"BUILDING_BINARY"}
+{"timestamp":1758089489164,"action":"BUILD_FAILED","error":"Command failed: /home/dp/go/bin/go build -o actd ./cmd/racecar-webd"}
+{"timestamp":1758089489169,"action":"ATP_SPENT","amount":400,"description":"Building","total_spent":1200}
+{"timestamp":1758089489180,"action":"SWARM_FAILED","error":"Build failed: Command failed: /home/dp/go/bin/go build -o actd ./cmd/racecar-webd"}

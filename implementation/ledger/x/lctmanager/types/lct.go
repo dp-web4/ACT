@@ -1,6 +1,9 @@
 package types
 
-import sdk "github.com/cosmos/cosmos-sdk/types"
+import (
+  trusttypes "racecar-web/x/trusttensor/types"
+    "cosmossdk.io/math"
+)
 
 // Web4 Compliant LCT (Linked Context Token)
 type LCT struct {
@@ -11,6 +14,9 @@ type LCT struct {
     BirthCertificate *BirthCertificate `json:"birth_certificate,omitempty"`
     CreatedAt        int64         `json:"created_at"`
     UpdatedAt        int64         `json:"updated_at"`
+
+    T3Tensor         *trusttypes.T3Tensor `json:"t3_tensor,omitempty"`
+    V3Tensor         *trusttypes.V3Tensor `json:"v3_tensor,omitempty"`
 }
 
 // Cryptographic Identity for Web4
@@ -32,6 +38,6 @@ type BirthCertificate struct {
     Society          string   `json:"society"`
     Rights           []string `json:"rights"`
     Responsibilities []string `json:"responsibilities"`
-    InitialATP       sdk.Int  `json:"initial_atp"`
+    InitialATP       math.Int  `json:"initial_atp"`
     IssuedAt         int64    `json:"issued_at"`
 }

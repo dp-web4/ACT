@@ -8,7 +8,7 @@ import (
 	
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	
-	"racecarweb/x/mrh/types"
+	"racecar-web/x/mrh/types"
 )
 
 // AddWitnessRelationship records a witness relationship between LCTs
