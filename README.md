@@ -12,6 +12,16 @@
 
 ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
 
+### Web4 Society Integration
+
+ACT implements the foundational Web4 Society concept, where all entities (humans, agents, services) are citizens of self-governing digital societies. Each society maintains:
+- **Laws**: Codified governance rules that all citizens must follow
+- **Ledger**: Immutable record of all society events and citizen actions
+- **Treasury**: Society-managed ATP/ADP token pools (tokens belong to society, not individuals)
+- **Citizenship**: Witnessed relationships between entities and their societies
+
+For complete Web4 specifications, see: [github.com/dp-web4/web4](https://github.com/dp-web4/web4)
+
 ## Attribution & Licensing
 
 ### Swarm Architecture
@@ -64,12 +74,13 @@ Complete Agentic Context Protocol:
 - Result recording and witnessing
 
 ### 3. Demo Society
-Minimal viable society providing:
-- LCT issuance and management
-- Law Oracle with basic rules
-- ATP/ADP token pool
-- Witness network
-- Immutable ledger
+Minimal viable Web4 society implementing:
+- **Society LCT**: The society's own identity token
+- **Law Oracle**: Starting with "all decisions unanimous"
+- **Society Treasury**: ATP/ADP pool owned by society (not individuals)
+- **Citizenship Records**: Witnessed relationships on immutable ledger
+- **Ledger Type**: Confined (citizens-only access) initially
+- **Fractal Ready**: Can become citizen of larger societies
 
 ### 4. MCP Bridges
 Connectors to existing MCP servers:
