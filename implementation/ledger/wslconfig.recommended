@@ -1,0 +1,27 @@
+# Recommended .wslconfig for ACT Blockchain Development
+# Save this file as: C:\Users\[YourUsername]\.wslconfig
+# Then restart WSL with: wsl --shutdown
+
+[wsl2]
+# Increase memory for Ignite operations
+memory=12GB
+
+# Limit CPU to prevent system lockup
+processors=8
+
+# Increase swap for memory pressure situations
+swap=8GB
+
+# Enable localhost forwarding for blockchain API
+localhostForwarding=true
+
+# Optional performance optimizations
+pageReporting=false      # Reduce memory reclaim overhead
+guiApplications=false     # Save memory if GUI not needed
+nestedVirtualization=false # Not needed for blockchain
+
+# After saving this file:
+# 1. Run in PowerShell: wsl --shutdown
+# 2. Wait a few seconds
+# 3. Restart your WSL terminal
+# 4. Verify with: free -h (should show ~12GB total memory)
