@@ -3,8 +3,8 @@ package energycycle
 import (
     sdk "github.com/cosmos/cosmos-sdk/types"
     sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-    "github.com/dp-web4/act/x/energycycle/keeper"
-    "github.com/dp-web4/act/x/energycycle/types"
+    "racecar-web/x/energycycle/keeper"
+    "racecar-web/x/energycycle/types"
 )
 
 // NewHandler returns a handler for energycycle messages

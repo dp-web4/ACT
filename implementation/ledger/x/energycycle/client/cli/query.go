@@ -5,7 +5,7 @@ import (
     "github.com/cosmos/cosmos-sdk/client"
     "github.com/cosmos/cosmos-sdk/client/flags"
     "github.com/spf13/cobra"
-    "github.com/dp-web4/act/x/energycycle/types"
+    "racecar-web/x/energycycle/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module

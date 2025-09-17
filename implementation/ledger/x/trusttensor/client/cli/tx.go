@@ -5,7 +5,7 @@ import (
     "github.com/cosmos/cosmos-sdk/client/flags"
     "github.com/cosmos/cosmos-sdk/client/tx"
     "github.com/spf13/cobra"
-    "github.com/dp-web4/act/x/trusttensor/types"
+    "racecar-web/x/trusttensor/types"
 )
 
 // GetTxCmd returns the transaction commands for this module

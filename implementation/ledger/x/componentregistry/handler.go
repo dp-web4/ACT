@@ -3,8 +3,8 @@ package componentregistry
 import (
     sdk "github.com/cosmos/cosmos-sdk/types"
     sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-    "github.com/dp-web4/act/x/componentregistry/keeper"
-    "github.com/dp-web4/act/x/componentregistry/types"
+    "racecar-web/x/componentregistry/keeper"
+    "racecar-web/x/componentregistry/types"
 )
 
 // NewHandler returns a handler for componentregistry messages

@@ -3,8 +3,8 @@ package pairingqueue
 import (
     sdk "github.com/cosmos/cosmos-sdk/types"
     sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-    "github.com/dp-web4/act/x/pairingqueue/keeper"
-    "github.com/dp-web4/act/x/pairingqueue/types"
+    "racecar-web/x/pairingqueue/keeper"
+    "racecar-web/x/pairingqueue/types"
 )
 
 // NewHandler returns a handler for pairingqueue messages

@@ -3,7 +3,7 @@ package keeper
 import (
     "fmt"
     sdk "github.com/cosmos/cosmos-sdk/types"
-    "github.com/dp-web4/act/x/pairingqueue/types"
+    "racecar-web/x/pairingqueue/types"
 )
 
 // Keeper maintains state for pairingqueue

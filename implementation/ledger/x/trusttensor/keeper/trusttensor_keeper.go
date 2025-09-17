@@ -3,7 +3,7 @@ package keeper
 import (
     "fmt"
     sdk "github.com/cosmos/cosmos-sdk/types"
-    "github.com/dp-web4/act/x/trusttensor/types"
+    "racecar-web/x/trusttensor/types"
 )
 
 // Keeper maintains state for trusttensor

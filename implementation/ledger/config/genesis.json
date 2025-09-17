@@ -1,0 +1,79 @@
+{
+  "app_name": "act",
+  "app_version": "0.1.0",
+  "genesis_time": "2025-09-17T05:40:26.262Z",
+  "chain_id": "act-testnet-1",
+  "initial_height": "1",
+  "consensus_params": {
+    "block": {
+      "max_bytes": "22020096",
+      "max_gas": "-1"
+    }
+  },
+  "app_state": {
+    "lctmanager": {
+      "params": {},
+      "lctList": [
+        {
+          "id": "lct:genesis:orchestrator",
+          "entity_type": "GENESIS",
+          "identity": {
+            "ed25519_pub_key": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+          },
+          "birth_certificate": {
+            "timestamp": 1758087626262,
+            "entity_type": "GENESIS",
+            "genesis_block": 1
+          },
+          "t3_tensor": {
+            "talent": 1,
+            "training": 1,
+            "temperament": 1
+          },
+          "v3_tensor": {
+            "veracity": 1,
+            "validity": 1,
+            "value": 1
+          }
+        }
+      ]
+    },
+    "trusttensor": {
+      "params": {},
+      "trustRecordList": []
+    },
+    "energycycle": {
+      "params": {
+        "velocity_requirement": "0.1",
+        "demurrage_rate": "0.001"
+      },
+      "energyPoolList": [
+        {
+          "id": "default",
+          "atp_balance": "10000",
+          "adp_balance": "0",
+          "velocity_requirement": "0.1",
+          "demurrage_rate": "0.001"
+        }
+      ]
+    },
+    "componentregistry": {
+      "params": {},
+      "componentList": []
+    },
+    "pairingqueue": {
+      "params": {},
+      "societyList": [
+        {
+          "id": "genesis-society",
+          "name": "Genesis Society",
+          "law_oracle": "lct:genesis:orchestrator",
+          "members": [
+            "lct:genesis:orchestrator"
+          ],
+          "atp_pool": "default"
+        }
+      ]
+    }
+  }
+}

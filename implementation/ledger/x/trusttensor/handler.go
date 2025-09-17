@@ -3,8 +3,8 @@ package trusttensor
 import (
     sdk "github.com/cosmos/cosmos-sdk/types"
     sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-    "github.com/dp-web4/act/x/trusttensor/keeper"
-    "github.com/dp-web4/act/x/trusttensor/types"
+    "racecar-web/x/trusttensor/keeper"
+    "racecar-web/x/trusttensor/types"
 )
 
 // NewHandler returns a handler for trusttensor messages

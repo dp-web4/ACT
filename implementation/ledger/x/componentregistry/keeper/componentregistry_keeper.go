@@ -3,7 +3,7 @@ package keeper
 import (
     "fmt"
     sdk "github.com/cosmos/cosmos-sdk/types"
-    "github.com/dp-web4/act/x/componentregistry/types"
+    "racecar-web/x/componentregistry/types"
 )
 
 // Keeper maintains state for componentregistry

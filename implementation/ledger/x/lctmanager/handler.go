@@ -3,8 +3,8 @@ package lctmanager
 import (
     sdk "github.com/cosmos/cosmos-sdk/types"
     sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-    "github.com/dp-web4/act/x/lctmanager/keeper"
-    "github.com/dp-web4/act/x/lctmanager/types"
+    "racecar-web/x/lctmanager/keeper"
+    "racecar-web/x/lctmanager/types"
 )
 
 // NewHandler returns a handler for lctmanager messages
