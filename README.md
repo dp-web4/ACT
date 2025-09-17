@@ -1,5 +1,7 @@
 # ACT - Agentic Context Tool
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 ## Overview
 
 ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
