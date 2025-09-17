@@ -44,6 +44,98 @@ func (ms msgServer) UpdateParams(ctx context.Context, msg *types.MsgUpdateParams
 	return &types.MsgUpdateParamsResponse{}, nil
 }
 
+// MintLCT implements the Msg/MintLCT RPC method for creating new Linked Context Tokens.
+func (ms msgServer) MintLCT(ctx context.Context, msg *types.MsgMintLCT) (*types.MsgMintLCTResponse, error) {
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, errors.Wrapf(types.ErrInvalidSigner, "invalid creator address: %s", err)
+	}
+
+	// Validate entity type
+	validTypes := map[string]bool{
+		"agent":   true,
+		"human":   true,
+		"device":  true,
+		"service": true,
+		"swarm":   true,
+	}
+	if !validTypes[msg.EntityType] {
+		return nil, errors.Wrapf(types.ErrInvalidRequest, "invalid entity type: %s", msg.EntityType)
+	}
+
+	// Generate unique LCT ID
+	lctId := fmt.Sprintf("lct-%s-%s-%d", msg.EntityType, msg.EntityName, time.Now().UnixNano())
+
+	// Prevent duplicate LCTs
+	if _, found := ms.Keeper.GetLinkedContextToken(ctx, lctId); found {
+		return nil, errors.Wrapf(types.ErrLctExists, "LCT already exists: %s", lctId)
+	}
+
+	// Create entity address (derived from LCT ID for uniqueness)
+	hash := sha256.Sum256([]byte(lctId))
+	entityAddress := sdk.AccAddress(hash[:20]).String()
+
+	// Parse initial ADP amount (default to "1000" if empty)
+	adpAmount := msg.InitialAdpAmount
+	if adpAmount == "" {
+		adpAmount = "1000"
+	}
+
+	// Create LCT struct for the entity
+	lct := types.LinkedContextToken{
+		LctId:              lctId,
+		ComponentAId:       msg.EntityName,
+		ComponentBId:       msg.EntityType,
+		PairingStatus:      "active",
+		CreatedAt:          time.Now().Unix(),
+		UpdatedAt:          time.Now().Unix(),
+		TrustAnchor:        creator.String(),
+		OperationalContext: fmt.Sprintf("%s:%s", msg.EntityType, msg.EntityName),
+		ProxyComponentId:   "", // No proxy for direct entities
+		LctKeyHalf:         "", // Key management handled off-chain
+		LastContactAt:      time.Now().Unix(),
+		AuthorizationRules: "{}", // Default empty rules
+	}
+
+	// Store metadata if provided
+	if len(msg.Metadata) > 0 {
+		metadataStr := "{"
+		for k, v := range msg.Metadata {
+			metadataStr += fmt.Sprintf(`"%s":"%s",`, k, v)
+		}
+		metadataStr = metadataStr[:len(metadataStr)-1] + "}"
+		lct.AuthorizationRules = metadataStr
+	}
+
+	// Store the LCT
+	if err := ms.Keeper.SetLinkedContextToken(ctx, lct); err != nil {
+		return nil, err
+	}
+
+	// TODO: Initialize T3/V3 tensors when trusttensor module is ready
+	// TODO: Allocate initial ADP tokens when energycycle module is ready
+
+	// Emit event
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+	sdkCtx.EventManager().EmitEvent(
+		sdk.NewEvent("lct_minted",
+			sdk.NewAttribute("lct_id", lctId),
+			sdk.NewAttribute("entity_name", msg.EntityName),
+			sdk.NewAttribute("entity_type", msg.EntityType),
+			sdk.NewAttribute("entity_address", entityAddress),
+			sdk.NewAttribute("adp_balance", adpAmount),
+			sdk.NewAttribute("creator", creator.String()),
+		),
+	)
+
+	return &types.MsgMintLCTResponse{
+		LctId:         lctId,
+		EntityAddress: entityAddress,
+		AdpBalance:    adpAmount,
+		Status:        "minted",
+	}, nil
+}
+
 // CreateLctRelationship implements the Msg/CreateLctRelationship RPC method.
 func (ms msgServer) CreateLctRelationship(ctx context.Context, msg *types.MsgCreateLctRelationship) (*types.MsgCreateLctRelationshipResponse, error) {
 	creator, err := sdk.AccAddressFromBech32(msg.Creator)

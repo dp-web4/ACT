@@ -124,6 +124,298 @@ func (m *MsgUpdateParamsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgUpdateParamsResponse proto.InternalMessageInfo
 
+// MsgDischargeATP defines the message for discharging ATP to ADP.
+type MsgDischargeATP struct {
+	Creator         string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	LctId           string `protobuf:"bytes,2,opt,name=lct_id,json=lctId,proto3" json:"lct_id,omitempty"`
+	Amount          string `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	WorkDescription string `protobuf:"bytes,4,opt,name=work_description,json=workDescription,proto3" json:"work_description,omitempty"`
+	TargetLct       string `protobuf:"bytes,5,opt,name=target_lct,json=targetLct,proto3" json:"target_lct,omitempty"`
+}
+
+func (m *MsgDischargeATP) Reset()         { *m = MsgDischargeATP{} }
+func (m *MsgDischargeATP) String() string { return proto.CompactTextString(m) }
+func (*MsgDischargeATP) ProtoMessage()    {}
+func (*MsgDischargeATP) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a8d02ba67591d698, []int{2}
+}
+func (m *MsgDischargeATP) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDischargeATP) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDischargeATP.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDischargeATP) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDischargeATP.Merge(m, src)
+}
+func (m *MsgDischargeATP) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDischargeATP) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDischargeATP.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDischargeATP proto.InternalMessageInfo
+
+func (m *MsgDischargeATP) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgDischargeATP) GetLctId() string {
+	if m != nil {
+		return m.LctId
+	}
+	return ""
+}
+
+func (m *MsgDischargeATP) GetAmount() string {
+	if m != nil {
+		return m.Amount
+	}
+	return ""
+}
+
+func (m *MsgDischargeATP) GetWorkDescription() string {
+	if m != nil {
+		return m.WorkDescription
+	}
+	return ""
+}
+
+func (m *MsgDischargeATP) GetTargetLct() string {
+	if m != nil {
+		return m.TargetLct
+	}
+	return ""
+}
+
+// MsgDischargeATPResponse defines the response for MsgDischargeATP.
+type MsgDischargeATPResponse struct {
+	EnergyReleased string `protobuf:"bytes,1,opt,name=energy_released,json=energyReleased,proto3" json:"energy_released,omitempty"`
+	AdpCreated     string `protobuf:"bytes,2,opt,name=adp_created,json=adpCreated,proto3" json:"adp_created,omitempty"`
+	WorkId         string `protobuf:"bytes,3,opt,name=work_id,json=workId,proto3" json:"work_id,omitempty"`
+	RemainingAtp   string `protobuf:"bytes,4,opt,name=remaining_atp,json=remainingAtp,proto3" json:"remaining_atp,omitempty"`
+}
+
+func (m *MsgDischargeATPResponse) Reset()         { *m = MsgDischargeATPResponse{} }
+func (m *MsgDischargeATPResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDischargeATPResponse) ProtoMessage()    {}
+func (*MsgDischargeATPResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a8d02ba67591d698, []int{3}
+}
+func (m *MsgDischargeATPResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDischargeATPResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDischargeATPResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDischargeATPResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDischargeATPResponse.Merge(m, src)
+}
+func (m *MsgDischargeATPResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDischargeATPResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDischargeATPResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDischargeATPResponse proto.InternalMessageInfo
+
+func (m *MsgDischargeATPResponse) GetEnergyReleased() string {
+	if m != nil {
+		return m.EnergyReleased
+	}
+	return ""
+}
+
+func (m *MsgDischargeATPResponse) GetAdpCreated() string {
+	if m != nil {
+		return m.AdpCreated
+	}
+	return ""
+}
+
+func (m *MsgDischargeATPResponse) GetWorkId() string {
+	if m != nil {
+		return m.WorkId
+	}
+	return ""
+}
+
+func (m *MsgDischargeATPResponse) GetRemainingAtp() string {
+	if m != nil {
+		return m.RemainingAtp
+	}
+	return ""
+}
+
+// MsgRechargeADP defines the message for recharging ADP to ATP.
+type MsgRechargeADP struct {
+	Creator         string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	LctId           string `protobuf:"bytes,2,opt,name=lct_id,json=lctId,proto3" json:"lct_id,omitempty"`
+	Amount          string `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	EnergySource    string `protobuf:"bytes,4,opt,name=energy_source,json=energySource,proto3" json:"energy_source,omitempty"`
+	ValidationProof string `protobuf:"bytes,5,opt,name=validation_proof,json=validationProof,proto3" json:"validation_proof,omitempty"`
+}
+
+func (m *MsgRechargeADP) Reset()         { *m = MsgRechargeADP{} }
+func (m *MsgRechargeADP) String() string { return proto.CompactTextString(m) }
+func (*MsgRechargeADP) ProtoMessage()    {}
+func (*MsgRechargeADP) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a8d02ba67591d698, []int{4}
+}
+func (m *MsgRechargeADP) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgRechargeADP) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgRechargeADP.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgRechargeADP) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgRechargeADP.Merge(m, src)
+}
+func (m *MsgRechargeADP) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgRechargeADP) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgRechargeADP.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgRechargeADP proto.InternalMessageInfo
+
+func (m *MsgRechargeADP) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgRechargeADP) GetLctId() string {
+	if m != nil {
+		return m.LctId
+	}
+	return ""
+}
+
+func (m *MsgRechargeADP) GetAmount() string {
+	if m != nil {
+		return m.Amount
+	}
+	return ""
+}
+
+func (m *MsgRechargeADP) GetEnergySource() string {
+	if m != nil {
+		return m.EnergySource
+	}
+	return ""
+}
+
+func (m *MsgRechargeADP) GetValidationProof() string {
+	if m != nil {
+		return m.ValidationProof
+	}
+	return ""
+}
+
+// MsgRechargeADPResponse defines the response for MsgRechargeADP.
+type MsgRechargeADPResponse struct {
+	AtpCreated     string `protobuf:"bytes,1,opt,name=atp_created,json=atpCreated,proto3" json:"atp_created,omitempty"`
+	EnergyConsumed string `protobuf:"bytes,2,opt,name=energy_consumed,json=energyConsumed,proto3" json:"energy_consumed,omitempty"`
+	RemainingAdp   string `protobuf:"bytes,3,opt,name=remaining_adp,json=remainingAdp,proto3" json:"remaining_adp,omitempty"`
+	NewAtpBalance  string `protobuf:"bytes,4,opt,name=new_atp_balance,json=newAtpBalance,proto3" json:"new_atp_balance,omitempty"`
+}
+
+func (m *MsgRechargeADPResponse) Reset()         { *m = MsgRechargeADPResponse{} }
+func (m *MsgRechargeADPResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgRechargeADPResponse) ProtoMessage()    {}
+func (*MsgRechargeADPResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a8d02ba67591d698, []int{5}
+}
+func (m *MsgRechargeADPResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgRechargeADPResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgRechargeADPResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgRechargeADPResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgRechargeADPResponse.Merge(m, src)
+}
+func (m *MsgRechargeADPResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgRechargeADPResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgRechargeADPResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgRechargeADPResponse proto.InternalMessageInfo
+
+func (m *MsgRechargeADPResponse) GetAtpCreated() string {
+	if m != nil {
+		return m.AtpCreated
+	}
+	return ""
+}
+
+func (m *MsgRechargeADPResponse) GetEnergyConsumed() string {
+	if m != nil {
+		return m.EnergyConsumed
+	}
+	return ""
+}
+
+func (m *MsgRechargeADPResponse) GetRemainingAdp() string {
+	if m != nil {
+		return m.RemainingAdp
+	}
+	return ""
+}
+
+func (m *MsgRechargeADPResponse) GetNewAtpBalance() string {
+	if m != nil {
+		return m.NewAtpBalance
+	}
+	return ""
+}
+
 // MsgCreateRelationshipEnergyOperation defines the MsgCreateRelationshipEnergyOperation message.
 type MsgCreateRelationshipEnergyOperation struct {
 	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
@@ -137,7 +429,7 @@ func (m *MsgCreateRelationshipEnergyOperation) Reset()         { *m = MsgCreateR
 func (m *MsgCreateRelationshipEnergyOperation) String() string { return proto.CompactTextString(m) }
 func (*MsgCreateRelationshipEnergyOperation) ProtoMessage()    {}
 func (*MsgCreateRelationshipEnergyOperation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a8d02ba67591d698, []int{2}
+	return fileDescriptor_a8d02ba67591d698, []int{6}
 }
 func (m *MsgCreateRelationshipEnergyOperation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -216,7 +508,7 @@ func (m *MsgCreateRelationshipEnergyOperationResponse) String() string {
 }
 func (*MsgCreateRelationshipEnergyOperationResponse) ProtoMessage() {}
 func (*MsgCreateRelationshipEnergyOperationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a8d02ba67591d698, []int{3}
+	return fileDescriptor_a8d02ba67591d698, []int{7}
 }
 func (m *MsgCreateRelationshipEnergyOperationResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -277,7 +569,7 @@ func (m *MsgExecuteEnergyTransfer) Reset()         { *m = MsgExecuteEnergyTransf
 func (m *MsgExecuteEnergyTransfer) String() string { return proto.CompactTextString(m) }
 func (*MsgExecuteEnergyTransfer) ProtoMessage()    {}
 func (*MsgExecuteEnergyTransfer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a8d02ba67591d698, []int{4}
+	return fileDescriptor_a8d02ba67591d698, []int{8}
 }
 func (m *MsgExecuteEnergyTransfer) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -335,7 +627,7 @@ func (m *MsgExecuteEnergyTransferResponse) Reset()         { *m = MsgExecuteEner
 func (m *MsgExecuteEnergyTransferResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgExecuteEnergyTransferResponse) ProtoMessage()    {}
 func (*MsgExecuteEnergyTransferResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a8d02ba67591d698, []int{5}
+	return fileDescriptor_a8d02ba67591d698, []int{9}
 }
 func (m *MsgExecuteEnergyTransferResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -377,7 +669,7 @@ func (m *MsgValidateRelationshipValue) Reset()         { *m = MsgValidateRelatio
 func (m *MsgValidateRelationshipValue) String() string { return proto.CompactTextString(m) }
 func (*MsgValidateRelationshipValue) ProtoMessage()    {}
 func (*MsgValidateRelationshipValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a8d02ba67591d698, []int{6}
+	return fileDescriptor_a8d02ba67591d698, []int{10}
 }
 func (m *MsgValidateRelationshipValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -451,7 +743,7 @@ func (m *MsgValidateRelationshipValueResponse) Reset()         { *m = MsgValidat
 func (m *MsgValidateRelationshipValueResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgValidateRelationshipValueResponse) ProtoMessage()    {}
 func (*MsgValidateRelationshipValueResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a8d02ba67591d698, []int{7}
+	return fileDescriptor_a8d02ba67591d698, []int{11}
 }
 func (m *MsgValidateRelationshipValueResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -497,6 +789,10 @@ func (m *MsgValidateRelationshipValueResponse) GetAdpTokens() string {
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "racecarweb.energycycle.v1.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "racecarweb.energycycle.v1.MsgUpdateParamsResponse")
+	proto.RegisterType((*MsgDischargeATP)(nil), "racecarweb.energycycle.v1.MsgDischargeATP")
+	proto.RegisterType((*MsgDischargeATPResponse)(nil), "racecarweb.energycycle.v1.MsgDischargeATPResponse")
+	proto.RegisterType((*MsgRechargeADP)(nil), "racecarweb.energycycle.v1.MsgRechargeADP")
+	proto.RegisterType((*MsgRechargeADPResponse)(nil), "racecarweb.energycycle.v1.MsgRechargeADPResponse")
 	proto.RegisterType((*MsgCreateRelationshipEnergyOperation)(nil), "racecarweb.energycycle.v1.MsgCreateRelationshipEnergyOperation")
 	proto.RegisterType((*MsgCreateRelationshipEnergyOperationResponse)(nil), "racecarweb.energycycle.v1.MsgCreateRelationshipEnergyOperationResponse")
 	proto.RegisterType((*MsgExecuteEnergyTransfer)(nil), "racecarweb.energycycle.v1.MsgExecuteEnergyTransfer")
@@ -510,55 +806,73 @@ func init() {
 }
 
 var fileDescriptor_a8d02ba67591d698 = []byte{
-	// 765 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x55, 0xcd, 0x4f, 0x13, 0x4f,
-	0x18, 0xee, 0xf2, 0xf9, 0xeb, 0xd0, 0x42, 0x7e, 0x2b, 0x86, 0x76, 0xa3, 0x05, 0x8a, 0x1f, 0xa4,
-	0x91, 0x36, 0xb4, 0x89, 0x46, 0x38, 0x10, 0xbe, 0x62, 0x4c, 0x6c, 0x34, 0x0b, 0x72, 0xf0, 0xb2,
-	0x19, 0x76, 0xc7, 0x65, 0x63, 0xbb, 0xb3, 0x99, 0x99, 0xad, 0xed, 0xcd, 0x70, 0xd3, 0x93, 0x17,
-	0x0f, 0xde, 0x3d, 0x78, 0x31, 0xe1, 0xe0, 0x1f, 0xc1, 0xc1, 0x03, 0xf1, 0xe4, 0xc9, 0x18, 0x38,
-	0x70, 0xf7, 0x2f, 0x30, 0xf3, 0xb1, 0x5b, 0x28, 0xb4, 0x10, 0x8c, 0x97, 0xa6, 0xfb, 0xbc, 0x5f,
-	0xcf, 0xf3, 0xce, 0x3b, 0xef, 0x80, 0x3c, 0x81, 0x36, 0xb2, 0x21, 0x79, 0x8d, 0xb6, 0x4b, 0xc8,
-	0x47, 0xc4, 0x6d, 0xd9, 0x2d, 0xbb, 0x86, 0x4a, 0x8d, 0xf9, 0x12, 0x6b, 0x16, 0x03, 0x82, 0x19,
-	0xd6, 0xb3, 0x6d, 0x9f, 0xe2, 0x09, 0x9f, 0x62, 0x63, 0xde, 0xf8, 0x1f, 0xd6, 0x3d, 0x1f, 0x97,
-	0xc4, 0xaf, 0xf4, 0x36, 0x26, 0x6c, 0x4c, 0xeb, 0x98, 0x96, 0xea, 0xd4, 0xe5, 0x59, 0xea, 0xd4,
-	0x55, 0x86, 0xac, 0x34, 0x58, 0xe2, 0xab, 0x24, 0x3f, 0x94, 0x69, 0xdc, 0xc5, 0x2e, 0x96, 0x38,
-	0xff, 0xa7, 0xd0, 0x3b, 0xdd, 0xb9, 0x05, 0x90, 0xc0, 0xba, 0x8a, 0xce, 0x7f, 0xd3, 0xc0, 0x58,
-	0x95, 0xba, 0xcf, 0x03, 0x07, 0x32, 0xf4, 0x4c, 0x58, 0xf4, 0xfb, 0x20, 0x09, 0x43, 0xb6, 0x83,
-	0x89, 0xc7, 0x5a, 0x19, 0x6d, 0x4a, 0x9b, 0x4d, 0xae, 0x64, 0xbe, 0x7f, 0x9d, 0x1b, 0x57, 0x65,
-	0x97, 0x1d, 0x87, 0x20, 0x4a, 0x37, 0x18, 0xf1, 0x7c, 0xd7, 0x6c, 0xbb, 0xea, 0x6b, 0x60, 0x48,
-	0xe6, 0xce, 0xf4, 0x4d, 0x69, 0xb3, 0x23, 0xe5, 0xe9, 0x62, 0x57, 0xf1, 0x45, 0x59, 0x6a, 0x25,
-	0xb9, 0xff, 0x73, 0x32, 0xf1, 0xf9, 0x78, 0xaf, 0xa0, 0x99, 0x2a, 0x76, 0x61, 0x71, 0xf7, 0x78,
-	0xaf, 0xd0, 0xce, 0xfa, 0xee, 0x78, 0xaf, 0x30, 0x7b, 0x42, 0x4c, 0xf3, 0x94, 0x9c, 0x0e, 0xea,
-	0xf9, 0x2c, 0x98, 0xe8, 0x80, 0x4c, 0x44, 0x03, 0xec, 0x53, 0x94, 0xff, 0xad, 0x81, 0x5b, 0x55,
-	0xea, 0xae, 0x12, 0x04, 0x19, 0x32, 0x51, 0x0d, 0x32, 0x0f, 0xfb, 0x74, 0xc7, 0x0b, 0xd6, 0x45,
-	0xbe, 0xa7, 0x01, 0x22, 0x02, 0xd2, 0xcb, 0x60, 0xd8, 0xe6, 0x4e, 0x98, 0x5c, 0x28, 0x3e, 0x72,
-	0xd4, 0x6f, 0x02, 0x40, 0x71, 0x48, 0x6c, 0x64, 0xd5, 0x6c, 0x26, 0xe4, 0x27, 0xcd, 0xa4, 0x44,
-	0x9e, 0xd8, 0x8c, 0x9b, 0x19, 0x24, 0x2e, 0x62, 0xc2, 0xdc, 0x2f, 0xcd, 0x12, 0xe1, 0xe6, 0x19,
-	0x90, 0x96, 0xa2, 0x2c, 0x58, 0xc7, 0xa1, 0xcf, 0x32, 0x03, 0xc2, 0x23, 0x25, 0xc1, 0x65, 0x81,
-	0xe9, 0xb7, 0xc1, 0x28, 0x8e, 0x38, 0x5a, 0xac, 0x15, 0xa0, 0xcc, 0xa0, 0xf0, 0x4a, 0xc7, 0xe8,
-	0x66, 0x2b, 0x40, 0x0b, 0x29, 0xde, 0xbe, 0x88, 0x57, 0xfe, 0xa3, 0x06, 0xee, 0x5d, 0x46, 0x74,
-	0xd4, 0x25, 0x7d, 0x1a, 0xa4, 0xda, 0x55, 0x3c, 0x47, 0x76, 0xc0, 0x1c, 0x89, 0xb1, 0xc7, 0x0e,
-	0x17, 0x03, 0x59, 0x60, 0x31, 0xfc, 0x0a, 0xf9, 0x34, 0xd2, 0x0a, 0x59, 0xb0, 0x29, 0x00, 0xfd,
-	0x2e, 0x18, 0x63, 0x24, 0xa4, 0xcc, 0x6a, 0xc0, 0x9a, 0xc7, 0xcf, 0xc1, 0x11, 0x82, 0xff, 0x33,
-	0x47, 0x05, 0xbc, 0x15, 0xa1, 0xf9, 0x4f, 0x1a, 0xc8, 0x54, 0xa9, 0xbb, 0xde, 0x44, 0x76, 0xc8,
-	0x90, 0x24, 0xb4, 0x49, 0xa0, 0x4f, 0x5f, 0x22, 0x72, 0xa5, 0x43, 0xe8, 0xe4, 0xde, 0x77, 0x96,
-	0xfb, 0x0c, 0x48, 0x33, 0x55, 0xc2, 0x72, 0x20, 0x83, 0xea, 0x2c, 0x52, 0x11, 0xb8, 0x06, 0x19,
-	0xec, 0x68, 0x61, 0x1e, 0x4c, 0x75, 0x63, 0x19, 0xcf, 0xd6, 0x6e, 0x1f, 0xb8, 0x51, 0xa5, 0x6e,
-	0xa4, 0xed, 0x64, 0xa3, 0xb7, 0x60, 0x2d, 0x44, 0xff, 0x4a, 0xce, 0x3c, 0x18, 0x27, 0xc8, 0xf6,
-	0x02, 0x0f, 0xf9, 0x71, 0xbf, 0x3d, 0xec, 0x2b, 0x55, 0xd7, 0x62, 0xdb, 0x56, 0x6c, 0xe2, 0x63,
-	0x14, 0x32, 0xaf, 0xe6, 0xb1, 0x96, 0xc5, 0xd3, 0xf8, 0xae, 0x1a, 0xb6, 0xb4, 0x42, 0x4d, 0x01,
-	0xca, 0x46, 0xf1, 0x53, 0xb4, 0xb1, 0xcf, 0x50, 0x93, 0xa9, 0x61, 0x4b, 0x09, 0x70, 0x55, 0x62,
-	0x1d, 0x8d, 0x82, 0xe2, 0x7e, 0x75, 0xed, 0x41, 0x3c, 0x62, 0x06, 0x48, 0x36, 0xac, 0x8a, 0x45,
-	0x6d, 0x4c, 0x90, 0x9a, 0xaf, 0xe1, 0x46, 0x65, 0x83, 0x7f, 0x8a, 0xd9, 0x72, 0xce, 0xcc, 0x96,
-	0xa3, 0x66, 0xab, 0x7c, 0x30, 0x00, 0xfa, 0xab, 0xd4, 0xd5, 0x7d, 0x90, 0x3a, 0xb5, 0xb1, 0x0a,
-	0x3d, 0x36, 0x4d, 0xc7, 0x3e, 0x30, 0xca, 0x97, 0xf7, 0x8d, 0x29, 0x7f, 0xd1, 0xc0, 0xf4, 0xc5,
-	0x8b, 0x63, 0xa9, 0x77, 0xe6, 0x0b, 0x13, 0x18, 0x8f, 0xfe, 0x32, 0x41, 0xcc, 0xf7, 0xad, 0x06,
-	0xae, 0x9f, 0x7f, 0xaf, 0x2a, 0xbd, 0x4b, 0x9c, 0x1b, 0x64, 0x2c, 0x5e, 0x21, 0x28, 0xe6, 0xf2,
-	0x41, 0x03, 0xd9, 0xee, 0x17, 0xe3, 0x41, 0xef, 0xd4, 0x5d, 0x03, 0x8d, 0xa5, 0x2b, 0x06, 0x46,
-	0xbc, 0x8c, 0xc1, 0x37, 0xfc, 0xd9, 0x59, 0x79, 0xb8, 0x7f, 0x98, 0xd3, 0x0e, 0x0e, 0x73, 0xda,
-	0xaf, 0xc3, 0x9c, 0xf6, 0xfe, 0x28, 0x97, 0x38, 0x38, 0xca, 0x25, 0x7e, 0x1c, 0xe5, 0x12, 0x2f,
-	0x26, 0x55, 0x81, 0xb9, 0xb3, 0xcf, 0x0e, 0x5f, 0xbf, 0x74, 0x7b, 0x48, 0x3c, 0xa1, 0x95, 0x3f,
-	0x01, 0x00, 0x00, 0xff, 0xff, 0xdb, 0xc4, 0xa0, 0xcd, 0x08, 0x08, 0x00, 0x00,
+	// 1044 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0xbf, 0x4f, 0x23, 0x47,
+	0x14, 0x66, 0x21, 0x40, 0xfc, 0xb0, 0x71, 0xb2, 0xe1, 0x0e, 0x63, 0xe5, 0x0c, 0x98, 0xe4, 0xc2,
+	0xa1, 0x9c, 0x2d, 0x40, 0x4a, 0x94, 0xbb, 0xe2, 0x64, 0xf0, 0x29, 0x42, 0x3a, 0x2b, 0x68, 0x21,
+	0x14, 0x69, 0x56, 0xc3, 0xee, 0xdc, 0xb2, 0x62, 0xbd, 0xb3, 0x9a, 0x19, 0x1b, 0xdc, 0x45, 0xd7,
+	0x25, 0x55, 0x9a, 0x14, 0x29, 0x23, 0xa5, 0x48, 0x73, 0x0a, 0x45, 0xfe, 0x88, 0x2b, 0x52, 0x5c,
+	0x52, 0xa5, 0x8a, 0x22, 0x28, 0xe8, 0xf3, 0x17, 0x44, 0xf3, 0x63, 0xd7, 0xf6, 0x82, 0x6d, 0x44,
+	0x94, 0x6b, 0x10, 0xfb, 0xcd, 0x9b, 0xf7, 0xbe, 0xef, 0x7b, 0x6f, 0x66, 0x0c, 0x65, 0x8a, 0x1c,
+	0xec, 0x20, 0x7a, 0x82, 0x0f, 0xab, 0x38, 0xc4, 0xd4, 0xeb, 0x38, 0x1d, 0x27, 0xc0, 0xd5, 0xf6,
+	0x7a, 0x95, 0x9f, 0x56, 0x22, 0x4a, 0x38, 0x31, 0x17, 0xba, 0x31, 0x95, 0x9e, 0x98, 0x4a, 0x7b,
+	0xbd, 0xf8, 0x2e, 0x6a, 0xfa, 0x21, 0xa9, 0xca, 0xbf, 0x2a, 0xba, 0x38, 0xef, 0x10, 0xd6, 0x24,
+	0xac, 0xda, 0x64, 0x9e, 0xc8, 0xd2, 0x64, 0x9e, 0x5e, 0x58, 0x50, 0x0b, 0xb6, 0xfc, 0xaa, 0xaa,
+	0x0f, 0xbd, 0x34, 0xe7, 0x11, 0x8f, 0x28, 0x5c, 0xfc, 0xa7, 0xd1, 0xfb, 0x83, 0xb9, 0x45, 0x88,
+	0xa2, 0xa6, 0xde, 0x5d, 0xfe, 0xcd, 0x80, 0x7c, 0x83, 0x79, 0x5f, 0x46, 0x2e, 0xe2, 0x78, 0x57,
+	0xae, 0x98, 0x9f, 0x40, 0x06, 0xb5, 0xf8, 0x11, 0xa1, 0x3e, 0xef, 0x14, 0x8c, 0x25, 0x63, 0x35,
+	0xb3, 0x55, 0xf8, 0xe3, 0xd7, 0x87, 0x73, 0xba, 0x6c, 0xcd, 0x75, 0x29, 0x66, 0x6c, 0x8f, 0x53,
+	0x3f, 0xf4, 0xac, 0x6e, 0xa8, 0x59, 0x87, 0x29, 0x95, 0xbb, 0x30, 0xbe, 0x64, 0xac, 0xce, 0x6c,
+	0x2c, 0x57, 0x06, 0x8a, 0xaf, 0xa8, 0x52, 0x5b, 0x99, 0x57, 0x7f, 0x2d, 0x8e, 0xfd, 0x7c, 0x79,
+	0xb6, 0x66, 0x58, 0x7a, 0xef, 0xa3, 0xc7, 0x2f, 0x2e, 0xcf, 0xd6, 0xba, 0x59, 0xbf, 0xbd, 0x3c,
+	0x5b, 0x5b, 0xed, 0x11, 0x73, 0xda, 0x27, 0x27, 0x45, 0xbd, 0xbc, 0x00, 0xf3, 0x29, 0xc8, 0xc2,
+	0x2c, 0x22, 0x21, 0xc3, 0xb1, 0xd2, 0xba, 0xcf, 0x9c, 0x23, 0x44, 0x3d, 0x5c, 0xdb, 0xdf, 0x35,
+	0x37, 0x60, 0xda, 0xa1, 0x18, 0x71, 0x42, 0x47, 0xea, 0x8c, 0x03, 0xcd, 0x3b, 0x30, 0x15, 0x38,
+	0xdc, 0xf6, 0x5d, 0xa9, 0x32, 0x63, 0x4d, 0x06, 0x0e, 0xdf, 0x71, 0xcd, 0xbb, 0x30, 0x85, 0x9a,
+	0xa4, 0x15, 0xf2, 0xc2, 0x84, 0x84, 0xf5, 0x97, 0xf9, 0x00, 0xde, 0x39, 0x21, 0xf4, 0xd8, 0x76,
+	0x31, 0x73, 0xa8, 0x1f, 0x71, 0x9f, 0x84, 0x85, 0xb7, 0x64, 0x44, 0x5e, 0xe0, 0xf5, 0x2e, 0x6c,
+	0xde, 0x03, 0xe0, 0x82, 0x19, 0xb7, 0x03, 0x87, 0x17, 0x26, 0x65, 0x50, 0x46, 0x21, 0xcf, 0x1c,
+	0xfe, 0x28, 0x2b, 0x8c, 0x89, 0x69, 0x94, 0x7f, 0x34, 0xa4, 0xd4, 0x5e, 0x39, 0xb1, 0x54, 0xf3,
+	0x23, 0xc8, 0x2b, 0x93, 0x6c, 0x8a, 0x03, 0x8c, 0x18, 0x76, 0x95, 0x3c, 0x6b, 0x56, 0xc1, 0x96,
+	0x46, 0xcd, 0x45, 0x98, 0x41, 0x6e, 0x64, 0xcb, 0x9c, 0x38, 0x16, 0x04, 0xc8, 0x8d, 0xb6, 0x15,
+	0x62, 0xce, 0xc3, 0xb4, 0x64, 0xef, 0xbb, 0xb1, 0x2c, 0xf1, 0xb9, 0xe3, 0x9a, 0x2b, 0x90, 0xa3,
+	0xb8, 0x89, 0xfc, 0xd0, 0x0f, 0x3d, 0x1b, 0xf1, 0x48, 0x6b, 0xca, 0x26, 0x60, 0x8d, 0x47, 0xe5,
+	0xdf, 0x0d, 0x98, 0x6d, 0x30, 0xcf, 0xc2, 0x9a, 0x62, 0xfd, 0x8d, 0x38, 0xbe, 0x02, 0x39, 0xad,
+	0x9e, 0x91, 0x16, 0x75, 0x70, 0x4c, 0x4d, 0x81, 0x7b, 0x12, 0x13, 0x6d, 0x69, 0xa3, 0xc0, 0x77,
+	0x91, 0x70, 0x5e, 0x1c, 0x2b, 0xf2, 0x5c, 0x3b, 0x9e, 0xef, 0xe2, 0xbb, 0x02, 0x4e, 0xf9, 0xfe,
+	0x8b, 0x01, 0x77, 0xfb, 0x35, 0x25, 0xb6, 0x0b, 0x37, 0x79, 0xd7, 0x4d, 0x43, 0xbb, 0xc9, 0x13,
+	0x37, 0xbb, 0x7d, 0x71, 0x48, 0xc8, 0x5a, 0xcd, 0xc4, 0x72, 0xdd, 0x97, 0x6d, 0x8d, 0xa6, 0xdc,
+	0x75, 0x23, 0xad, 0xb0, 0xc7, 0x5d, 0x37, 0x32, 0xef, 0x43, 0x3e, 0xc4, 0x27, 0xc2, 0x7c, 0xfb,
+	0x10, 0x05, 0x28, 0x4c, 0x94, 0xe6, 0x42, 0x7c, 0x52, 0xe3, 0xd1, 0x96, 0x02, 0xcb, 0xff, 0x18,
+	0xf0, 0x41, 0x83, 0x79, 0x8a, 0x84, 0x85, 0x03, 0x29, 0x8d, 0x1d, 0xf9, 0xd1, 0x53, 0x59, 0xf4,
+	0x8b, 0x08, 0x53, 0x09, 0xdd, 0xaa, 0x37, 0xf7, 0x00, 0x94, 0xcb, 0x72, 0x66, 0x95, 0x9a, 0x8c,
+	0x42, 0x9e, 0x39, 0x3c, 0x35, 0xd2, 0x13, 0xa9, 0x91, 0xee, 0x69, 0x95, 0xee, 0x64, 0x5f, 0xab,
+	0x6a, 0xaa, 0x9f, 0x1f, 0xc2, 0x2c, 0x89, 0x39, 0xda, 0xbc, 0x13, 0x61, 0xdd, 0xa8, 0x5c, 0x82,
+	0xee, 0x77, 0x22, 0x9c, 0x6a, 0xd3, 0x0f, 0x06, 0x7c, 0x7c, 0x13, 0xd1, 0x49, 0xf3, 0x96, 0x21,
+	0xdb, 0xad, 0xe2, 0xc7, 0xdd, 0x9b, 0x49, 0xb0, 0x1d, 0x57, 0x88, 0x11, 0x66, 0x73, 0x72, 0x8c,
+	0x43, 0x16, 0x6b, 0x45, 0x3c, 0xda, 0x97, 0x80, 0xe8, 0x2e, 0xa7, 0x2d, 0xc6, 0x6d, 0x3d, 0x40,
+	0x58, 0x9d, 0x99, 0xb7, 0xad, 0x59, 0x09, 0x1f, 0xc4, 0x68, 0xf9, 0x27, 0x03, 0x0a, 0x0d, 0xe6,
+	0x3d, 0x3d, 0xc5, 0x4e, 0x8b, 0x63, 0x45, 0x68, 0x9f, 0xa2, 0x90, 0x3d, 0xc7, 0xf4, 0x56, 0x4d,
+	0x48, 0x73, 0x1f, 0xbf, 0xca, 0x7d, 0x05, 0x72, 0x5c, 0x97, 0xb0, 0x5d, 0xc4, 0x51, 0x3c, 0x51,
+	0x31, 0x58, 0x47, 0x1c, 0xa5, 0x2c, 0x2c, 0xc3, 0xd2, 0x20, 0x96, 0xc9, 0xa5, 0xfa, 0x62, 0x1c,
+	0xde, 0x6f, 0x30, 0x2f, 0xd6, 0xd6, 0x6b, 0xf4, 0x01, 0x0a, 0x5a, 0xf8, 0xff, 0x92, 0xb3, 0x0e,
+	0x73, 0x14, 0x3b, 0x7e, 0xe4, 0xe3, 0x30, 0xf1, 0x5b, 0xdc, 0xac, 0x4a, 0xd5, 0x7b, 0xc9, 0xda,
+	0x41, 0xb2, 0x24, 0xc6, 0xa8, 0xc5, 0xfd, 0xc0, 0xe7, 0x1d, 0x5b, 0xa4, 0x09, 0xbd, 0xf8, 0xb4,
+	0x68, 0xd4, 0x92, 0xa0, 0x32, 0x4a, 0x74, 0xd1, 0x21, 0x21, 0xc7, 0xa7, 0xf1, 0x3d, 0x9c, 0x95,
+	0xe0, 0xb6, 0xc2, 0x52, 0x46, 0x21, 0x79, 0xbe, 0x06, 0x7a, 0x90, 0x8c, 0x58, 0x11, 0x32, 0x6d,
+	0x7b, 0xd3, 0x66, 0x0e, 0xa1, 0x58, 0xcf, 0xd7, 0x74, 0x7b, 0x73, 0x4f, 0x7c, 0xca, 0xd9, 0x72,
+	0xaf, 0xcc, 0x96, 0xab, 0x67, 0x6b, 0xe3, 0xe5, 0x14, 0x4c, 0x34, 0x98, 0x67, 0x86, 0x90, 0xed,
+	0x7b, 0xaa, 0xd7, 0x86, 0x3c, 0xb1, 0xa9, 0x87, 0xb0, 0xb8, 0x71, 0xf3, 0xd8, 0x84, 0x72, 0x08,
+	0xd9, 0xbe, 0x07, 0x73, 0x44, 0xbd, 0xde, 0xd8, 0x51, 0xf5, 0xae, 0x7d, 0xb9, 0x8e, 0x61, 0xa6,
+	0xf7, 0xb5, 0x78, 0x30, 0x3c, 0x45, 0x4f, 0x68, 0x71, 0xfd, 0xc6, 0xa1, 0x49, 0xb1, 0x97, 0x06,
+	0x2c, 0x8f, 0xbe, 0x15, 0x9f, 0x0c, 0x4f, 0x3c, 0x32, 0x41, 0xf1, 0xf3, 0xff, 0x98, 0x20, 0xe1,
+	0xfb, 0x8d, 0x01, 0x77, 0xae, 0xbf, 0x34, 0x36, 0x87, 0x97, 0xb8, 0x76, 0x53, 0xf1, 0xf1, 0x2d,
+	0x36, 0x25, 0x5c, 0xbe, 0x37, 0x60, 0x61, 0xf0, 0xa9, 0xff, 0x74, 0x78, 0xea, 0x81, 0x1b, 0x8b,
+	0x4f, 0x6e, 0xb9, 0x31, 0xe6, 0x55, 0x9c, 0xfc, 0x5a, 0xfc, 0x98, 0xdc, 0xfa, 0xec, 0xd5, 0x79,
+	0xc9, 0x78, 0x7d, 0x5e, 0x32, 0xfe, 0x3e, 0x2f, 0x19, 0xdf, 0x5d, 0x94, 0xc6, 0x5e, 0x5f, 0x94,
+	0xc6, 0xfe, 0xbc, 0x28, 0x8d, 0x7d, 0xb5, 0xa8, 0x0b, 0x3c, 0xbc, 0xfa, 0x63, 0x52, 0xbc, 0x2d,
+	0xec, 0x70, 0x4a, 0xfe, 0x30, 0xde, 0xfc, 0x37, 0x00, 0x00, 0xff, 0xff, 0x6b, 0xb4, 0x5d, 0x0a,
+	0xde, 0x0b, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -576,6 +890,10 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	// DischargeATP converts ATP to ADP, releasing energy for work
+	DischargeATP(ctx context.Context, in *MsgDischargeATP, opts ...grpc.CallOption) (*MsgDischargeATPResponse, error)
+	// RechargeADP converts ADP back to ATP using energy input
+	RechargeADP(ctx context.Context, in *MsgRechargeADP, opts ...grpc.CallOption) (*MsgRechargeADPResponse, error)
 	// CreateRelationshipEnergyOperation defines the CreateRelationshipEnergyOperation RPC.
 	CreateRelationshipEnergyOperation(ctx context.Context, in *MsgCreateRelationshipEnergyOperation, opts ...grpc.CallOption) (*MsgCreateRelationshipEnergyOperationResponse, error)
 	// ExecuteEnergyTransfer defines the ExecuteEnergyTransfer RPC.
@@ -595,6 +913,24 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error) {
 	out := new(MsgUpdateParamsResponse)
 	err := c.cc.Invoke(ctx, "/racecarweb.energycycle.v1.Msg/UpdateParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DischargeATP(ctx context.Context, in *MsgDischargeATP, opts ...grpc.CallOption) (*MsgDischargeATPResponse, error) {
+	out := new(MsgDischargeATPResponse)
+	err := c.cc.Invoke(ctx, "/racecarweb.energycycle.v1.Msg/DischargeATP", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) RechargeADP(ctx context.Context, in *MsgRechargeADP, opts ...grpc.CallOption) (*MsgRechargeADPResponse, error) {
+	out := new(MsgRechargeADPResponse)
+	err := c.cc.Invoke(ctx, "/racecarweb.energycycle.v1.Msg/RechargeADP", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -633,6 +969,10 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	// DischargeATP converts ATP to ADP, releasing energy for work
+	DischargeATP(context.Context, *MsgDischargeATP) (*MsgDischargeATPResponse, error)
+	// RechargeADP converts ADP back to ATP using energy input
+	RechargeADP(context.Context, *MsgRechargeADP) (*MsgRechargeADPResponse, error)
 	// CreateRelationshipEnergyOperation defines the CreateRelationshipEnergyOperation RPC.
 	CreateRelationshipEnergyOperation(context.Context, *MsgCreateRelationshipEnergyOperation) (*MsgCreateRelationshipEnergyOperationResponse, error)
 	// ExecuteEnergyTransfer defines the ExecuteEnergyTransfer RPC.
@@ -647,6 +987,12 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) UpdateParams(ctx context.Context, req *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (*UnimplementedMsgServer) DischargeATP(ctx context.Context, req *MsgDischargeATP) (*MsgDischargeATPResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DischargeATP not implemented")
+}
+func (*UnimplementedMsgServer) RechargeADP(ctx context.Context, req *MsgRechargeADP) (*MsgRechargeADPResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RechargeADP not implemented")
 }
 func (*UnimplementedMsgServer) CreateRelationshipEnergyOperation(ctx context.Context, req *MsgCreateRelationshipEnergyOperation) (*MsgCreateRelationshipEnergyOperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRelationshipEnergyOperation not implemented")
@@ -676,6 +1022,42 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).UpdateParams(ctx, req.(*MsgUpdateParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DischargeATP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDischargeATP)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DischargeATP(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/racecarweb.energycycle.v1.Msg/DischargeATP",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DischargeATP(ctx, req.(*MsgDischargeATP))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_RechargeADP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgRechargeADP)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).RechargeADP(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/racecarweb.energycycle.v1.Msg/RechargeADP",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).RechargeADP(ctx, req.(*MsgRechargeADP))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -742,6 +1124,14 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "DischargeATP",
+			Handler:    _Msg_DischargeATP_Handler,
+		},
+		{
+			MethodName: "RechargeADP",
+			Handler:    _Msg_RechargeADP_Handler,
 		},
 		{
 			MethodName: "CreateRelationshipEnergyOperation",
@@ -820,6 +1210,224 @@ func (m *MsgUpdateParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDischargeATP) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDischargeATP) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDischargeATP) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.TargetLct) > 0 {
+		i -= len(m.TargetLct)
+		copy(dAtA[i:], m.TargetLct)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TargetLct)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.WorkDescription) > 0 {
+		i -= len(m.WorkDescription)
+		copy(dAtA[i:], m.WorkDescription)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.WorkDescription)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Amount) > 0 {
+		i -= len(m.Amount)
+		copy(dAtA[i:], m.Amount)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Amount)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.LctId) > 0 {
+		i -= len(m.LctId)
+		copy(dAtA[i:], m.LctId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.LctId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDischargeATPResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDischargeATPResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDischargeATPResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.RemainingAtp) > 0 {
+		i -= len(m.RemainingAtp)
+		copy(dAtA[i:], m.RemainingAtp)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.RemainingAtp)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.WorkId) > 0 {
+		i -= len(m.WorkId)
+		copy(dAtA[i:], m.WorkId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.WorkId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.AdpCreated) > 0 {
+		i -= len(m.AdpCreated)
+		copy(dAtA[i:], m.AdpCreated)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.AdpCreated)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.EnergyReleased) > 0 {
+		i -= len(m.EnergyReleased)
+		copy(dAtA[i:], m.EnergyReleased)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.EnergyReleased)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgRechargeADP) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgRechargeADP) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgRechargeADP) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.ValidationProof) > 0 {
+		i -= len(m.ValidationProof)
+		copy(dAtA[i:], m.ValidationProof)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ValidationProof)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.EnergySource) > 0 {
+		i -= len(m.EnergySource)
+		copy(dAtA[i:], m.EnergySource)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.EnergySource)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Amount) > 0 {
+		i -= len(m.Amount)
+		copy(dAtA[i:], m.Amount)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Amount)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.LctId) > 0 {
+		i -= len(m.LctId)
+		copy(dAtA[i:], m.LctId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.LctId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgRechargeADPResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgRechargeADPResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgRechargeADPResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NewAtpBalance) > 0 {
+		i -= len(m.NewAtpBalance)
+		copy(dAtA[i:], m.NewAtpBalance)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NewAtpBalance)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.RemainingAdp) > 0 {
+		i -= len(m.RemainingAdp)
+		copy(dAtA[i:], m.RemainingAdp)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.RemainingAdp)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.EnergyConsumed) > 0 {
+		i -= len(m.EnergyConsumed)
+		copy(dAtA[i:], m.EnergyConsumed)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.EnergyConsumed)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.AtpCreated) > 0 {
+		i -= len(m.AtpCreated)
+		copy(dAtA[i:], m.AtpCreated)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.AtpCreated)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1125,6 +1733,114 @@ func (m *MsgUpdateParamsResponse) Size() (n int) {
 	return n
 }
 
+func (m *MsgDischargeATP) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.LctId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Amount)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.WorkDescription)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TargetLct)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgDischargeATPResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.EnergyReleased)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.AdpCreated)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.WorkId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.RemainingAtp)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgRechargeADP) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.LctId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Amount)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.EnergySource)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ValidationProof)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgRechargeADPResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.AtpCreated)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.EnergyConsumed)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.RemainingAdp)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NewAtpBalance)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
 func (m *MsgCreateRelationshipEnergyOperation) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1400,6 +2116,782 @@ func (m *MsgUpdateParamsResponse) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: MsgUpdateParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDischargeATP) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDischargeATP: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDischargeATP: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LctId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.LctId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Amount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WorkDescription", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.WorkDescription = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TargetLct", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TargetLct = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDischargeATPResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDischargeATPResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDischargeATPResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EnergyReleased", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EnergyReleased = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AdpCreated", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AdpCreated = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WorkId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.WorkId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RemainingAtp", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RemainingAtp = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgRechargeADP) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgRechargeADP: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgRechargeADP: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LctId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.LctId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Amount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EnergySource", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EnergySource = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidationProof", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ValidationProof = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgRechargeADPResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgRechargeADPResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgRechargeADPResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AtpCreated", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AtpCreated = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EnergyConsumed", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EnergyConsumed = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RemainingAdp", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RemainingAdp = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewAtpBalance", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NewAtpBalance = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])

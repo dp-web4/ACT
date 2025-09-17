@@ -245,3 +245,185 @@ func (k msgServer) ValidateRelationshipValue(ctx context.Context, msg *types.Msg
 		AdpTokens: adpTokensStr,
 	}, nil
 }
+
+// DischargeATP implements the Msg/DischargeATP RPC method for converting ATP to ADP during work.
+func (ms msgServer) DischargeATP(ctx context.Context, msg *types.MsgDischargeATP) (*types.MsgDischargeATPResponse, error) {
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
+	}
+
+	// Validate input
+	if msg.LctId == "" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "worker LCT ID cannot be empty")
+	}
+
+	if msg.Amount == "" || msg.Amount == "0" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "ATP amount must be greater than 0")
+	}
+
+	if msg.WorkDescription == "" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "work description required for discharge")
+	}
+
+	// Get current block height
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+	blockHeight := sdkCtx.BlockHeight()
+
+	// Generate work ID for tracking
+	workId := fmt.Sprintf("work-%s-%d", msg.LctId, blockHeight)
+
+	// TODO: Verify society has sufficient ATP tokens in pool
+	// For now, we assume ATP is available
+
+	// Create ADP token representing discharged energy
+	adpToken := &types.RelationshipAdpToken{
+		TokenId:          fmt.Sprintf("adp-%s", workId),
+		OriginalAtpId:    fmt.Sprintf("atp-pool-%s", msg.Amount), // Reference to pool ATP
+		LctId:            msg.LctId,
+		DischargedAt:     blockHeight,
+		ValueScore:       "0", // Will be set by V3 tensor validation
+		ConfirmationData: msg.WorkDescription,
+		EnergyEfficiency: "1.0", // Will be calculated from actual vs planned
+		TrustValidation:  "pending",
+		ValidationBlock:  blockHeight + 10, // Validation window
+		OperationContext: fmt.Sprintf("work:%s:target:%s", msg.WorkDescription, msg.TargetLct),
+		Version:          1,
+	}
+
+	// Store the ADP token
+	if err := ms.RelationshipAdpTokens.Set(ctx, adpToken.TokenId, *adpToken); err != nil {
+		return nil, errorsmod.Wrap(err, "failed to store ADP token")
+	}
+
+	// Calculate energy released for work
+	energyReleased := msg.Amount // Energy made available for work
+	adpCreated := msg.Amount     // Same amount of ADP created (state change only)
+
+	// If trusttensor keeper is available, initiate V3 tracking
+	if ms.trusttensorKeeper != nil && msg.TargetLct != "" {
+		// Track work relationship between LCTs for V3 tensor calculation
+		_, _, err = ms.trusttensorKeeper.CalculateRelationshipTrust(ctx, msg.LctId, workId)
+		if err != nil {
+			// Log but don't fail - V3 tracking is async
+			// TODO: Add logger when available
+		}
+	}
+
+	// Emit event for tracking energy expenditure
+	sdkCtx.EventManager().EmitEvent(
+		sdk.NewEvent("atp_discharged_for_work",
+			sdk.NewAttribute("worker_lct", msg.LctId),
+			sdk.NewAttribute("work_id", workId),
+			sdk.NewAttribute("work_description", msg.WorkDescription),
+			sdk.NewAttribute("target_lct", msg.TargetLct),
+			sdk.NewAttribute("atp_consumed", msg.Amount),
+			sdk.NewAttribute("adp_created", adpCreated),
+			sdk.NewAttribute("adp_token_id", adpToken.TokenId),
+			sdk.NewAttribute("energy_released", energyReleased),
+			sdk.NewAttribute("validation_window", fmt.Sprintf("%d", adpToken.ValidationBlock)),
+			sdk.NewAttribute("creator", creator.String()),
+		),
+	)
+
+	// TODO: Update society token pool balances
+	// Society ATP balance -= msg.Amount
+	// Society ADP balance += msg.Amount
+	remainingAtp := "0" // Placeholder - should query society pool
+
+	return &types.MsgDischargeATPResponse{
+		EnergyReleased: energyReleased,
+		AdpCreated:     adpCreated,
+		WorkId:         workId,
+		RemainingAtp:   remainingAtp,
+	}, nil
+}
+
+// RechargeADP implements the Msg/RechargeADP RPC method for energy producers to charge ADP tokens to ATP.
+func (ms msgServer) RechargeADP(ctx context.Context, msg *types.MsgRechargeADP) (*types.MsgRechargeADPResponse, error) {
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
+	}
+
+	// Validate input
+	if msg.LctId == "" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "producer LCT ID cannot be empty")
+	}
+
+	if msg.Amount == "" || msg.Amount == "0" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "amount must be greater than 0")
+	}
+
+	// Validate energy source (must be a producer entity type)
+	validSources := map[string]bool{
+		"solar": true, "wind": true, "wave": true, "nuclear": true,
+		"geothermal": true, "grid": true, "battery": true,
+	}
+	if !validSources[msg.EnergySource] {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid energy source: %s", msg.EnergySource)
+	}
+
+	// Get current block height
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+	blockHeight := sdkCtx.BlockHeight()
+
+	// Generate recharge operation ID
+	rechargeId := fmt.Sprintf("charge-%s-%s-%d", msg.LctId, msg.EnergySource, blockHeight)
+
+	// In Web4, we're converting society's ADP tokens to ATP by adding real energy
+	// This requires validation proof that actual energy was harvested/generated
+	if msg.ValidationProof == "" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "energy generation validation proof required")
+	}
+
+	// Create ATP token representing the charged energy
+	atpToken := &types.RelationshipAtpToken{
+		TokenId:             fmt.Sprintf("atp-%s", rechargeId),
+		LctId:               msg.LctId,
+		EnergyAmount:        msg.Amount,
+		CreatedAt:           blockHeight,
+		OperationId:         rechargeId,
+		Status:              "charged",
+		RelationshipContext: fmt.Sprintf("producer:%s:source:%s", msg.LctId, msg.EnergySource),
+		ExpirationBlock:     blockHeight + 100000, // ATP tokens expire if not used
+		TrustScore:          "1.0", // Producer entities have high trust
+		EfficiencyRating:    msg.ValidationProof, // Store validation in efficiency field
+		Version:             1,
+	}
+
+	// Store the ATP token
+	if err := ms.RelationshipAtpTokens.Set(ctx, atpToken.TokenId, *atpToken); err != nil {
+		return nil, errorsmod.Wrap(err, "failed to store ATP token")
+	}
+
+	// Track energy consumed from environment (cost of charging)
+	energyConsumed := msg.Amount // Real energy harvested
+
+	// Emit event for society-level tracking
+	sdkCtx.EventManager().EmitEvent(
+		sdk.NewEvent("adp_charged_to_atp",
+			sdk.NewAttribute("producer_lct", msg.LctId),
+			sdk.NewAttribute("energy_source", msg.EnergySource),
+			sdk.NewAttribute("adp_consumed", msg.Amount),
+			sdk.NewAttribute("atp_created", atpToken.EnergyAmount),
+			sdk.NewAttribute("atp_token_id", atpToken.TokenId),
+			sdk.NewAttribute("energy_harvested", energyConsumed),
+			sdk.NewAttribute("validation_proof", msg.ValidationProof),
+			sdk.NewAttribute("creator", creator.String()),
+		),
+	)
+
+	// TODO: Update society token pool balances
+	// Society ADP balance -= msg.Amount
+	// Society ATP balance += msg.Amount
+	remainingAdp := "0"  // Placeholder - should query society pool
+	newAtpBalance := msg.Amount // Placeholder - should query society pool
+
+	return &types.MsgRechargeADPResponse{
+		AtpCreated:     atpToken.EnergyAmount,
+		EnergyConsumed: energyConsumed,
+		RemainingAdp:   remainingAdp,
+		NewAtpBalance:  newAtpBalance,
+	}, nil
+}
