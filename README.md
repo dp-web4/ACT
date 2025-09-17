@@ -1,6 +1,12 @@
 # ACT - Agentic Context Tool
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+![Status: Experimental](https://img.shields.io/badge/Status-Experimental-orange.svg)
+![Progress: 65%](https://img.shields.io/badge/Progress-65%25-yellow.svg)
+
+## 🚧 Development Status
+
+**This repository is now PUBLIC but remains in EXPERIMENTAL/DEVELOPMENT stage.** The Web4 reference implementation is approximately 65% complete. Core protobuf definitions are finalized, keeper implementations are functional, but proto generation and module wiring are still in progress. Expect breaking changes as we iterate toward production readiness.
 
 ## Overview
 
@@ -241,14 +247,52 @@ ACT is the missing piece that makes Web4 accessible to humans. By providing a us
 - **Trust building**: Reputation that matters
 - **Interoperability**: Work with any MCP server
 
+## 🔨 What's Needed (Contributors Welcome!)
+
+### Immediate Priorities
+1. **Proto Generation**: Run `make proto-gen` and fix compilation errors
+2. **Module Wiring**: Complete app.go integration for all 5 Web4 modules
+3. **Genesis Configuration**: Define initial state for demo society
+4. **Chain Startup**: Get the blockchain running with Web4 modules
+
+### Help Wanted
+- **Go Developers**: Cosmos SDK experience helpful but not required
+- **Protocol Designers**: Help refine Web4 specifications
+- **Documentation**: Improve setup guides and API docs
+- **Testing**: Write unit and integration tests
+- **Frontend**: Build demo UI for society interactions
+
 ## Contributing
 
-This is currently a private repository. Contact the maintainers for access.
+We welcome contributions! This project is in active development:
+
+1. **Check Issues**: See what needs work
+2. **Fork & Branch**: Create feature branches from `main`
+3. **Test Locally**: Ensure changes don't break existing functionality
+4. **Submit PR**: Include clear description of changes
+5. **Be Patient**: This is experimental - we're figuring it out together!
+
+### Development Setup
+```bash
+# Clone the repository
+git clone https://github.com/dp-web4/ACT.git
+cd ACT
+
+# Install Go 1.21+
+# Install Node.js 18+
+
+# Set up the ledger
+cd implementation/ledger
+make install
+
+# Run the swarm monitor
+cd ../../swarm-bootstrap
+node monitor-swarm.js
+```
 
 ## License
 
-Proprietary (during development)
-Will transition to AGPL-3.0 for public release
+GNU Affero General Public License v3.0 (AGPL-3.0) - see [LICENSE](LICENSE) file
 
 ## Contact
 
