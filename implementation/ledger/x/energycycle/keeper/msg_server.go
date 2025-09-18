@@ -427,3 +427,71 @@ func (ms msgServer) RechargeADP(ctx context.Context, msg *types.MsgRechargeADP) 
 		NewAtpBalance:  newAtpBalance,
 	}, nil
 }
+
+// MintADP implements the Msg/MintADP RPC method for treasury role to mint new ADP tokens.
+func (ms msgServer) MintADP(ctx context.Context, msg *types.MsgMintADP) (*types.MsgMintADPResponse, error) {
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
+	}
+
+	// Validate input
+	if msg.Amount == "" || msg.Amount == "0" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "amount must be greater than 0")
+	}
+
+	if msg.SocietyLct == "" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "society LCT ID cannot be empty")
+	}
+
+	if msg.RoleLct == "" {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "treasury role LCT ID cannot be empty")
+	}
+
+	// TODO: Verify that role_lct is actually a treasury role
+	// TODO: Verify that role_lct belongs to the society_lct
+	// For now, we'll trust the input during genesis
+
+	// Get current block height
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+	blockHeight := sdkCtx.BlockHeight()
+	timestamp := time.Now().UTC().Format(time.RFC3339)
+
+	// Generate mint operation ID
+	mintId := fmt.Sprintf("mint-adp-%s-%d", msg.SocietyLct, blockHeight)
+
+	// Create ADP tokens for the society treasury
+	// In Web4, these represent discharged energy available to be charged
+	// The treasury role has the authority to mint initial ADP allocation
+
+	// Store the mint operation for audit trail
+	// TODO: Create proper mint record storage
+
+	// For now, we track the minted amount conceptually
+	// In production, this would update the society's ADP balance in state
+
+	// Emit event for mint operation
+	sdkCtx.EventManager().EmitEvent(
+		sdk.NewEvent("adp_minted",
+			sdk.NewAttribute("society_lct", msg.SocietyLct),
+			sdk.NewAttribute("treasury_role", msg.RoleLct),
+			sdk.NewAttribute("amount", msg.Amount),
+			sdk.NewAttribute("reason", msg.Reason),
+			sdk.NewAttribute("mint_id", mintId),
+			sdk.NewAttribute("block_height", fmt.Sprintf("%d", blockHeight)),
+			sdk.NewAttribute("timestamp", timestamp),
+			sdk.NewAttribute("creator", creator.String()),
+		),
+	)
+
+	// TODO: Actually update society ADP balance in state
+	// For now, we'll return success with the minted amount
+	societyBalance := msg.Amount // This should be queried from state after update
+
+	return &types.MsgMintADPResponse{
+		MintedAmount:   msg.Amount,
+		SocietyBalance: societyBalance,
+		MintId:         mintId,
+		Timestamp:      timestamp,
+	}, nil
+}

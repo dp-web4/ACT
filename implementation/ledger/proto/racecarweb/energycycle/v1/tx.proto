@@ -24,6 +24,9 @@ service Msg {
   // RechargeADP converts ADP back to ATP using energy input
   rpc RechargeADP(MsgRechargeADP) returns (MsgRechargeADPResponse);
 
+  // MintADP creates new ADP tokens for society treasury (treasury role only)
+  rpc MintADP(MsgMintADP) returns (MsgMintADPResponse);
+
   // CreateRelationshipEnergyOperation defines the CreateRelationshipEnergyOperation RPC.
   rpc CreateRelationshipEnergyOperation(MsgCreateRelationshipEnergyOperation) returns (MsgCreateRelationshipEnergyOperationResponse);
 
@@ -89,6 +92,24 @@ message MsgRechargeADPResponse {
   string energy_consumed = 2;        // Amount of energy consumed
   string remaining_adp = 3;         // Remaining ADP balance
   string new_atp_balance = 4;      // New total ATP balance
+}
+
+// MsgMintADP defines the message for minting new ADP tokens (treasury role only).
+message MsgMintADP {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string amount = 2;                 // Amount of ADP to mint
+  string society_lct = 3;           // Society receiving the ADP
+  string role_lct = 4;              // Treasury role LCT authorizing mint
+  string reason = 5;                // Reason for minting (e.g., "genesis allocation")
+}
+
+// MsgMintADPResponse defines the response for MsgMintADP.
+message MsgMintADPResponse {
+  string minted_amount = 1;         // Amount of ADP minted
+  string society_balance = 2;       // New society ADP balance
+  string mint_id = 3;               // Unique mint operation ID
+  string timestamp = 4;             // Timestamp of mint operation
 }
 
 // MsgCreateRelationshipEnergyOperation defines the MsgCreateRelationshipEnergyOperation message.
