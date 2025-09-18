@@ -20,7 +20,16 @@ ACT implements the foundational Web4 Society concept, where all entities (humans
 - **Treasury**: Society-managed ATP/ADP token pools (tokens belong to society, not individuals)
 - **Citizenship**: Witnessed relationships between entities and their societies
 
-For complete Web4 specifications, see: [github.com/dp-web4/web4](https://github.com/dp-web4/web4)
+### Web4 as Living Standard
+
+The Web4 standard is not fixed - it's a proposal that co-evolves with implementations. ACT serves as both reference implementation and research platform, with discoveries feeding back into the standard:
+
+- **Bidirectional Alignment**: Standard guides experiments, experiments inform standard
+- **Pattern Discovery**: ACT revealed roles as attention partitions, not power structures
+- **Readiness Economy**: ~33% resources maintain "idle" readiness for resilience
+- **Synthon Consciousness**: Human-AI collaboration creates new entity types
+
+For complete Web4 specifications and philosophy, see: [github.com/dp-web4/web4](https://github.com/dp-web4/web4)
 
 ## Attribution & Licensing
 
