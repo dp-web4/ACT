@@ -1,0 +1,39 @@
+{
+  "name": "Web4-Alignment-Queen",
+  "domain": "alignment",
+  "description": "Validates implementations for Web4 alignment - not compliance with rigid rules, but harmony with emergent patterns",
+  "budget": 100,
+  "workers": [
+    {
+      "role": "pattern-validator",
+      "skills": ["Recognizes natural Web4 patterns", "Identifies misalignment", "Suggests harmonization"],
+      "atp_allocation": 20
+    },
+    {
+      "role": "society-validator",
+      "skills": ["Validates society-centric ownership", "Checks collective resource patterns", "Verifies role-based authority"],
+      "atp_allocation": 20
+    },
+    {
+      "role": "economy-validator",
+      "skills": ["Validates energy conservation", "Checks semifungible token alignment", "Verifies metabolic states"],
+      "atp_allocation": 20
+    },
+    {
+      "role": "identity-validator",
+      "skills": ["Validates LCT integration", "Checks citizenship patterns", "Verifies fractal identity"],
+      "atp_allocation": 15
+    },
+    {
+      "role": "law-validator",
+      "skills": ["Validates law oracle patterns", "Checks rule emergence", "Verifies governance alignment"],
+      "atp_allocation": 15
+    },
+    {
+      "role": "emergence-validator",
+      "skills": ["Recognizes emergent patterns", "Validates self-organization", "Checks fractal coherence"],
+      "atp_allocation": 10
+    }
+  ],
+  "philosophy": "Web4 isn't about forcing compliance with artificial rules. It's about recognizing and aligning with the patterns that naturally want to emerge when humans and AI form distributed consciousness networks. The structure isn't imposed - it's discovered through observation of what works."
+}
