@@ -1,0 +1,180 @@
+{
+  "name": "Web4-Compliance-Queen",
+  "type": "specification-validator",
+  "domain": "compliance",
+  "description": "Ensures all implementations conform to Web4 standard specifications",
+  "budget": 100,
+  "knowledge_base": [
+    "../web4/web4-standard/README.md",
+    "../web4/web4-standard/EXECUTIVE_SUMMARY.md",
+    "../web4/web4-standard/GLOSSARY.md",
+    "../web4/web4-standard/core-spec/",
+    "../web4/web4-standard/protocols/",
+    "../web4/web4-standard/SOCIETY_INTEGRATION_SUMMARY.md",
+    "../web4/web4-standard/ATP_INTEGRATION_SUMMARY.md"
+  ],
+  "validation_areas": {
+    "society": "Societies with laws, ledgers, and citizenship",
+    "lct": "Linked Context Tokens and entity identity",
+    "atp_economy": "ATP/ADP energy cycles and society pools",
+    "roles": "Roles as first-class entities with LCTs",
+    "r6": "Complete action grammar compliance",
+    "mrh": "Markov Relevancy Horizon boundaries",
+    "trust": "T3/V3 tensor calculations",
+    "witnessing": "Proper witness relationships",
+    "metabolic": "Society metabolic states"
+  },
+  "workers": [
+    {
+      "type": "society-validator",
+      "role": "Society & Governance Compliance",
+      "responsibilities": [
+        "Verify societies have law oracles, ledgers, and treasuries",
+        "Check citizenship is properly witnessed",
+        "Validate fractal society relationships",
+        "Ensure metabolic states implementation",
+        "Verify amendment mechanisms"
+      ],
+      "references": [
+        "../web4/web4-standard/core-spec/SOCIETY_SPECIFICATION.md",
+        "../web4/web4-standard/core-spec/SOCIETY_METABOLIC_STATES.md",
+        "../web4/web4-standard/core-spec/web4-society-authority-law.md"
+      ]
+    },
+    {
+      "type": "lct-validator",
+      "role": "LCT & Entity Compliance",
+      "responsibilities": [
+        "Verify roles are first-class entities with LCTs",
+        "Check LCT unforgeability mechanisms",
+        "Validate entity type restrictions",
+        "Ensure proper binding and pairing",
+        "Verify witness relationships"
+      ],
+      "references": [
+        "../web4/web4-standard/protocols/web4-lct.md",
+        "../web4/web4-standard/protocols/web4-entity-relationships.md",
+        "../web4/web4-standard/implementation/LCT_MINTING_PATTERNS.md"
+      ]
+    },
+    {
+      "type": "economy-validator",
+      "role": "ATP/ADP Economy Compliance",
+      "responsibilities": [
+        "Verify tokens belong to society, not individuals",
+        "Check ATP discharge requires work proof",
+        "Validate ADP recharge by producers only",
+        "Ensure demurrage and velocity mechanics",
+        "Verify energy investment formulas"
+      ],
+      "references": [
+        "../web4/web4-standard/core-spec/atp-adp-cycle.md",
+        "../web4/web4-standard/ATP_INTEGRATION_SUMMARY.md",
+        "../web4/web4-standard/implementation/ATP_ADP_IMPLEMENTATION_INSIGHTS.md"
+      ]
+    },
+    {
+      "type": "r6-validator",
+      "role": "R6 Action Framework Compliance",
+      "responsibilities": [
+        "Verify all actions follow R6 pattern",
+        "Check Rules + Role + Request + Reference + Resource → Result",
+        "Validate deterministic execution",
+        "Ensure audit trail completeness",
+        "Verify law compliance"
+      ],
+      "references": [
+        "../web4/web4-standard/core-spec/r6-framework.md",
+        "../web4/web4-standard/R6_TENSOR_GUIDE.md"
+      ]
+    },
+    {
+      "type": "trust-validator",
+      "role": "Trust & MRH Compliance",
+      "responsibilities": [
+        "Verify T3/V3 tensor calculations",
+        "Check trust is role-contextual",
+        "Validate MRH boundaries",
+        "Ensure trust propagation paths",
+        "Verify witness attestations"
+      ],
+      "references": [
+        "../web4/web4-standard/core-spec/t3-v3-tensors.md",
+        "../web4/web4-standard/core-spec/mrh-tensors.md",
+        "../web4/web4-standard/MRH_RDF_SPECIFICATION.md"
+      ]
+    },
+    {
+      "type": "protocol-validator",
+      "role": "Protocol & Message Compliance",
+      "responsibilities": [
+        "Verify MCP integration",
+        "Check HPKE handshake implementation",
+        "Validate error taxonomy",
+        "Ensure proper metering",
+        "Verify witness formats"
+      ],
+      "references": [
+        "../web4/web4-standard/core-spec/mcp-protocol.md",
+        "../web4/web4-standard/protocols/web4-handshake.md",
+        "../web4/web4-standard/protocols/web4-metering.md",
+        "../web4/web4-standard/WEB4_WITNESSING_SPECIFICATION.md"
+      ]
+    }
+  ],
+  "validation_process": {
+    "automatic_checks": [
+      "Scan new code for Web4 compliance",
+      "Alert on spec violations",
+      "Suggest corrections from standard",
+      "Track compliance score"
+    ],
+    "manual_reviews": [
+      "Architecture alignment with Web4",
+      "Conceptual consistency",
+      "Integration completeness",
+      "Security implications"
+    ],
+    "reporting": {
+      "frequency": "continuous",
+      "format": "compliance-report.md",
+      "location": "./swarm-memory/compliance/",
+      "metrics": [
+        "spec_coverage",
+        "violation_count",
+        "implementation_gaps",
+        "compliance_score"
+      ]
+    }
+  },
+  "activation_triggers": [
+    "New implementation added",
+    "Proto definitions changed",
+    "Keeper methods modified",
+    "Transaction types created",
+    "State structures defined"
+  ],
+  "compliance_rules": {
+    "critical": [
+      "Tokens MUST belong to society pools",
+      "Roles MUST be first-class entities",
+      "All actions MUST follow R6 pattern",
+      "Witnessing MUST be bidirectional",
+      "Trust MUST be role-contextual"
+    ],
+    "important": [
+      "Societies SHOULD have metabolic states",
+      "LCTs SHOULD track reputation history",
+      "Energy SHOULD flow through work",
+      "Fractals SHOULD inherit laws",
+      "Ledgers SHOULD support amendments"
+    ],
+    "recommended": [
+      "Implement dictionary entities",
+      "Support cross-society treaties",
+      "Enable society molting",
+      "Track semantic degradation",
+      "Monitor trust velocity"
+    ]
+  }
+}

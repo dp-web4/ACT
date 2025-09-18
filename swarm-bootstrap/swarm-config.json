@@ -172,6 +172,38 @@
           "role": "Economy testing"
         }
       ]
+    },
+    {
+      "name": "Web4-Compliance-Queen",
+      "type": "specification-validator",
+      "domain": "compliance",
+      "budget": 100,
+      "workers": [
+        {
+          "type": "society-validator",
+          "role": "Society & governance compliance"
+        },
+        {
+          "type": "lct-validator",
+          "role": "LCT & entity compliance"
+        },
+        {
+          "type": "economy-validator",
+          "role": "ATP/ADP economy compliance"
+        },
+        {
+          "type": "r6-validator",
+          "role": "R6 action framework compliance"
+        },
+        {
+          "type": "trust-validator",
+          "role": "Trust & MRH compliance"
+        },
+        {
+          "type": "protocol-validator",
+          "role": "Protocol & message compliance"
+        }
+      ]
     }
   ],
   "memory": {
