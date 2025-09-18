@@ -49,7 +49,7 @@ async function displaySwarmHierarchy() {
   console.log(`   Status: ${colors.green}● Active${colors.reset}`);
   
   // Domain Queens
-  console.log(`\n${colors.bright}🏗️ Domain Queens (6)${colors.reset}`);
+  console.log(`\n${colors.bright}🏗️ Domain Queens (7)${colors.reset}`);
   for (const queen of SWARM_CONFIG.queens) {
     const status = await getQueenStatus(queen.name);
     const statusColor = status === 'active' ? colors.green : colors.yellow;

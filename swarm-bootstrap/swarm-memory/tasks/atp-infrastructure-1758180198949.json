@@ -1,0 +1,165 @@
+{
+  "task": {
+    "name": "ATP/ADP Semifungible Token Infrastructure",
+    "description": "Implement complete energy economy with society treasury on blockchain",
+    "budget": 500,
+    "deadline": "2025-01-18",
+    "queens_involved": [
+      "ATP-Economy-Queen",
+      "Demo-Society-Queen",
+      "LCT-Infrastructure-Queen",
+      "Web4-Compliance-Queen"
+    ],
+    "objectives": [
+      "Create semifungible ATP/ADP token types",
+      "Implement society treasury storage",
+      "Fix CLI for minting operations",
+      "Enable complete energy cycle",
+      "Migrate from conceptual to actual blockchain storage"
+    ]
+  },
+  "assignments": {
+    "ATP-Economy-Queen": {
+      "workers": {
+        "tokenomics-designer": [
+          "Design semifungible token structure",
+          "Define ATP charged vs ADP discharged states",
+          "Specify society pool mechanics",
+          "Create demurrage parameters"
+        ],
+        "coder": [
+          "Implement EnergyPool state storage",
+          "Create GetSocietyPool keeper method",
+          "Create UpdateSocietyBalance keeper method",
+          "Wire up pool state to MintADP"
+        ],
+        "economic-validator": [
+          "Test token state transitions",
+          "Verify pool balance updates",
+          "Validate anti-hoarding mechanics",
+          "Ensure work-based discharge"
+        ]
+      }
+    },
+    "Demo-Society-Queen": {
+      "workers": {
+        "backend-dev": [
+          "Create society state structure",
+          "Implement society LCT storage",
+          "Add role binding mechanism",
+          "Create citizenship records"
+        ],
+        "database-architect": [
+          "Design treasury ledger schema",
+          "Create audit trail structure",
+          "Implement amendment mechanism",
+          "Setup witness records"
+        ],
+        "coder": [
+          "Implement society keeper methods",
+          "Create genesis society init",
+          "Add role validation",
+          "Build treasury access controls"
+        ]
+      }
+    },
+    "LCT-Infrastructure-Queen": {
+      "workers": {
+        "coder": [
+          "Extend LCT for role entities",
+          "Add society LCT type",
+          "Implement role-entity binding",
+          "Create LCT metadata for roles"
+        ],
+        "security-auditor": [
+          "Validate treasury role authority",
+          "Check minting permissions",
+          "Verify role inheritance",
+          "Audit access controls"
+        ]
+      }
+    },
+    "Web4-Compliance-Queen": {
+      "workers": {
+        "society-validator": [
+          "Verify society pool ownership",
+          "Check role as entity compliance",
+          "Validate citizenship witnessing",
+          "Ensure law oracle integration"
+        ],
+        "economy-validator": [
+          "Confirm semifungible implementation",
+          "Validate energy cycle mechanics",
+          "Check demurrage compliance",
+          "Verify work proof requirements"
+        ]
+      }
+    }
+  },
+  "implementation": [
+    {
+      "phase": "Phase 1: Token Types",
+      "tasks": [
+        "Define semifungible token proto messages",
+        "Create ATP and ADP as distinct states",
+        "Add token metadata for work tracking"
+      ],
+      "queens": [
+        "ATP-Economy-Queen"
+      ],
+      "atp": 50
+    },
+    {
+      "phase": "Phase 2: Society Storage",
+      "tasks": [
+        "Create SocietyPool storage structure",
+        "Implement keeper CRUD operations",
+        "Add genesis initialization"
+      ],
+      "queens": [
+        "Demo-Society-Queen",
+        "ATP-Economy-Queen"
+      ],
+      "atp": 100
+    },
+    {
+      "phase": "Phase 3: CLI Integration",
+      "tasks": [
+        "Fix autocli.go for mint-adp",
+        "Add positional arguments",
+        "Wire up to keeper methods"
+      ],
+      "queens": [
+        "LCT-Infrastructure-Queen"
+      ],
+      "atp": 50
+    },
+    {
+      "phase": "Phase 4: Energy Cycle",
+      "tasks": [
+        "Implement MintADP with pool updates",
+        "Wire DischargeATP to pool",
+        "Connect RechargeADP to pool"
+      ],
+      "queens": [
+        "ATP-Economy-Queen",
+        "Demo-Society-Queen"
+      ],
+      "atp": 150
+    },
+    {
+      "phase": "Phase 5: Compliance & Testing",
+      "tasks": [
+        "Validate against Web4 spec",
+        "Test complete energy cycle",
+        "Verify pool balances"
+      ],
+      "queens": [
+        "Web4-Compliance-Queen"
+      ],
+      "atp": 100
+    }
+  ],
+  "timestamp": "2025-09-18T07:23:18.949Z",
+  "status": "initiated"
+}

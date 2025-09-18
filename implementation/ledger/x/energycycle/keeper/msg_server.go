@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"cosmossdk.io/math"
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -266,6 +267,12 @@ func (ms msgServer) DischargeATP(ctx context.Context, msg *types.MsgDischargeATP
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "work description required for discharge")
 	}
 
+	// Parse amount to sdk.Int
+	amount, ok := math.NewIntFromString(msg.Amount)
+	if !ok {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid amount format")
+	}
+
 	// Get current block height
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	blockHeight := sdkCtx.BlockHeight()
@@ -273,8 +280,25 @@ func (ms msgServer) DischargeATP(ctx context.Context, msg *types.MsgDischargeATP
 	// Generate work ID for tracking
 	workId := fmt.Sprintf("work-%s-%d", msg.LctId, blockHeight)
 
-	// TODO: Verify society has sufficient ATP tokens in pool
-	// For now, we assume ATP is available
+	// Extract society LCT from worker LCT (format: society:demo:role:worker)
+	// For now, use default society
+	societyLct := "society:demo"
+	if msg.TargetLct != "" && len(msg.TargetLct) > 0 {
+		// Could parse society from target if needed
+		societyLct = msg.TargetLct
+	}
+
+	// Use society pool keeper to discharge ATP to ADP
+	err = ms.DischargeATPFromPool(ctx, societyLct, amount, msg.LctId, msg.WorkDescription)
+	if err != nil {
+		return nil, errorsmod.Wrap(err, "failed to discharge ATP from society pool")
+	}
+
+	// Get updated pool balance
+	pool, err := ms.GetSocietyPool(ctx, societyLct)
+	if err != nil {
+		return nil, errorsmod.Wrap(err, "failed to get society pool")
+	}
 
 	// Create ADP token representing discharged energy
 	adpToken := &types.RelationshipAdpToken{
@@ -306,7 +330,6 @@ func (ms msgServer) DischargeATP(ctx context.Context, msg *types.MsgDischargeATP
 		_, _, err = ms.trusttensorKeeper.CalculateRelationshipTrust(ctx, msg.LctId, workId)
 		if err != nil {
 			// Log but don't fail - V3 tracking is async
-			// TODO: Add logger when available
 		}
 	}
 
@@ -326,16 +349,11 @@ func (ms msgServer) DischargeATP(ctx context.Context, msg *types.MsgDischargeATP
 		),
 	)
 
-	// TODO: Update society token pool balances
-	// Society ATP balance -= msg.Amount
-	// Society ADP balance += msg.Amount
-	remainingAtp := "0" // Placeholder - should query society pool
-
 	return &types.MsgDischargeATPResponse{
 		EnergyReleased: energyReleased,
 		AdpCreated:     adpCreated,
 		WorkId:         workId,
-		RemainingAtp:   remainingAtp,
+		RemainingAtp:   pool.AtpBalance.String(),
 	}, nil
 }
 
@@ -353,6 +371,12 @@ func (ms msgServer) RechargeADP(ctx context.Context, msg *types.MsgRechargeADP) 
 
 	if msg.Amount == "" || msg.Amount == "0" {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "amount must be greater than 0")
+	}
+
+	// Parse amount to sdk.Int
+	amount, ok := math.NewIntFromString(msg.Amount)
+	if !ok {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid amount format")
 	}
 
 	// Validate energy source (must be a producer entity type)
@@ -375,6 +399,22 @@ func (ms msgServer) RechargeADP(ctx context.Context, msg *types.MsgRechargeADP) 
 	// This requires validation proof that actual energy was harvested/generated
 	if msg.ValidationProof == "" {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "energy generation validation proof required")
+	}
+
+	// Extract society LCT from producer LCT (format: society:demo:role:producer)
+	// For now, use default society
+	societyLct := "society:demo"
+
+	// Use society pool keeper to recharge ADP to ATP
+	err = ms.RechargeADPToATP(ctx, societyLct, amount, msg.LctId, msg.EnergySource)
+	if err != nil {
+		return nil, errorsmod.Wrap(err, "failed to recharge ADP to ATP in society pool")
+	}
+
+	// Get updated pool balance
+	pool, err := ms.GetSocietyPool(ctx, societyLct)
+	if err != nil {
+		return nil, errorsmod.Wrap(err, "failed to get society pool")
 	}
 
 	// Create ATP token representing the charged energy
@@ -414,17 +454,11 @@ func (ms msgServer) RechargeADP(ctx context.Context, msg *types.MsgRechargeADP) 
 		),
 	)
 
-	// TODO: Update society token pool balances
-	// Society ADP balance -= msg.Amount
-	// Society ATP balance += msg.Amount
-	remainingAdp := "0"  // Placeholder - should query society pool
-	newAtpBalance := msg.Amount // Placeholder - should query society pool
-
 	return &types.MsgRechargeADPResponse{
 		AtpCreated:     atpToken.EnergyAmount,
 		EnergyConsumed: energyConsumed,
-		RemainingAdp:   remainingAdp,
-		NewAtpBalance:  newAtpBalance,
+		RemainingAdp:   pool.AdpBalance.String(),
+		NewAtpBalance:  pool.AtpBalance.String(),
 	}, nil
 }
 
@@ -448,6 +482,12 @@ func (ms msgServer) MintADP(ctx context.Context, msg *types.MsgMintADP) (*types.
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "treasury role LCT ID cannot be empty")
 	}
 
+	// Parse amount to sdk.Int
+	amount, ok := math.NewIntFromString(msg.Amount)
+	if !ok {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid amount format")
+	}
+
 	// TODO: Verify that role_lct is actually a treasury role
 	// TODO: Verify that role_lct belongs to the society_lct
 	// For now, we'll trust the input during genesis
@@ -460,15 +500,17 @@ func (ms msgServer) MintADP(ctx context.Context, msg *types.MsgMintADP) (*types.
 	// Generate mint operation ID
 	mintId := fmt.Sprintf("mint-adp-%s-%d", msg.SocietyLct, blockHeight)
 
-	// Create ADP tokens for the society treasury
-	// In Web4, these represent discharged energy available to be charged
-	// The treasury role has the authority to mint initial ADP allocation
+	// Use society pool keeper to mint ADP
+	err = ms.MintADPToPool(ctx, msg.SocietyLct, amount, msg.RoleLct)
+	if err != nil {
+		return nil, errorsmod.Wrap(err, "failed to mint ADP to society pool")
+	}
 
-	// Store the mint operation for audit trail
-	// TODO: Create proper mint record storage
-
-	// For now, we track the minted amount conceptually
-	// In production, this would update the society's ADP balance in state
+	// Get updated pool balance
+	pool, err := ms.GetSocietyPool(ctx, msg.SocietyLct)
+	if err != nil {
+		return nil, errorsmod.Wrap(err, "failed to get society pool")
+	}
 
 	// Emit event for mint operation
 	sdkCtx.EventManager().EmitEvent(
@@ -484,13 +526,9 @@ func (ms msgServer) MintADP(ctx context.Context, msg *types.MsgMintADP) (*types.
 		),
 	)
 
-	// TODO: Actually update society ADP balance in state
-	// For now, we'll return success with the minted amount
-	societyBalance := msg.Amount // This should be queried from state after update
-
 	return &types.MsgMintADPResponse{
 		MintedAmount:   msg.Amount,
-		SocietyBalance: societyBalance,
+		SocietyBalance: pool.AdpBalance.String(),
 		MintId:         mintId,
 		Timestamp:      timestamp,
 	}, nil

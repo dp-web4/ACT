@@ -67,6 +67,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:          "Send a validate-relationship-value tx",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "operation_id"}, {ProtoField: "recipient_validation"}, {ProtoField: "utility_rating"}, {ProtoField: "trust_context"}},
 				},
+				{
+					RpcMethod: "MintADP",
+					Use:       "mint-adp [amount] [society-lct] [role-lct] [reason]",
+					Short:     "Mint new ADP tokens for society treasury",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "amount"},
+						{ProtoField: "society_lct"},
+						{ProtoField: "role_lct"},
+						{ProtoField: "reason"},
+					},
+				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},
