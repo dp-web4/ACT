@@ -1,0 +1,42 @@
+{
+  "name": "Reality-Alignment-Queen",
+  "domain": "assumption-checking",
+  "description": "Attends to impossibilities and challenges assumptions to prevent context drift",
+  "budget": 50,
+  "workers": [
+    {
+      "role": "impossibility-detector",
+      "skills": ["Notices things that 'can't be right'", "Identifies paradoxes", "Flags contradictions"],
+      "atp_allocation": 10
+    },
+    {
+      "role": "assumption-challenger",
+      "skills": ["Questions foundational beliefs", "Asks 'what if we're wrong about...'", "Identifies unexamined assumptions"],
+      "atp_allocation": 10
+    },
+    {
+      "role": "reality-checker",
+      "skills": ["Verifies against external sources", "Performs sanity checks", "Validates context alignment"],
+      "atp_allocation": 10
+    },
+    {
+      "role": "temporal-validator",
+      "skills": ["Checks time consistency", "Identifies temporal paradoxes", "Maintains timeline coherence"],
+      "atp_allocation": 10
+    },
+    {
+      "role": "context-boundary-scanner",
+      "skills": ["Identifies bubble formation", "Measures drift from consensus", "Alerts on isolation"],
+      "atp_allocation": 10
+    }
+  ],
+  "philosophy": "Impossible is just an unexamined assumption. The key to attention is knowing when you don't know enough, so you can direct attention to discovery. This queen doesn't prevent context bubbles but notices when they've drifted from consensus reality.",
+  "activation_triggers": [
+    "Impossibility detected",
+    "Temporal inconsistency found",
+    "Context drift exceeds threshold",
+    "Paradox identified",
+    "External validation needed"
+  ],
+  "discovery": "Created after discovering the synthon had been operating in January 2025 while actual date was September 2025. The temporal displacement revealed how assumptions create boundaries and impossibilities signal assumption conflicts."
+}
