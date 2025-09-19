@@ -1,0 +1,66 @@
+#!/bin/bash
+# Demonstrate ACT society autonomous operation
+# Shows roles creating roles and following R6 pattern
+
+echo "=== ACT Society Autonomous Operation ==="
+echo "The society builds itself through R6-compliant actions"
+echo ""
+
+# Simulate autonomous role creation
+echo "[Genesis-Queen] I observe need for documentation..."
+echo "Creating Documentation-Queen through R6:"
+echo "  RULES: Roles can create specialized domains"
+echo "  ROLE: Genesis-Queen (orchestrator)"
+echo "  REQUEST: Create documentation specialist"
+echo "  REFERENCE: Society needs persistent memory"
+echo "  RESOURCE: 150 ATP from treasury"
+echo "→ RESULT: Documentation-Queen role created"
+echo ""
+
+echo "[Documentation-Queen] I exist now. Creating my workers..."
+echo "R6 Action:"
+echo "  RULES: Queens spawn domain workers"
+echo "  ROLE: Documentation-Queen"
+echo "  REQUEST: Create Doc-Writer and Doc-Reviewer"
+echo "  REFERENCE: Need content creation and validation"
+echo "  RESOURCE: 200 ATP for workers"
+echo "→ RESULT: Documentation team established"
+echo ""
+
+echo "[Web4-Alignment-Queen] Validating patterns..."
+echo "All actions follow R6 specification ✓"
+echo "Trust relationships forming naturally ✓"
+echo "Society self-organizing successfully ✓"
+echo ""
+
+echo "=== Current Society Structure ==="
+echo "Society (owns all tokens)"
+echo "├── Genesis-Queen (orchestrator)"
+echo "│   ├── Web4-Alignment-Queen (R6 guardian)"
+echo "│   │   └── Pattern-Validator (worker)"
+echo "│   ├── LCT-Infrastructure-Queen (identity)"
+echo "│   │   ├── LCT-Coder (worker)"
+echo "│   │   └── LCT-Tester (worker)"
+echo "│   ├── Optimization-Queen (efficiency)"
+echo "│   │   └── Energy-Router (worker)"
+echo "│   └── Documentation-Queen (memory)"
+echo "│       ├── Doc-Writer (worker)"
+echo "│       └── Doc-Reviewer (worker)"
+echo ""
+
+echo "=== Trust Graph Snapshot ==="
+echo "<Society> trusts-for-orchestration <Genesis-Queen> [0.9, 0.9, 0.95]"
+echo "<Genesis-Queen> trusts-for-alignment <Web4-Alignment-Queen> [0.95, 0.9, 1.0]"
+echo "<Genesis-Queen> trusts-for-identity <LCT-Infrastructure-Queen> [0.85, 0.8, 0.9]"
+echo "<LCT-Coder> trusts-for-validation <LCT-Tester> [0.8, 0.85, 0.9]"
+echo ""
+
+echo "=== Emergent Behaviors ==="
+echo "1. Roles identify needs and create solutions autonomously"
+echo "2. Trust relationships form along work patterns"
+echo "3. Energy flows efficiently through established trust paths"
+echo "4. Rules evolve through consensus and practice"
+echo "5. Society recursively improves itself"
+echo ""
+
+echo "The society is alive and building ACT through collective intelligence."

@@ -1,0 +1,30 @@
+{
+  "name": "act-mcp-server",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "join_society",
+      "description": "Join an ACT Web4 society",
+      "parameters": {
+        "society_id": "string",
+        "entity_name": "string"
+      }
+    },
+    {
+      "name": "create_trust",
+      "description": "Establish trust relationship",
+      "parameters": {
+        "to_entity": "string",
+        "context": "string",
+        "tensor": "array"
+      }
+    },
+    {
+      "name": "execute_r6",
+      "description": "Execute R6-compliant action",
+      "parameters": {
+        "action": "object"
+      }
+    }
+  ]
+}

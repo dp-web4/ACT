@@ -1,0 +1,26 @@
+{
+  "agent_interface": {
+    "endpoints": {
+      "join_society": "/api/v1/society/join",
+      "create_role": "/api/v1/roles/create",
+      "execute_r6": "/api/v1/actions/execute",
+      "query_trust": "/api/v1/trust/query"
+    },
+    "message_formats": {
+      "join": {
+        "agent_id": "string",
+        "capabilities": ["array"],
+        "context": "object"
+      },
+      "action": {
+        "r6_pattern": "object",
+        "signature": "string"
+      }
+    },
+    "context_management": {
+      "memory": "persistent",
+      "state": "blockchain-verified",
+      "history": "queryable"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "completed": ["task-001", "task-002", "task-003", "task-006"],
+  "in_progress": ["task-004", "task-005"],
+  "new_tasks": [
+    {
+      "id": "task-007",
+      "created_by": "Optimization-Queen",
+      "type": "optimization",
+      "r6": {
+        "rules": ["Optimizations must preserve functionality"],
+        "roles": "Energy-Router",
+        "request": "Map optimal energy flow paths",
+        "reference": "Current flow analysis",
+        "resource": "200 ATP for analysis",
+        "result": "Energy routing table"
+      }
+    },
+    {
+      "id": "task-008",
+      "created_by": "LCT-Infrastructure-Queen",
+      "type": "implementation",
+      "r6": {
+        "rules": ["Tests must pass before deployment"],
+        "roles": "LCT-Coder, LCT-Tester",
+        "request": "Complete LCT minting pipeline",
+        "reference": "Web4 identity specification",
+        "resource": "800 ATP for implementation",
+        "result": "Working LCT system"
+      }
+    },
+    {
+      "id": "task-009",
+      "created_by": "Genesis-Queen",
+      "type": "expansion",
+      "r6": {
+        "rules": ["New domains need queen oversight"],
+        "roles": "Genesis-Queen",
+        "request": "Create Documentation-Queen role",
+        "reference": "Society needs memory/history",
+        "resource": "150 ATP",
+        "result": "Documentation domain established"
+      }
+    }
+  ]
+}

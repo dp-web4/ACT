@@ -1,0 +1,89 @@
+{
+  "tasks": [
+    {
+      "id": "task-001",
+      "type": "role-creation",
+      "r6": {
+        "rules": ["Roles can create subordinate roles", "New roles need society approval"],
+        "roles": "Genesis-Queen",
+        "request": "Create LCT-Infrastructure-Queen role",
+        "reference": "Need identity infrastructure specialist",
+        "resource": "100 ATP for role creation",
+        "result": "New queen role for LCT management"
+      },
+      "priority": "high"
+    },
+    {
+      "id": "task-002",
+      "type": "rule-negotiation",
+      "r6": {
+        "rules": ["Current: All decisions unanimous", "Proposed: Weighted voting by trust"],
+        "roles": "Web4-Alignment-Queen",
+        "request": "Update governance to trust-weighted voting",
+        "reference": "Unanimous requirement blocks progress",
+        "resource": "Society consensus",
+        "result": "New governance rule adopted"
+      },
+      "priority": "medium"
+    },
+    {
+      "id": "task-003",
+      "type": "worker-spawn",
+      "r6": {
+        "rules": ["Queens can spawn workers", "Workers limited to domain tasks"],
+        "roles": "LCT-Infrastructure-Queen",
+        "request": "Spawn LCT-Coder and LCT-Tester workers",
+        "reference": "Implementation requires coding and testing",
+        "resource": "200 ATP for worker creation",
+        "result": "Two workers created under queen"
+      },
+      "priority": "high"
+    },
+    {
+      "id": "task-004",
+      "type": "implementation",
+      "r6": {
+        "rules": ["Code must pass tests", "Implementation follows Web4 spec"],
+        "roles": "LCT-Coder",
+        "request": "Implement basic LCT creation function",
+        "reference": "Web4 spec section 2.1",
+        "resource": "500 ATP for implementation work",
+        "result": "Working LCT creation code"
+      },
+      "priority": "high"
+    },
+    {
+      "id": "task-005",
+      "type": "discovery",
+      "r6": {
+        "rules": ["Discoveries must be documented", "Patterns must be validated"],
+        "roles": "Web4-Alignment-Queen",
+        "request": "Discover emergent patterns in role interactions",
+        "reference": "Observe first 100 R6 actions",
+        "resource": "Society observation logs",
+        "result": "Pattern documentation for future rules"
+      },
+      "priority": "low"
+    },
+    {
+      "id": "task-006",
+      "type": "recursive-improvement",
+      "r6": {
+        "rules": ["Society can modify itself", "Changes require alignment validation"],
+        "roles": "Genesis-Queen",
+        "request": "Spawn Optimization-Queen to improve efficiency",
+        "reference": "Energy usage suboptimal in current structure",
+        "resource": "150 ATP for role creation",
+        "result": "New role focused on society optimization"
+      },
+      "priority": "medium"
+    }
+  ],
+  "queue_rules": {
+    "assignment": "Tasks assigned by Genesis Queen based on role capabilities",
+    "execution": "R6 pattern must be followed and validated",
+    "completion": "Web4 Alignment Queen verifies result matches request",
+    "energy": "ATP discharged on work start, recharged on value confirmation",
+    "evolution": "New tasks can be created by any role following R6"
+  }
+}
