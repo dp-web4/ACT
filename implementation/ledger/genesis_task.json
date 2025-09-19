@@ -1,0 +1,36 @@
+{
+  "task": {
+    "id": "genesis-task-001",
+    "type": "validation",
+    "submitted_by": "alice",
+    "target_role": "genesis-queen",
+    "priority": "high",
+    "description": "Validate Web4 society initialization and energy economy",
+    "objectives": [
+      "Verify LCT minting mechanism",
+      "Confirm ATP/ADP energy cycle operational",
+      "Test trust tensor (T3) calculations",
+      "Validate value tensor (V3) attribution"
+    ],
+    "energy_requirements": {
+      "atp_required": "1000",
+      "expected_adp_discharge": "800",
+      "recharge_interval": "100 blocks"
+    },
+    "trust_metrics": {
+      "initial_trust": [1.0, 0.0, 0.0],
+      "expected_trust": [0.9, 0.05, 0.05],
+      "verification_threshold": 0.8
+    },
+    "value_distribution": {
+      "society_pool": 0.5,
+      "treasury": 0.3,
+      "participants": 0.2
+    },
+    "metadata": {
+      "protocol_version": "Web4-v1.0",
+      "consensus_type": "proof-of-attention",
+      "timestamp": "2025-01-19T10:56:00Z"
+    }
+  }
+}
