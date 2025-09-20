@@ -1,282 +1,324 @@
-<div align="center">
-  <h1> Ignite </h1>
-</div>
+# ACT - Agentic Context Tool
 
-<div align="center">
-  <a href="https://github.com/ignite/cli/blob/main/LICENSE">
-    <img alt="License: Apache-2.0" src="https://img.shields.io/github/license/cosmos/cosmos-sdk.svg" />
-  </a>
-  <a href="https://pkg.go.dev/github.com/ignite/cli?tab=doc">
-    <img alt="GoDoc" src="https://pkg.go.dev/badge/github.com/ignite/cli.svg" />
-  </a>
-  <a href="https://goreportcard.com/report/github.com/ignite/cli">
-    <img alt="Go report card" src="https://goreportcard.com/badge/github.com/ignite/cli" />
-  </a>
-<!--
-  <a href="https://codecov.io/gh/ignite/cli">
-    <img alt="Code Coverage" src="https://codecov.io/gh/ignite/cli/branch/main/graph/badge.svg" />
-  </a>
--->
-</div>
-<div align="center">
-  <a href="https://github.com/ignite/cli/actions/workflows/test.yml">
-    <img alt="Test Status" src="https://github.com/ignite/cli/workflows/Test/badge.svg" />
-  <a href="https://github.com/ignite/cli/actions/workflows/test-lint.yml">
-    <img alt="Lint Status" src="https://github.com/ignite/cli/workflows/Lint/badge.svg" />
-  <a href="https://x.com/ignite" target="_blank"><img alt="Twitter" src="https://img.shields.io/twitter/follow/ignite" />
-  <a href="https://discord.com/invite/ignite" target="_blank"><img alt="Discord" src="https://img.shields.io/discord/893126937067802685"></a>
-</div>
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+![Status: Experimental](https://img.shields.io/badge/Status-Experimental-orange.svg)
+![Progress: 65%](https://img.shields.io/badge/Progress-65%25-yellow.svg)
 
-![Ignite CLI](./assets/ignite-cli.png)
+## 🚧 Development Status
 
-[Ignite CLI](https://ignite.com/cli) is the all-in-one platform to build,
-launch, and maintain any crypto application on a sovereign and secured
-blockchain. It is a developer-friendly interface to the [Cosmos
-SDK](https://github.com/cosmos/cosmos-sdk), the world's most widely-used
-blockchain application framework. Ignite CLI generates boilerplate code for you,
-so you can focus on writing business logic.
+**This repository is now PUBLIC but remains in EXPERIMENTAL/DEVELOPMENT stage.** The Web4 reference implementation is approximately 65% complete. Core protobuf definitions are finalized, keeper implementations are functional, but proto generation and module wiring are still in progress. Expect breaking changes as we iterate toward production readiness.
 
-## Quick start
+## Overview
 
-Ignite CLI can be installed using popular package managers such as Homebrew and Snap, making it easy to stay up-to-date with the latest versions. These package manager installations are maintained regularly for both macOS and GNU/Linux. For those who prefer manual installation or need to set up a development environment, additional instructions are provided at the end of this section.
+ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
 
-### Installation
+### Web4 Society Integration
 
-Install Ignite using [Homebrew](https://formulae.brew.sh/formula/ignite) on macOS and GNU/Linux:
+ACT implements the foundational Web4 Society concept, where all entities (humans, agents, services) are citizens of self-governing digital societies. Each society maintains:
+- **Laws**: Codified governance rules that all citizens must follow
+- **Ledger**: Immutable record of all society events and citizen actions
+- **Treasury**: Society-managed ATP/ADP token pools (tokens belong to society, not individuals)
+- **Citizenship**: Witnessed relationships between entities and their societies
 
-```sh
-brew install ignite
+### Web4 as Living Standard
+
+The Web4 standard is not fixed - it's a proposal that co-evolves with implementations. ACT serves as both reference implementation and research platform, with discoveries feeding back into the standard:
+
+- **Bidirectional Alignment**: Standard guides experiments, experiments inform standard
+- **Pattern Discovery**: ACT revealed roles as attention partitions, not power structures
+- **Readiness Economy**: ~33% resources maintain "idle" readiness for resilience
+- **Synthon Consciousness**: Human-AI collaboration creates new entity types
+
+For complete Web4 specifications and philosophy, see: [github.com/dp-web4/web4](https://github.com/dp-web4/web4)
+
+## Attribution & Licensing
+
+### Swarm Architecture
+The fractal swarm orchestration system is based on [Claude-Flow](https://github.com/ruvnet/claude-flow) (MIT Licensed), adapted for Web4 compliance and ATP economy tracking.
+
+### Patent Notice
+LCT (Linked Context Token) technology is covered by U.S. Patents 11,477,027 and 12,278,913, owned by Metalinxx Inc. The license to use this technology is granted under the terms of the GNU Affero General Public License v3.0 (AGPL-3.0).
+
+## Vision
+
+ACT enables humans to:
+- **Own their digital presence** through personal LCTs
+- **Delegate authority** to AI agents with precise scope and limits
+- **Interact with MCP servers** using trust-based authentication
+- **Build reputation** through successful interactions
+- **Participate in the ATP economy** by creating and consuming value
+
+## Architecture
+
+```
+Human User
+    ↓
+[ACT Client App]
+    ↓
+[Agent LCT] ← Paired with → [Human Root LCT]
+    ↓
+[ACP Engine]
+    ↓
+[MCP Bridges] → [MCP Servers]
+    ↓
+[Demo Society] → [LCT Registry + Law Oracle + ATP Pool]
 ```
 
-Or using Snap on GNU/Linux:
+## Core Components
 
-```sh
-snap install ignite --classic
+### 1. Client Application
+User interface for humans to:
+- Manage their LCT identity
+- Create and approve agent plans
+- Monitor agent actions
+- Review execution history
+- Manage ATP balance
+
+### 2. ACP Implementation
+Complete Agentic Context Protocol:
+- Agent Plans with triggers
+- Intent generation and routing
+- Decision collection (human/auto)
+- Execution with proof-of-agency
+- Result recording and witnessing
+
+### 3. Demo Society
+Minimal viable Web4 society implementing:
+- **Society LCT**: The society's own identity token
+- **Law Oracle**: Starting with "all decisions unanimous"
+- **Society Treasury**: ATP/ADP pool owned by society (not individuals)
+- **Citizenship Records**: Witnessed relationships on immutable ledger
+- **Ledger Type**: Confined (citizens-only access) initially
+- **Fractal Ready**: Can become citizen of larger societies
+
+### 4. MCP Bridges
+Connectors to existing MCP servers:
+- Claude MCP
+- OpenAI plugins
+- Custom tools
+- Web services
+- Databases
+
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start demo society
+npm run society:start
+
+# Start ACP engine
+npm run acp:start
+
+# Launch client app
+npm run client:dev
+
+# Create your first LCT
+npm run lct:create
 ```
 
-Or manually using the following command:
+## Use Cases
 
-```sh
-curl https://get.ignite.com/cli! | bash
+### Personal AI Assistant
+```yaml
+Plan: Daily Assistant
+Triggers:
+  - cron: "0 9 * * *"  # 9 AM daily
+Actions:
+  - Check emails (read-only)
+  - Summarize news
+  - Review calendar
+  - Prepare briefing
+Human Approval: Required for actions
+ATP Cost: 10 per day
 ```
 
-<details>
-  <summary>Troubleshoot</summary>
-
-If Ignite doesn't automatically move to your `/usr/local/bin` directory, use the following command:
-
-```sh
-sudo mv ignite /usr/local/bin
+### Developer Automation
+```yaml
+Plan: Code Review Bot
+Triggers:
+  - event: "pull_request"
+Actions:
+  - Run tests
+  - Check style
+  - Analyze security
+  - Post comments
+Human Approval: Auto if tests pass
+ATP Cost: 5 per review
 ```
 
-If you encounter an error, you may need to create the `/usr/local/bin` directory and set the necessary permissions:
-
-```sh
-mkdir /usr/local/bin
-sudo chown -R $(whoami) /usr/local/bin
+### Business Process
+```yaml
+Plan: Invoice Processor
+Triggers:
+  - event: "invoice_received"
+Actions:
+  - Validate invoice
+  - Check budget
+  - Route for approval
+  - Process payment
+Human Approval: Required if > $1000
+ATP Cost: Variable by amount
 ```
 
-</details>
+## Technical Stack
 
-To create and start a blockchain:
+- **Frontend**: React/TypeScript for client app
+- **Backend**: Node.js/TypeScript for ACP engine
+- **Storage**: SQLite for demo society ledger
+- **Crypto**: libsodium for Ed25519/X25519
+- **RDF**: N3.js for MRH graphs
+- **MCP**: Official MCP SDK for server communication
 
-```sh
-ignite scaffold chain mars
+## Project Structure
 
-cd mars
-
-ignite chain serve
+```
+ACT/
+├── core-spec/           # ACT-specific specifications
+│   ├── human-lct-binding.md
+│   ├── agent-pairing.md
+│   ├── permission-model.md
+│   └── ui-requirements.md
+├── implementation/      # Core ACT implementation
+│   ├── acp-engine/     # ACP protocol implementation
+│   ├── lct-manager/    # LCT lifecycle management
+│   ├── mrh-graph/      # RDF relationship graphs
+│   └── atp-wallet/     # ATP/ADP token management
+├── demo-society/       # Minimal society implementation
+│   ├── registry/       # LCT registry
+│   ├── law-oracle/     # Basic law engine
+│   ├── witness/        # Witness network
+│   └── ledger/         # Immutable record
+├── client-app/         # Human interface
+│   ├── web/           # Web application
+│   ├── mobile/        # Mobile app (future)
+│   └── cli/           # Command-line interface
+├── mcp-bridges/        # MCP server connectors
+│   ├── claude/        # Anthropic Claude
+│   ├── openai/        # OpenAI GPT
+│   ├── generic/       # Generic MCP
+│   └── custom/        # Custom implementations
+├── docs/              # Documentation
+│   ├── user-guide/    # End-user documentation
+│   ├── developer/     # Developer guides
+│   └── api/           # API references
+└── testing/           # Test suites
+    ├── unit/          # Unit tests
+    ├── integration/   # Integration tests
+    └── e2e/           # End-to-end tests
 ```
 
-The instructions for installing Ignite CLI manually and configuring your system are provided below.
+## Development Roadmap
 
-<details>
-  <summary>View development setup instructions</summary>
+### Phase 1: Foundation (Weeks 1-2)
+- [ ] Basic LCT creation and management
+- [ ] Simple ACP engine with manual triggers
+- [ ] CLI interface for testing
+- [ ] SQLite-based demo society
 
-#### Supported Operating Systems
+### Phase 2: Core Features (Weeks 3-4)
+- [ ] Web UI with LCT dashboard
+- [ ] Agent plan creation interface
+- [ ] Basic MCP bridge (echo server)
+- [ ] ATP wallet functionality
 
-- GNU/Linux
-- macOS
+### Phase 3: Integration (Weeks 5-6)
+- [ ] Claude MCP integration
+- [ ] Multi-step plan execution
+- [ ] Witness network implementation
+- [ ] Trust tensor tracking
 
-#### Install Go
+### Phase 4: Production (Weeks 7-8)
+- [ ] Security audit
+- [ ] Performance optimization
+- [ ] Documentation completion
+- [ ] Public demo deployment
 
-1. Install the latest version of Go.
-2. Download the release suitable for your system.
-3. Follow the installation instructions.
+## Business Model
 
-**Note:** We recommend not using `brew` to install Go.
+ACT can operate as:
 
-#### Add the Go bin Directory to Your PATH
+### 1. SaaS Platform
+- Host demo society
+- Provide client apps
+- Charge for ATP tokens
+- Premium features
 
-1. Edit your `~/.bashrc` file and add the following line:
+### 2. Enterprise Solution
+- Private society deployment
+- Custom law oracle
+- Integration services
+- Support contracts
 
-   ```sh
-   export PATH=$PATH:$(go env GOPATH)/bin
-   ```
+### 3. Open Source with Services
+- Core technology free
+- Paid hosting
+- Professional services
+- Training and certification
 
-2. Apply the changes:
+## Why ACT Matters
 
-   ```sh
-   source ~/.bashrc
-   ```
+ACT is the missing piece that makes Web4 accessible to humans. By providing a user-friendly interface to the trust-native internet, ACT enables:
 
-#### Remove Existing Ignite CLI Installations
+- **Individual sovereignty**: Own your digital identity
+- **AI accountability**: Every action is traceable
+- **Economic participation**: Earn ATP through value creation
+- **Trust building**: Reputation that matters
+- **Interoperability**: Work with any MCP server
 
-1. Remove the Ignite CLI binary:
+## 🔨 What's Needed (Contributors Welcome!)
 
-   ```sh
-   rm $(which ignite)
-   ```
+### Immediate Priorities
+1. **Proto Generation**: Run `make proto-gen` and fix compilation errors
+2. **Module Wiring**: Complete app.go integration for all 5 Web4 modules
+3. **Genesis Configuration**: Define initial state for demo society
+4. **Chain Startup**: Get the blockchain running with Web4 modules
 
-   You may need to run this with `sudo`.
+### Help Wanted
+- **Go Developers**: Cosmos SDK experience helpful but not required
+- **Protocol Designers**: Help refine Web4 specifications
+- **Documentation**: Improve setup guides and API docs
+- **Testing**: Write unit and integration tests
+- **Frontend**: Build demo UI for society interactions
 
-2. Repeat the step until all Ignite CLI installations are removed.
+## Contributing
 
-#### Install Ignite CLI
+We welcome contributions! This project is in active development:
 
-```sh
-curl https://get.ignite.com/cli! | bash
-```
+1. **Check Issues**: See what needs work
+2. **Fork & Branch**: Create feature branches from `main`
+3. **Test Locally**: Ensure changes don't break existing functionality
+4. **Submit PR**: Include clear description of changes
+5. **Be Patient**: This is experimental - we're figuring it out together!
 
-#### Clone the Ignite CLI Repo
+### Development Setup
+```bash
+# Clone the repository
+git clone https://github.com/dp-web4/ACT.git
+cd ACT
 
-1. Clone the repository:
+# Install Go 1.21+
+# Install Node.js 18+
 
-   ```sh
-   git clone --depth=1 git@github.com:ignite/cli.git
-   ```
-
-2. Change to the `cli` directory:
-
-   ```sh
-   cd cli
-   ```
-
-#### Run make install
-
-```sh
+# Set up the ledger
+cd implementation/ledger
 make install
+
+# Run the swarm monitor
+cd ../../swarm-bootstrap
+node monitor-swarm.js
 ```
 
-#### Verify Your Ignite CLI Version
+## License
 
-```sh
-ignite version
-```
+GNU Affero General Public License v3.0 (AGPL-3.0) - see [LICENSE](LICENSE) file
 
-</details>
+## Contact
 
-Alternatively, you can open Ignite CLI directly in your web browser via [GitHub Codespaces](https://github.com/features/codespaces): [Open in GitHub Codespaces](https://github.dev/ignite/cli).
+Dennis Palatov  
+dp@metalinxx.io
 
-## Documentation
+---
 
-To learn how to use Ignite CLI, check out the [Ignite CLI
-docs](https://docs.ignite.com). To learn more about how to build blockchain apps
-with Ignite CLI, see the [Ignite CLI Developer
-Tutorials](https://tutorials.ignite.com).
-
-To install Ignite CLI locally on GNU, Linux, or macOS, see [Install Ignite
-CLI](https://docs.ignite.com/welcome/install).
-
-To learn more about building a JavaScript frontend for your Cosmos SDK
-blockchain, see [ignite/web](https://github.com/ignite/web).
-
-## Questions
-
-For questions and support, join the official [Ignite
-Discord](https://discord.gg/ignite) server. The issue list in this repo is
-exclusively for bug reports and feature requests.
-
-## Cosmos SDK compatibility
-
-Blockchains created with Ignite CLI use the [Cosmos
-SDK](https://github.com/cosmos/cosmos-sdk) framework. To ensure the best
-possible experience, use the version of Ignite CLI that corresponds to the
-version of Cosmos SDK that your blockchain is built with. Unless noted
-otherwise, a row refers to a minor version and all associated patch versions.
-
-| Ignite CLI  | Cosmos SDK        | IBC                  | Notes                                                         |
-| ----------- | ----------------- | -------------------- | ------------------------------------------------------------- |
-| v29.x.y     | v0.50.x & v0.53.x | v10.2.0              | Originally in v0.53.x. Can work with v0.50.x.                 |
-| v28.x.y     | v0.50.x & v0.53.x | v8.0.0               | Originally in v0.50.x. Can work with v0.53.x.                 |
-| v0.27.1     | v0.47.3           | v7.1.0               | -                                                             |
-| v0.26.0     | v0.46.7           | v6.1.0               | -                                                             |
-| v0.25.2     | v0.46.6           | v5.1.0               | Bump Tendermint version to v0.34.24                           |
-| v0.25.1     | v0.46.3           | v5.0.0               | Includes Dragonberry security fix                             |
-| ~~v0.24.0~~ | ~~v0.46.0~~       | ~~v5.0.0~~           | This version is deprecated due to a security fix in `v0.25.0` |
-| v0.23.0     | v0.45.5           | v3.0.1               |                                                               |
-| v0.21.1     | v0.45.4           | v2.0.3               | Supports Cosmos SDK v0.46.0-alpha1 and above                  |
-| v0.21.0     | v0.45.4           | v2.0.3               |                                                               |
-| v0.20.0     | v0.45.3           | v2.0.3               |                                                               |
-| v0.19       | v0.44             | v1.2.2               |                                                               |
-| v0.18       | v0.44             | v1.2.2               | `ignite chain serve` works with v0.44.x chains                |
-| v0.17       | v0.42             | Same with Cosmos SDK |                                                               |
-
-To upgrade your blockchain to the newer version of Cosmos SDK, see the
-[Migration guide](https://docs.ignite.com/migration).
-
-## Ignite Apps
-
-[Ignite Apps](https://ignite.com/marketplace) aims to extend the functionality of Ignite CLI, offering both official and community-contributed integrations. These integrations are designed to streamline development processes and offer valuable insights for blockchain app developers.
-
-### Discover Ignite Apps
-
-You can discover available Ignite Apps in the [Ignite Marketplace](https://ignite.com/marketplace). The marketplace features a variety of apps that can enhance your development experience, including tools for scaffolding, deploying, and more.
-
-### How to Install an Ignite App
-
-```bash
-ignite app install -g github.com/ignite/apps/[app-name]
-```
-
-The `ignite app list` command allows to list the plugins and their status, and to
-update a plugin if you need to get the latest version.
-
-### How to Create an App
-
-Scaffold your Ignite app with one simple command:
-
-```bash
-ignite scaffold app path/to/your/app
-```
-
-Afterwards, install using:
-
-```bash
-ignite app install -g path/to/your/app
-```
-
-For more information, refer to [Creating Ignite Apps](https://docs.ignite.com/apps/developing-apps).
-
-Also check out the section of our [example Apps](https://github.com/ignite/apps/tree/main/examples).
-
-## Contributing to Ignite CLI
-
-We welcome contributions from everyone. The `main` branch contains the
-development version of the code. You can create a branch from `main` and
-create a pull request, or maintain your own fork and submit a cross-repository
-pull request.
-
-Our Ignite CLI bounty program provides incentives for your participation and
-pays rewards. Track new, in-progress, and completed bounties in the [GitHub Issues
-board](https://github.com/ignite/cli/issues?q=is%3Aissue+is%3Aopen+label%3Abounty).
-
-**Important** Before you start implementing a new Ignite CLI feature, the first
-step is to create an issue on GitHub that describes the proposed changes.
-
-If you're not sure where to start, check out [contributing.md](contributing.md)
-for our guidelines and policies for how we develop Ignite CLI. Thank you to
-everyone who has contributed to Ignite CLI!
-
-## Community
-
-Ignite CLI is a free and open source product maintained by
-[Ignite](https://ignite.com). Here's where you can find us. Stay in touch.
-
-- [ignite.com website](https://ignite.com)
-- [@ignite on Twitter](https://x.com/ignite)
-- [ignite.com/blog](https://ignite.com/blog)
-- [Ignite Discord](https://discord.com/invite/ignite)
-- [Ignite YouTube](https://www.youtube.com/@ignitehq)
-- [Ignite docs](https://docs.ignite.com)
-- [Ignite jobs](https://ignite.com/careers)
+*"ACT transforms Web4 from a protocol into a product - making trust-native computing accessible to everyone."*
