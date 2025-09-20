@@ -1,0 +1,53 @@
+{
+  "meta_society": {
+    "name": "Federation-Alpha",
+    "type": "meta-society",
+    "members": [
+      {
+        "society": "ACT-Society-1",
+        "node_id": "c1a129e14fad4cb7c95f9e2b5e9586013941ebf5",
+        "voting_weight": 0.5
+      },
+      {
+        "society": "ACT-Society-2", 
+        "node_id": "2fcb70b4c7c34c2f6db472246da91d0fe960d055",
+        "voting_weight": 0.5
+      }
+    ],
+    "meta_laws": [
+      {
+        "id": "ML001",
+        "law": "Meta-society laws require consensus from all member societies",
+        "ratified_by": ["Society-1", "Society-2"]
+      },
+      {
+        "id": "ML002",
+        "law": "Member societies retain sovereignty over local matters",
+        "ratified_by": ["Society-1", "Society-2"]
+      },
+      {
+        "id": "ML003",
+        "law": "Inter-society disputes resolved by meta-society governance",
+        "ratified_by": ["Society-1", "Society-2"]
+      },
+      {
+        "id": "ML004",
+        "law": "Energy can flow between member societies for federation work",
+        "ratified_by": ["Society-1", "Society-2"]
+      }
+    ],
+    "governance": {
+      "proposal_threshold": 0.3,
+      "passing_threshold": 0.66,
+      "veto_threshold": 0.34,
+      "voting_period": "100 blocks"
+    },
+    "treasury": {
+      "initial_atp": 5000000,
+      "contributed_by": {
+        "Society-1": 2500000,
+        "Society-2": 2500000
+      }
+    }
+  }
+}

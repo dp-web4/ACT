@@ -1,0 +1,31 @@
+{
+  "roles": [
+    {
+      "name": "Meta-Genesis-Queen",
+      "authority": "coordinate-member-societies",
+      "responsibilities": [
+        "Facilitate inter-society communication",
+        "Validate meta-law compliance",
+        "Coordinate federation work"
+      ]
+    },
+    {
+      "name": "Bridge-Guardian",
+      "authority": "manage-ibc-bridges", 
+      "responsibilities": [
+        "Maintain chain connections",
+        "Verify cross-chain transactions",
+        "Ensure state consistency"
+      ]
+    },
+    {
+      "name": "Federation-Arbiter",
+      "authority": "resolve-disputes",
+      "responsibilities": [
+        "Mediate inter-society conflicts",
+        "Interpret meta-laws",
+        "Propose governance changes"
+      ]
+    }
+  ]
+}
