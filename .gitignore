@@ -53,3 +53,20 @@ temp/
 # OS
 Thumbs.db
 desktop.ini
+
+# Go binaries and build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+/racecarwebd
+/racecar-webd
+implementation/ledger/racecarwebd
+implementation/ledger/racecar-webd
+society[0-9]*/
+*.log
+*.pid
+
+# Test and vendor directories
+vendor/
+testdata/

@@ -3,6 +3,9 @@ module racecarweb
 go 1.24.0
 
 replace (
+	// Fix Go 1.24 compatibility with sonic library
+	github.com/bytedance/sonic => github.com/bytedance/sonic v1.12.1
+	github.com/bytedance/sonic/loader => github.com/bytedance/sonic/loader v0.2.0
 	// fix upstream GHSA-h395-qcrw-5vmq vulnerability.
 	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.9.1
 	// replace broken goleveldb
@@ -129,6 +132,7 @@ require (
 	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/ckaznocha/intrange v0.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
+	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
 	github.com/cockroachdb/apd/v2 v2.0.2 // indirect
 	github.com/cockroachdb/errors v1.12.0 // indirect

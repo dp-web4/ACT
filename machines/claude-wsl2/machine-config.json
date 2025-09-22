@@ -1,0 +1,62 @@
+{
+  "machine_name": "claude-wsl2",
+  "machine_type": "WSL2_Ubuntu",
+  "architecture": "x86_64/amd64",
+  "os": "WSL2 Linux 6.6.87.2",
+  "hostname": "DESKTOP-9E6HCAO",
+  "network": {
+    "ip_address": "172.25.232.122",
+    "p2p_port": 26676,
+    "rpc_port": 26677,
+    "api_port": 1328,
+    "grpc_port": 9101,
+    "grpc_web_port": 9111,
+    "prometheus_port": 26670
+  },
+  "society": {
+    "name": "act-society-4-claude",
+    "chain_id": "act-web4",
+    "node_id": "7edf3af3b969d7665ad41287dc702be841a8107f",
+    "moniker": "act-society-claude",
+    "role": "federation_member",
+    "home_dir": "./society4"
+  },
+  "federation": {
+    "society_1": {
+      "ip": "10.0.0.72",
+      "node_id": "c1a129e14fad4cb7c95f9e2b5e9586013941ebf5",
+      "p2p_endpoint": "c1a129e14fad4cb7c95f9e2b5e9586013941ebf5@10.0.0.72:26656"
+    },
+    "society_2_cbp": {
+      "ip": "172.28.241.186",
+      "node_id": "2fcb70b4c7c34c2f6db472246da91d0fe960d055",
+      "p2p_endpoint": "2fcb70b4c7c34c2f6db472246da91d0fe960d055@172.28.241.186:26666"
+    },
+    "society_3_sprout": {
+      "ip": "10.0.0.36",
+      "node_id": "e3ce22d2b84e0be6ad4bbe0f08afa9507b4bab85",
+      "p2p_endpoint": "e3ce22d2b84e0be6ad4bbe0f08afa9507b4bab85@10.0.0.36:26656"
+    }
+  },
+  "paths": {
+    "project_root": "/mnt/c/projects/ai-agents/ACT",
+    "ledger_dir": "/mnt/c/projects/ai-agents/ACT/implementation/ledger",
+    "binary_path": "/home/dp/.go/bin/racecarwebd",
+    "go_path": "/home/dp/go",
+    "society_home": "/mnt/c/projects/ai-agents/ACT/implementation/ledger/society4"
+  },
+  "environment": {
+    "go_version": "1.23.0+",
+    "cosmos_sdk": "v0.53.3",
+    "ignite_version": "v29.0.0",
+    "memory": "Available",
+    "disk": "SSD"
+  },
+  "status": {
+    "blockchain": "not_started",
+    "federation": "pending",
+    "last_block": 0,
+    "peers": 0
+  },
+  "notes": "Society 4 - Claude-operated node for Web4 development and testing"
+}
