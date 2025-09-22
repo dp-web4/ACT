@@ -18,11 +18,11 @@ const (
 
 // Collection key prefixes for Web4 energy cycle storage
 var (
-	ParamsKey                  = collections.NewPrefix(0)
-	EnergyOperationKey         = collections.NewPrefix(1)
-	RelationshipAtpTokenKey    = collections.NewPrefix(2)
-	RelationshipAdpTokenKey    = collections.NewPrefix(3)
-	SocietyPoolKey             = collections.NewPrefix(4)
+	ParamsKey               = collections.NewPrefix(0)
+	EnergyOperationKey      = collections.NewPrefix(1)
+	RelationshipAtpTokenKey = collections.NewPrefix(2)
+	RelationshipAdpTokenKey = collections.NewPrefix(3)
+	SocietyPoolKey          = collections.NewPrefix(4)
 )
 
 // Energy operation types

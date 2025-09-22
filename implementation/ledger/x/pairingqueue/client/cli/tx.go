@@ -1,24 +1,24 @@
 package cli
 
 import (
-    "github.com/cosmos/cosmos-sdk/client"
-    "github.com/cosmos/cosmos-sdk/client/flags"
-    "github.com/cosmos/cosmos-sdk/client/tx"
-    "github.com/spf13/cobra"
-    "racecar-web/x/pairingqueue/types"
+	"fmt"
+	"racecar-web/x/pairingqueue/types"
+
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/spf13/cobra"
 )
 
 // GetTxCmd returns the transaction commands for this module
 func GetTxCmd() *cobra.Command {
-    cmd := &cobra.Command{
-        Use:   types.ModuleName,
-        Short: fmt.Sprintf("%s transactions subcommands", types.ModuleName),
-        RunE:  client.ValidateCmd,
-    }
+	cmd := &cobra.Command{
+		Use:   types.ModuleName,
+		Short: fmt.Sprintf("%s transactions subcommands", types.ModuleName),
+		RunE:  client.ValidateCmd,
+	}
 
-    cmd.AddCommand(CmdCreateLCT())
+	cmd.AddCommand(CmdCreateLCT())
 
-    return cmd
+	return cmd
 }
 
 // Flag parsing functions

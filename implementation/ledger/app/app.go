@@ -45,18 +45,12 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v10/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
 
-	"racecar-web/docs"
-	componentregistrytypes "racecar-web/x/componentregistry/types"
-	energycyclemodulekeeper "racecar-web/x/energycycle/keeper"
-	lctmanagermoduletypes "racecar-web/x/lctmanager/types"
-	pairingmodulekeeper "racecar-web/x/pairing/keeper"
-	pairingqueuemodulekeeper "racecar-web/x/pairingqueue/keeper"
-	trusttensormodulekeeper "racecar-web/x/trusttensor/keeper"
+	"racecarweb/docs"
 )
 
 const (
 	// Name is the name of the application.
-	Name = "racecar-web"
+	Name = "racecarweb"
 	// AccountAddressPrefix is the prefix for accounts addresses.
 	AccountAddressPrefix = "cosmos"
 	// ChainCoinType is the coin type of the chain.
@@ -103,22 +97,11 @@ type App struct {
 	ICAHostKeeper       icahostkeeper.Keeper
 	TransferKeeper      ibctransferkeeper.Keeper
 
-	ComponentregistryKeeper componentregistrytypes.ComponentregistryKeeper
-	PairingqueueKeeper      pairingqueuemodulekeeper.Keeper
-	LctmanagerKeeper        lctmanagermoduletypes.LctmanagerKeeper
-	PairingKeeper           pairingmodulekeeper.Keeper
-	TrusttensorKeeper       trusttensormodulekeeper.Keeper
-	EnergycycleKeeper       energycyclemodulekeeper.Keeper
-	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
-
 	// simulation manager
 	sm *module.SimulationManager
 }
 
 func init() {
-
-	sdk.DefaultBondDenom = "stake"
-
 	var err error
 	clienthelpers.EnvPrefix = Name
 	DefaultNodeHome, err = clienthelpers.GetNodeHomeDirectory("." + Name)
@@ -188,12 +171,6 @@ func New(
 		&app.ConsensusParamsKeeper,
 		&app.CircuitBreakerKeeper,
 		&app.ParamsKeeper,
-		&app.ComponentregistryKeeper,
-		&app.PairingqueueKeeper,
-		&app.LctmanagerKeeper,
-		&app.PairingKeeper,
-		&app.TrusttensorKeeper,
-		&app.EnergycycleKeeper,
 	); err != nil {
 		panic(err)
 	}

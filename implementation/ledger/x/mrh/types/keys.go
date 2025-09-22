@@ -9,7 +9,7 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_mrh"
-	
+
 	// RouterKey defines the module's message routing key
 	RouterKey = ModuleName
 )
@@ -18,16 +18,16 @@ const (
 var (
 	// MRHGraphPrefix is the prefix for MRH graph storage
 	MRHGraphPrefix = []byte{0x01}
-	
+
 	// LCTMRHMappingPrefix maps LCT IDs to their MRH graph hashes
 	LCTMRHMappingPrefix = []byte{0x02}
-	
+
 	// WitnessRelationshipPrefix stores witness relationships
 	WitnessRelationshipPrefix = []byte{0x03}
-	
+
 	// ContextCachePrefix caches computed contexts
 	ContextCachePrefix = []byte{0x04}
-	
+
 	// TrustPathCachePrefix caches trust paths between LCTs
 	TrustPathCachePrefix = []byte{0x05}
 )

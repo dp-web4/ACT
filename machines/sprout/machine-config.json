@@ -1,0 +1,40 @@
+{
+  "machine_id": "sprout-jetson",
+  "hostname": "ubuntu",
+  "username": "sprout",
+  "os_type": "jetson",
+  "architecture": "arm64",
+  "paths": {
+    "home": "/home/sprout",
+    "workspace": "/home/sprout/ai-workspace",
+    "act_root": "/home/sprout/ai-workspace/ACT",
+    "ledger": "/home/sprout/ai-workspace/ACT/implementation/ledger",
+    "go_bin": "/home/sprout/go/bin",
+    "go_root": "/usr/local/go"
+  },
+  "build": {
+    "go_version": "1.24.0",
+    "ignite_version": "29.4.0",
+    "binary_name": "racecar-webd",
+    "chain_id": "act-web4"
+  },
+  "network": {
+    "ip": "10.0.0.36",
+    "p2p_port": 26656,
+    "rpc_port": 26657,
+    "api_port": 1317,
+    "grpc_port": 9090
+  },
+  "society": {
+    "name": "act-society-sprout",
+    "node_id": "",
+    "genesis_file": "genesis_sprout.json",
+    "home_dir": "./society-sprout"
+  },
+  "resources": {
+    "cpu_cores": 6,
+    "ram_gb": 8,
+    "gpu": "Ampere 1024 CUDA cores",
+    "storage": "1TB NVMe SSD"
+  }
+}

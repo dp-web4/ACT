@@ -1,18 +1,6 @@
 package app
 
 import (
-	_ "racecar-web/x/componentregistry/module"
-	componentregistrymoduletypes "racecar-web/x/componentregistry/types"
-	_ "racecar-web/x/energycycle/module"
-	energycyclemoduletypes "racecar-web/x/energycycle/types"
-	_ "racecar-web/x/lctmanager/module"
-	lctmanagermoduletypes "racecar-web/x/lctmanager/types"
-	_ "racecar-web/x/pairing/module"
-	pairingmoduletypes "racecar-web/x/pairing/types"
-	_ "racecar-web/x/pairingqueue/module"
-	pairingqueuemoduletypes "racecar-web/x/pairingqueue/types"
-	_ "racecar-web/x/trusttensor/module"
-	trusttensormoduletypes "racecar-web/x/trusttensor/types"
 	"time"
 
 	runtimev1alpha1 "cosmossdk.io/api/cosmos/app/runtime/v1alpha1"
@@ -93,13 +81,6 @@ var (
 		{Account: nft.ModuleName},
 		{Account: ibctransfertypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: icatypes.ModuleName},
-		{Account: componentregistrymoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
-		{Account: pairingqueuemoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
-		{Account: lctmanagermoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
-		{Account: pairingmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
-		{Account: trusttensormoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
-		{Account: energycyclemoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
-		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
 	// blocked account addresses
@@ -142,12 +123,6 @@ var (
 						// ibc modules
 						ibcexported.ModuleName,
 						// chain modules
-						componentregistrymoduletypes.ModuleName,
-						pairingqueuemoduletypes.ModuleName,
-						lctmanagermoduletypes.ModuleName,
-						pairingmoduletypes.ModuleName,
-						trusttensormoduletypes.ModuleName,
-						energycyclemoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -156,12 +131,6 @@ var (
 						feegrant.ModuleName,
 						group.ModuleName,
 						// chain modules
-						componentregistrymoduletypes.ModuleName,
-						pairingqueuemoduletypes.ModuleName,
-						lctmanagermoduletypes.ModuleName,
-						pairingmoduletypes.ModuleName,
-						trusttensormoduletypes.ModuleName,
-						energycyclemoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -198,12 +167,6 @@ var (
 						ibctransfertypes.ModuleName,
 						icatypes.ModuleName,
 						// chain modules
-						componentregistrymoduletypes.ModuleName,
-						pairingqueuemoduletypes.ModuleName,
-						lctmanagermoduletypes.ModuleName,
-						pairingmoduletypes.ModuleName,
-						trusttensormoduletypes.ModuleName,
-						energycyclemoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 				}),
@@ -299,30 +262,6 @@ var (
 			{
 				Name:   epochstypes.ModuleName,
 				Config: appconfig.WrapAny(&epochsmodulev1.Module{}),
-			},
-			{
-				Name:   componentregistrymoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&componentregistrymoduletypes.Module{}),
-			},
-			{
-				Name:   pairingqueuemoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&pairingqueuemoduletypes.Module{}),
-			},
-			{
-				Name:   lctmanagermoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&lctmanagermoduletypes.Module{}),
-			},
-			{
-				Name:   pairingmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&pairingmoduletypes.Module{}),
-			},
-			{
-				Name:   trusttensormoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&trusttensormoduletypes.Module{}),
-			},
-			{
-				Name:   energycyclemoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&energycyclemoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

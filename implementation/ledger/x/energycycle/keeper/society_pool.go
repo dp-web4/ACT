@@ -4,11 +4,12 @@ import (
 	"context"
 	"fmt"
 
+	"racecar-web/x/energycycle/types"
+
 	"cosmossdk.io/math"
 	"cosmossdk.io/store/prefix"
 	runtime "github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"racecar-web/x/energycycle/types"
 )
 
 // GetSocietyPool retrieves a society pool from the store
@@ -22,15 +23,15 @@ func (k Keeper) GetSocietyPool(ctx context.Context, societyLct string) (types.So
 	if bz == nil {
 		// Return empty pool if not exists
 		return types.SocietyPool{
-			SocietyLct:  societyLct,
-			AtpBalance:  sdk.NewCoin("atp", math.ZeroInt()),
-			AdpBalance:  sdk.NewCoin("adp", math.ZeroInt()),
-			LastUpdate:  0,
-			TotalMinted: "0",
+			SocietyLct:      societyLct,
+			AtpBalance:      sdk.NewCoin("atp", math.ZeroInt()),
+			AdpBalance:      sdk.NewCoin("adp", math.ZeroInt()),
+			LastUpdate:      0,
+			TotalMinted:     "0",
 			TotalDischarged: "0",
-			TotalRecharged: "0",
-			MetabolicState: "active",
-			Metadata: make(map[string]string),
+			TotalRecharged:  "0",
+			MetabolicState:  "active",
+			Metadata:        make(map[string]string),
 		}, nil
 	}
 

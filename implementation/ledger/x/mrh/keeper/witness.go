@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-	
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	
+
 	"racecar-web/x/mrh/types"
 )
 
@@ -28,36 +28,36 @@ func (k Keeper) AddWitnessRelationship(
 		Signature:  signature,
 		TrustBoost: k.calculateTrustBoost(eventType),
 	}
-	
+
 	// Store witness relationship
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	store := k.storeService.OpenKVStore(sdkCtx)
 	key := types.GetWitnessRelationshipKey(witnessLCT, subjectLCT)
-	
+
 	// Serialize witness relationship
 	data, err := json.Marshal(witness)
 	if err != nil {
 		return fmt.Errorf("failed to serialize witness relationship: %w", err)
 	}
-	
+
 	if err := store.Set(key, data); err != nil {
 		return fmt.Errorf("failed to store witness relationship: %w", err)
 	}
-	
+
 	// Update MRH graphs for both LCTs
 	// Add witness relationship to subject's graph
 	if err := k.AddRelationship(ctx, subjectLCT, "web4:witnessedBy", witnessLCT, witness.TrustBoost); err != nil {
 		return fmt.Errorf("failed to add witness relationship to subject graph: %w", err)
 	}
-	
+
 	// Add witness relationship to witness's graph
 	if err := k.AddRelationship(ctx, witnessLCT, "web4:witnessed", subjectLCT, witness.TrustBoost); err != nil {
 		return fmt.Errorf("failed to add witness relationship to witness graph: %w", err)
 	}
-	
+
 	// Emit event
 	k.emitWitnessEvent(sdkCtx, witness)
-	
+
 	return nil
 }
 
@@ -65,25 +65,25 @@ func (k Keeper) AddWitnessRelationship(
 func (k Keeper) GetWitnesses(ctx context.Context, subjectLCT string) ([]*types.WitnessRelationship, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	store := k.storeService.OpenKVStore(sdkCtx)
-	
+
 	var witnesses []*types.WitnessRelationship
-	
+
 	// Iterate through all witness relationships
 	// This is inefficient - in production, use an index
 	iterator := store.Iterator(types.WitnessRelationshipPrefix, nil)
 	defer iterator.Close()
-	
+
 	for ; iterator.Valid(); iterator.Next() {
 		var witness types.WitnessRelationship
 		if err := json.Unmarshal(iterator.Value(), &witness); err != nil {
 			continue
 		}
-		
+
 		if witness.SubjectLCT == subjectLCT {
 			witnesses = append(witnesses, &witness)
 		}
 	}
-	
+
 	return witnesses, nil
 }
 
@@ -91,24 +91,24 @@ func (k Keeper) GetWitnesses(ctx context.Context, subjectLCT string) ([]*types.W
 func (k Keeper) GetWitnessedEntities(ctx context.Context, witnessLCT string) ([]*types.WitnessRelationship, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	store := k.storeService.OpenKVStore(sdkCtx)
-	
+
 	var witnessed []*types.WitnessRelationship
-	
+
 	// Iterate through witness relationships
 	iterator := store.Iterator(types.WitnessRelationshipPrefix, nil)
 	defer iterator.Close()
-	
+
 	for ; iterator.Valid(); iterator.Next() {
 		var witness types.WitnessRelationship
 		if err := json.Unmarshal(iterator.Value(), &witness); err != nil {
 			continue
 		}
-		
+
 		if witness.WitnessLCT == witnessLCT {
 			witnessed = append(witnessed, &witness)
 		}
 	}
-	
+
 	return witnessed, nil
 }
 
@@ -123,7 +123,7 @@ func (k Keeper) VerifyWitnessThreshold(
 	if err != nil {
 		return false, fmt.Errorf("failed to get witnesses: %w", err)
 	}
-	
+
 	// Count witnesses for specific event type
 	count := 0
 	for _, w := range witnesses {
@@ -131,7 +131,7 @@ func (k Keeper) VerifyWitnessThreshold(
 			count++
 		}
 	}
-	
+
 	return count >= requiredWitnesses, nil
 }
 
@@ -146,13 +146,13 @@ func (k Keeper) CalculateWitnessedTrust(
 	if err != nil {
 		return 0, err
 	}
-	
+
 	// Get witnesses for the target LCT
 	witnesses, err := k.GetWitnesses(ctx, toLCT)
 	if err != nil {
 		return baseTrust, nil // Return base trust if can't get witnesses
 	}
-	
+
 	// Calculate witness boost
 	totalBoost := 0.0
 	for _, w := range witnesses {
@@ -163,15 +163,15 @@ func (k Keeper) CalculateWitnessedTrust(
 			totalBoost += w.TrustBoost * witnessТrust
 		}
 	}
-	
+
 	// Apply witness boost with diminishing returns
 	boostedTrust := baseTrust + (1-baseTrust)*totalBoost*0.1 // Max 10% boost per witness
-	
+
 	// Cap at 1.0
 	if boostedTrust > 1.0 {
 		boostedTrust = 1.0
 	}
-	
+
 	return boostedTrust, nil
 }
 
@@ -188,7 +188,7 @@ func (k Keeper) CreateBirthCertificate(
 	if len(witnesses) < 3 {
 		return nil, fmt.Errorf("insufficient witnesses: need at least 3, got %d", len(witnesses))
 	}
-	
+
 	// Create birth certificate
 	cert := &BirthCertificate{
 		CertID:     generateCertID(),
@@ -199,27 +199,27 @@ func (k Keeper) CreateBirthCertificate(
 		Witnesses:  witnesses,
 		Metadata:   metadata,
 	}
-	
+
 	// Store birth certificate
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	store := k.storeService.OpenKVStore(sdkCtx)
-	
+
 	certKey := getBirthCertKey(cert.CertID)
 	certData, err := json.Marshal(cert)
 	if err != nil {
 		return nil, fmt.Errorf("failed to serialize birth certificate: %w", err)
 	}
-	
+
 	if err := store.Set(certKey, certData); err != nil {
 		return nil, fmt.Errorf("failed to store birth certificate: %w", err)
 	}
-	
+
 	// Map LCT to birth certificate
 	lctCertKey := getLCTBirthCertKey(lctID)
 	if err := store.Set(lctCertKey, []byte(cert.CertID)); err != nil {
 		return nil, fmt.Errorf("failed to store LCT-cert mapping: %w", err)
 	}
-	
+
 	// Record witness relationships
 	for _, witnessLCT := range witnesses {
 		if err := k.AddWitnessRelationship(ctx, witnessLCT, lctID, "birth_certificate", nil); err != nil {
@@ -227,10 +227,10 @@ func (k Keeper) CreateBirthCertificate(
 			k.Logger().Error("failed to record witness relationship", "witness", witnessLCT, "error", err)
 		}
 	}
-	
+
 	// Emit event
 	k.emitBirthCertEvent(sdkCtx, cert)
-	
+
 	return cert, nil
 }
 
@@ -238,7 +238,7 @@ func (k Keeper) CreateBirthCertificate(
 func (k Keeper) GetBirthCertificate(ctx context.Context, lctID string) (*BirthCertificate, error) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 	store := k.storeService.OpenKVStore(sdkCtx)
-	
+
 	// Get certificate ID from mapping
 	lctCertKey := getLCTBirthCertKey(lctID)
 	certIDBytes, err := store.Get(lctCertKey)
@@ -248,7 +248,7 @@ func (k Keeper) GetBirthCertificate(ctx context.Context, lctID string) (*BirthCe
 	if certIDBytes == nil {
 		return nil, fmt.Errorf("no birth certificate found for LCT %s", lctID)
 	}
-	
+
 	// Get certificate
 	certKey := getBirthCertKey(string(certIDBytes))
 	certData, err := store.Get(certKey)
@@ -258,12 +258,12 @@ func (k Keeper) GetBirthCertificate(ctx context.Context, lctID string) (*BirthCe
 	if certData == nil {
 		return nil, fmt.Errorf("birth certificate not found: %s", string(certIDBytes))
 	}
-	
+
 	var cert BirthCertificate
 	if err := json.Unmarshal(certData, &cert); err != nil {
 		return nil, fmt.Errorf("failed to deserialize birth certificate: %w", err)
 	}
-	
+
 	return &cert, nil
 }
 

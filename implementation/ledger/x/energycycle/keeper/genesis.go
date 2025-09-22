@@ -23,7 +23,7 @@ func (k Keeper) ExportGenesis(ctx context.Context) (*types.GenesisState, error) 
 		// Return default params if none exist
 		params = types.DefaultParams()
 	}
-	
+
 	return &types.GenesisState{
 		Params: params,
 	}, nil

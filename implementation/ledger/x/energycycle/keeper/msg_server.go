@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"cosmossdk.io/math"
 	errorsmod "cosmossdk.io/errors"
+	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
@@ -427,8 +427,8 @@ func (ms msgServer) RechargeADP(ctx context.Context, msg *types.MsgRechargeADP) 
 		Status:              "charged",
 		RelationshipContext: fmt.Sprintf("producer:%s:source:%s", msg.LctId, msg.EnergySource),
 		ExpirationBlock:     blockHeight + 100000, // ATP tokens expire if not used
-		TrustScore:          "1.0", // Producer entities have high trust
-		EfficiencyRating:    msg.ValidationProof, // Store validation in efficiency field
+		TrustScore:          "1.0",                // Producer entities have high trust
+		EfficiencyRating:    msg.ValidationProof,  // Store validation in efficiency field
 		Version:             1,
 	}
 

@@ -6,7 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	
+
 	"golang.org/x/crypto/curve25519"
 )
 
@@ -35,25 +35,25 @@ func (cm *CryptoManager) DeriveX25519Keys(edPriv ed25519.PrivateKey) ([]byte, []
 	if len(edPriv) != ed25519.PrivateKeySize {
 		return nil, nil, fmt.Errorf("invalid Ed25519 private key size")
 	}
-	
+
 	// Extract the 32-byte seed from the Ed25519 private key
 	seed := edPriv[:32]
-	
+
 	// Hash the seed to get X25519 private key
 	hash := sha256.Sum256(seed)
 	x25519Priv := hash[:]
-	
+
 	// Clamp the private key as per X25519 spec
 	x25519Priv[0] &= 248
 	x25519Priv[31] &= 127
 	x25519Priv[31] |= 64
-	
+
 	// Derive X25519 public key
 	x25519Pub, err := curve25519.X25519(x25519Priv, curve25519.Basepoint)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to derive X25519 public key: %w", err)
 	}
-	
+
 	return x25519Pub, x25519Priv, nil
 }
 
@@ -62,12 +62,12 @@ func (cm *CryptoManager) PerformDiffieHellman(privateKey, peerPublicKey []byte) 
 	if len(privateKey) != 32 || len(peerPublicKey) != 32 {
 		return nil, fmt.Errorf("invalid key sizes for Diffie-Hellman")
 	}
-	
+
 	sharedSecret, err := curve25519.X25519(privateKey, peerPublicKey)
 	if err != nil {
 		return nil, fmt.Errorf("Diffie-Hellman failed: %w", err)
 	}
-	
+
 	return sharedSecret, nil
 }
 
@@ -76,7 +76,7 @@ func (cm *CryptoManager) SignMessage(privateKey ed25519.PrivateKey, message []by
 	if len(privateKey) != ed25519.PrivateKeySize {
 		return nil, fmt.Errorf("invalid Ed25519 private key size")
 	}
-	
+
 	signature := ed25519.Sign(privateKey, message)
 	return signature, nil
 }
@@ -86,7 +86,7 @@ func (cm *CryptoManager) VerifySignature(publicKey ed25519.PublicKey, message, s
 	if len(publicKey) != ed25519.PublicKeySize {
 		return false
 	}
-	
+
 	return ed25519.Verify(publicKey, message, signature)
 }
 
@@ -95,7 +95,7 @@ func (cm *CryptoManager) GenerateLCTID(entityType string, publicKey ed25519.Publ
 	// Create a deterministic ID from the public key
 	hash := sha256.Sum256(publicKey)
 	shortHash := hex.EncodeToString(hash[:8]) // Use first 8 bytes for shorter ID
-	
+
 	// Format: lct:web4:act:<entity_type>:<hash>
 	return fmt.Sprintf("lct:web4:act:%s:%s", entityType, shortHash)
 }
@@ -115,22 +115,22 @@ func (cm *CryptoManager) GenerateProofOfAgency(
 		Timestamp:      getCurrentTimestamp(),
 		Nonce:          generateNonce(),
 	}
-	
+
 	// Serialize the message
 	messageBytes, err := serializeProofMessage(message)
 	if err != nil {
 		return nil, fmt.Errorf("failed to serialize proof message: %w", err)
 	}
-	
+
 	// Sign with delegator's private key
 	signature := ed25519.Sign(delegatorPrivKey, messageBytes)
-	
+
 	// Combine message and signature
 	proof := ProofOfAgency{
 		Message:   messageBytes,
 		Signature: signature,
 	}
-	
+
 	return serializeProof(proof)
 }
 
@@ -145,24 +145,24 @@ func (cm *CryptoManager) VerifyProofOfAgency(
 	if err != nil {
 		return false, fmt.Errorf("failed to deserialize proof: %w", err)
 	}
-	
+
 	// Verify the signature
 	if !ed25519.Verify(delegatorPubKey, proof.Message, proof.Signature) {
 		return false, nil
 	}
-	
+
 	// Deserialize and verify the message content
 	message, err := deserializeProofMessage(proof.Message)
 	if err != nil {
 		return false, fmt.Errorf("failed to deserialize proof message: %w", err)
 	}
-	
+
 	// Verify the agent public key matches
 	expectedKey := hex.EncodeToString(agentPubKey)
 	if message.AgentPublicKey != expectedKey {
 		return false, fmt.Errorf("agent public key mismatch")
 	}
-	
+
 	return true, nil
 }
 
@@ -180,13 +180,13 @@ func (cm *CryptoManager) GenerateWitnessSignature(
 		EventData:  hex.EncodeToString(eventData),
 		Timestamp:  getCurrentTimestamp(),
 	}
-	
+
 	// Serialize and sign
 	messageBytes, err := serializeWitnessMessage(message)
 	if err != nil {
 		return nil, fmt.Errorf("failed to serialize witness message: %w", err)
 	}
-	
+
 	signature := ed25519.Sign(witnessPrivKey, messageBytes)
 	return signature, nil
 }
@@ -218,9 +218,9 @@ type WitnessMessage struct {
 func serializeProofMessage(msg ProofOfAgencyMessage) ([]byte, error) {
 	// In production, use proper CBOR or protobuf encoding
 	// For now, using simple concatenation
-	data := fmt.Sprintf("%s|%v|%v|%d|%s", 
-		msg.AgentPublicKey, 
-		msg.Permissions, 
+	data := fmt.Sprintf("%s|%v|%v|%d|%s",
+		msg.AgentPublicKey,
+		msg.Permissions,
 		msg.Constraints,
 		msg.Timestamp,
 		msg.Nonce,
@@ -243,7 +243,7 @@ func deserializeProof(data []byte) (*ProofOfAgency, error) {
 	if len(data) < ed25519.SignatureSize {
 		return nil, fmt.Errorf("invalid proof data")
 	}
-	
+
 	sigStart := len(data) - ed25519.SignatureSize
 	return &ProofOfAgency{
 		Message:   data[:sigStart],
