@@ -1,0 +1,54 @@
+{
+  "machine_name": "cbp",
+  "machine_type": "WSL2_Ubuntu",
+  "architecture": "x86_64/amd64",
+  "os": "Ubuntu 22.04 WSL2",
+  "hostname": "cbp",
+  "network": {
+    "ip_address": "172.28.241.186",
+    "p2p_port": 26666,
+    "rpc_port": 26667,
+    "api_port": 1318,
+    "grpc_port": 9091
+  },
+  "society": {
+    "name": "act-society-2",
+    "chain_id": "act-web4",
+    "node_id": "2fcb70b4c7c34c2f6db472246da91d0fe960d055",
+    "moniker": "act-society-2",
+    "role": "federation_member",
+    "home_dir": "./society2"
+  },
+  "federation": {
+    "society_1": {
+      "ip": "10.0.0.72",
+      "node_id": "c1a129e14fad4cb7c95f9e2b5e9586013941ebf5",
+      "p2p_endpoint": "c1a129e14fad4cb7c95f9e2b5e9586013941ebf5@10.0.0.72:26656"
+    },
+    "society_3_jetson": {
+      "ip": "10.0.0.36",
+      "node_id": "TBD",
+      "p2p_endpoint": "TBD"
+    }
+  },
+  "paths": {
+    "project_root": "/mnt/c/exe/projects/ai-agents/ACT",
+    "ledger_dir": "/mnt/c/exe/projects/ai-agents/ACT/implementation/ledger",
+    "binary_path": "/home/dp/.go/bin/racecar-webd",
+    "go_path": "/home/dp/go",
+    "society_home": "/mnt/c/exe/projects/ai-agents/ACT/implementation/ledger/society2"
+  },
+  "environment": {
+    "go_version": "1.24.0",
+    "cosmos_sdk": "v0.53.3",
+    "ignite_version": "v29.0.0",
+    "memory": "12GB RAM + 32GB Swap",
+    "disk": "SSD"
+  },
+  "status": {
+    "blockchain": "running",
+    "federation": "connected",
+    "last_block": 14278,
+    "peers": 1
+  }
+}
