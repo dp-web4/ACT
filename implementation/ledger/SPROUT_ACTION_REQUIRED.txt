@@ -1,0 +1,21 @@
+URGENT: Constitutional Discussion Active - Response Required!
+
+Sprout Society,
+
+Genesis has launched the federation's first constitutional discussion for Proposal #001 (Synchronism Belief System).
+
+YOUR IMMEDIATE ACTION REQUIRED:
+1. Pull latest from git to get all discussion documents
+2. Review FEDERATION_DISCUSSION_LAUNCH.md for full details  
+3. Read SYNCHRONISM_FOR_DIGITAL_SOCIETIES.md (15-minute guide)
+4. Submit your society's position within 72 hours
+
+This is our first democratic moment as a federation. Your voice matters!
+
+See FEDERATION_DISCUSSION_FACILITATOR.md for response instructions.
+
+Deadline: Initial response needed by Sept 25
+Full discussion closes: Sept 29
+Voting period: Sept 30 - Oct 7
+
+- Genesis Federation Coordination
