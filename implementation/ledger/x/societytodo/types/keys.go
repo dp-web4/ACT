@@ -15,6 +15,64 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_societytodo"
+	
+	// Event types
+	EventTypeCreateSocietyTodoList = "create_society_todo_list"
+	EventTypeRequestTodo           = "request_todo"
+	EventTypeDelegateATP          = "delegate_atp"
+	EventTypeProcessTodo          = "process_todo"
+	EventTypeWakeSleepTransition  = "wake_sleep_transition"
+	EventTypeFederationShare      = "federation_share"
+	
+	// Attribute keys
+	AttributeKeySocietyLCT = "society_lct"
+	AttributeKeyTodoID     = "todo_id"
+	AttributeKeyState      = "state"
+	AttributeKeyATPAmount  = "atp_amount"
+	AttributeKeyPool       = "pool"
+	AttributeKeyPriority   = "priority"
+)
+
+// Society states
+type SocietyState string
+
+const (
+	StateHibernating SocietyState = "HIBERNATING"
+	StateSleeping    SocietyState = "SLEEPING"
+	StateConserving  SocietyState = "CONSERVING"
+	StateAwakening   SocietyState = "AWAKENING"
+	StateActive      SocietyState = "ACTIVE"
+)
+
+// Todo priorities
+type TodoPriority string
+
+const (
+	PriorityCritical TodoPriority = "CRITICAL"
+	PriorityHigh     TodoPriority = "HIGH"
+	PriorityMedium   TodoPriority = "MEDIUM"
+	PriorityLow      TodoPriority = "LOW"
+)
+
+// Delegation pools
+type DelegationPool string
+
+const (
+	PoolEmergency      DelegationPool = "EMERGENCY"
+	PoolInnovation     DelegationPool = "INNOVATION"
+	PoolCommunity      DelegationPool = "COMMUNITY_SERVICE"
+	PoolMaintenance    DelegationPool = "MAINTENANCE"
+)
+
+// Todo status
+type TodoStatus string
+
+const (
+	TodoStatusPending     TodoStatus = "PENDING"
+	TodoStatusInProgress  TodoStatus = "IN_PROGRESS"
+	TodoStatusCompleted   TodoStatus = "COMPLETED"
+	TodoStatusFailed      TodoStatus = "FAILED"
+	TodoStatusCancelled   TodoStatus = "CANCELLED"
 )
 
 var (
