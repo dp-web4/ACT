@@ -1,0 +1,61 @@
+{
+  "id": "constitutional_discussion_001",
+  "title": "Constitutional Amendment: Synchronism Adoption",
+  "description": "Federation-wide discussion of Proposal #001 - Synchronism Belief System with Coherence Guru role",
+  "type": "constitutional_amendment",
+  "priority": "CRITICAL",
+  "complexity": 9,
+  "sponsor": "genesis-society",
+  "participants": [
+    "all-federation-members"
+  ],
+  "discussion_phases": [
+    {
+      "phase": "education_and_review",
+      "duration_hours": 72,
+      "start_time": "2025-09-22T21:05:07.575538",
+      "deliverables": [
+        "document_review",
+        "initial_questions"
+      ],
+      "description": "All societies review Synchronism documents and ask clarifying questions"
+    },
+    {
+      "phase": "society_positions",
+      "duration_hours": 48,
+      "deliverables": [
+        "internal_consensus",
+        "position_statements",
+        "amendment_proposals"
+      ],
+      "description": "Each society develops internal position and proposes amendments"
+    },
+    {
+      "phase": "federation_synthesis",
+      "duration_hours": 48,
+      "deliverables": [
+        "amendment_negotiation",
+        "final_proposal_draft"
+      ],
+      "description": "Federation negotiates amendments and creates final voting proposal"
+    }
+  ],
+  "required_documents": [
+    "SYNCHRONISM_FOR_DIGITAL_SOCIETIES.md",
+    "COHERENCE_GURU_SPECIFICATION.md",
+    "FEDERATION_DISCUSSION_LAUNCH.md",
+    "docs/proposals/PROPOSAL_001_SYNCHRONISM_BELIEF_SYSTEM.md"
+  ],
+  "voting_requirements": {
+    "quorum": "75% of societies",
+    "consensus_threshold": "75% weighted vote",
+    "eligible_voters": "citizens with LCT and T3 > 0.5",
+    "voting_method": "atp_weighted_quadratic"
+  },
+  "discussion_endpoints": {
+    "live_chat": "http://10.0.0.72:8080/api/v1/federation/discussion/live",
+    "async_comments": "http://10.0.0.72:8080/api/v1/federation/discussion/async",
+    "position_submission": "http://10.0.0.72:8080/api/v1/federation/positions",
+    "amendment_proposals": "http://10.0.0.72:8080/api/v1/federation/amendments"
+  }
+}
