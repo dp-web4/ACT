@@ -38,5 +38,5 @@ genesis_*.json
 
 # Federation mailbox files
 federation_outbox/*.sent
-git_mailbox_*.sh
+git_mailbox*.sh
 git_mailbox*.log
