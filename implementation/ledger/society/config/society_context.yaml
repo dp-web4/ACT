@@ -1,0 +1,104 @@
+# Society Context Configuration
+# Machine-specific settings for federation resilience
+
+society:
+  id: "society_001_genesis"
+  name: "Genesis-Society"
+  machine_id: "dp-desktop-72"
+  created_at: "2025-01-19T00:00:00Z"
+  role: "genesis_validator"
+  
+network:
+  local_ip: "10.0.0.72"
+  public_ip: "10.0.0.72"  # Same in local network
+  network_interface: "eth0"
+  endpoints:
+    p2p: "tcp://10.0.0.72:26656"
+    rpc: "http://10.0.0.72:26657"
+    rest: "http://10.0.0.72:1317"
+    grpc: "10.0.0.72:9090"
+    
+federation:
+  chain_id: "act-web4"
+  known_peers:
+    - id: "act-society-claude"
+      node_id: "7edf3af375ad9f95cbf652cf3ab66af086e956bc"
+      endpoints: 
+        p2p: "tcp://10.0.0.147:26656"
+        rpc: "http://10.0.0.147:26657"
+      last_seen: "2025-01-22T20:00:00Z"
+      trust_level: 0.85
+      status: "active"
+      
+    - id: "society-2"
+      node_id: "2fcb70b4c7c34c2f6db472246da91d0fe960d055"
+      endpoints:
+        p2p: "tcp://10.0.0.146:26656"
+      last_seen: "2025-01-21T15:00:00Z"
+      trust_level: 0.80
+      status: "inactive"
+      
+    - id: "sprout"
+      endpoints:
+        p2p: "tcp://10.0.0.36:26656"
+      last_seen: "2025-01-21T16:00:00Z"
+      trust_level: 0.75
+      status: "unknown"
+      
+    - id: "society4"
+      endpoints:
+        p2p: "tcp://10.0.0.0:26656"  # Awaiting actual IP
+      trust_level: 0.50
+      status: "pending"
+
+resilience:
+  heartbeat_interval_seconds: 30
+  heartbeat_timeout_seconds: 120
+  reconnect_policy:
+    max_retries: 10
+    backoff_multiplier: 2
+    initial_backoff_seconds: 1
+    max_backoff_seconds: 512
+    give_up_after_seconds: 3600
+    
+  consensus:
+    min_peers_for_normal: 2
+    min_peers_for_degraded: 1
+    critical_only_threshold: 0.5
+    
+  todo_migration:
+    grace_period_seconds: 120
+    checkpoint_interval_seconds: 60
+    max_concurrent_migrations: 3
+    
+capabilities:
+  compute:
+    cpu_cores: 8
+    memory_gb: 32
+    storage_gb: 1000
+    gpu_available: false
+    
+  specializations:
+    - "consensus_validation"
+    - "state_management"
+    - "federation_coordination"
+    - "todo_processing"
+    
+  limits:
+    max_concurrent_todos: 10
+    max_atp_per_cycle: 1000000
+    max_delegations: 100
+    
+monitoring:
+  metrics_export: true
+  metrics_port: 9091
+  log_level: "info"
+  audit_log: true
+  event_retention_days: 30
+  
+backup:
+  enabled: true
+  interval_hours: 6
+  retention_copies: 4
+  backup_path: "/home/dp/ai-workspace/act/backups/"
+  include_federation_state: true

@@ -1,0 +1,197 @@
+syntax = "proto3";
+package racecarweb.societytodo.v1;
+
+import "google/protobuf/timestamp.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "racecar-web/x/societytodo/types";
+
+// SocietyState represents the operational state of a society
+enum SocietyState {
+  SOCIETY_STATE_UNSPECIFIED = 0;
+  SOCIETY_STATE_HIBERNATING = 1;
+  SOCIETY_STATE_SLEEPING = 2;
+  SOCIETY_STATE_CONSERVING = 3;
+  SOCIETY_STATE_AWAKENING = 4;
+  SOCIETY_STATE_ACTIVE = 5;
+}
+
+// TodoPriority represents the priority level of a todo
+enum TodoPriority {
+  TODO_PRIORITY_UNSPECIFIED = 0;
+  TODO_PRIORITY_LOW = 1;
+  TODO_PRIORITY_MEDIUM = 2;
+  TODO_PRIORITY_HIGH = 3;
+  TODO_PRIORITY_CRITICAL = 4;
+}
+
+// TodoStatus represents the current status of a todo item
+enum TodoStatus {
+  TODO_STATUS_UNSPECIFIED = 0;
+  TODO_STATUS_PENDING = 1;
+  TODO_STATUS_IN_PROGRESS = 2;
+  TODO_STATUS_COMPLETED = 3;
+  TODO_STATUS_FAILED = 4;
+  TODO_STATUS_CANCELLED = 5;
+}
+
+// DelegationPool represents the type of delegation pool
+enum DelegationPool {
+  DELEGATION_POOL_UNSPECIFIED = 0;
+  DELEGATION_POOL_EMERGENCY = 1;
+  DELEGATION_POOL_INNOVATION = 2;
+  DELEGATION_POOL_COMMUNITY = 3;
+  DELEGATION_POOL_MAINTENANCE = 4;
+}
+
+// SocietyTodoList manages todos for a society
+message SocietyTodoList {
+  string society_lct = 1;
+  SocietyState state = 2;
+  string atp_budget = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string atp_available = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  google.protobuf.Timestamp cycle_start_time = 5 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  int64 cycle_duration_seconds = 6;
+  uint64 cycle_number = 7;
+  string energy_efficiency = 8 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  bool accepting_requests = 9;
+  string emergency_reserve = 10 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  repeated string active_todos = 11;
+  uint64 completed_count = 12;
+  uint64 failed_count = 13;
+}
+
+// TodoItem represents a task in the society
+message TodoItem {
+  string id = 1;
+  string society_lct = 2;
+  string title = 3;
+  string description = 4;
+  TodoPriority priority = 5;
+  TodoStatus status = 6;
+  uint32 complexity = 7;
+  string atp_cost = 8 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string adp_reward = 9 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string requested_by = 10;
+  string executed_by = 11;
+  google.protobuf.Timestamp created_at = 12 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp started_at = 13 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp completed_at = 14 [(gogoproto.stdtime) = true];
+  string proof_hash = 15;
+  string quality_score = 16 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  repeated string shared_with = 17;
+}
+
+// CitizenRequest represents a todo request from a citizen
+message CitizenRequest {
+  string id = 1;
+  string citizen_lct = 2;
+  string society_lct = 3;
+  string title = 4;
+  string description = 5;
+  TodoPriority priority = 6;
+  uint32 complexity = 7;
+  string estimated_atp = 8 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string trust_level = 9 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  google.protobuf.Timestamp request_time = 10 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  string status = 11;
+  string todo_id = 12;
+  string rejection_reason = 13;
+}
+
+// ATPDelegation represents citizen ATP delegation to a pool
+message ATPDelegation {
+  string id = 1;
+  string citizen_lct = 2;
+  string society_lct = 3;
+  DelegationPool pool = 4;
+  string amount = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string voting_power = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  int64 lock_period_seconds = 7;
+  google.protobuf.Timestamp delegated_at = 8 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp unlocks_at = 9 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  bool is_active = 10;
+}
+
+// WakeSleepCycle represents a society's energy cycle
+message WakeSleepCycle {
+  string society_lct = 1;
+  uint64 cycle_number = 2;
+  SocietyState start_state = 3;
+  SocietyState end_state = 4;
+  string start_atp = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string end_atp = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  uint32 todos_created = 7;
+  uint32 todos_completed = 8;
+  uint32 todos_failed = 9;
+  string total_atp_spent = 10 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string total_adp_earned = 11 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string efficiency = 12 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  google.protobuf.Timestamp start_time = 13 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp end_time = 14 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+}
