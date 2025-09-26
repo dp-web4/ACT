@@ -188,6 +188,74 @@
             margin-bottom: 10px;
         }
 
+        .example-section {
+            background: #f0f8ff;
+            border: 1px solid #b0d4ff;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .example-header {
+            font-weight: 600;
+            color: #2c5aa0;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-code {
+            background: #ffffff;
+            border: 1px solid #d0e4ff;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 8px 0;
+        }
+
+        .copy-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .copy-button:hover {
+            background: #5a67d8;
+        }
+
+        .tips-list {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .tips-list li {
+            color: #555;
+            font-size: 13px;
+            margin: 4px 0;
+        }
+
+        .json-input {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .parameter-type {
+            color: #666;
+            font-size: 11px;
+            margin-left: 8px;
+            font-style: italic;
+        }
+
         .parameter {
             margin-bottom: 10px;
         }
@@ -340,10 +408,19 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { toolExamples, formatExample } from '/tool-helpers.js';
+
         let servers = [];
         let selectedServer = null;
         let ws = null;
+
+        // Make functions available globally
+        window.servers = servers;
+        window.selectedServer = selectedServer;
+        window.selectServer = selectServer;
+        window.discoverServers = discoverServers;
+        window.invokeTool = invokeTool;
 
         async function discoverServers() {
             try {
@@ -362,8 +439,8 @@
                 return;
             }
 
-            container.innerHTML = servers.map(server => `
-                <div class="server-card" onclick="selectServer('${server.name}')">
+            container.innerHTML = servers.map((server, index) => `
+                <div class="server-card" data-server-index="${index}">
                     <div class="server-name">
                         <span class="server-status ${server.available ? 'available' : ''} ${server.connected ? 'connected' : ''}"></span>
                         ${server.name}
@@ -372,19 +449,31 @@
                     <span class="server-type">${server.type}</span>
                 </div>
             `).join('');
+
+            // Add event listeners after rendering
+            document.querySelectorAll('.server-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.serverIndex);
+                    const server = servers[index];
+                    selectServer(server);
+                });
+            });
         }
 
-        async function selectServer(serverName) {
-            const server = servers.find(s => s.name === serverName);
+        async function selectServer(server) {
             if (!server) return;
 
             selectedServer = server;
+            window.selectedServer = selectedServer; // Make available globally
 
             // Update UI to show selected state
-            document.querySelectorAll('.server-card').forEach(card => {
-                card.classList.remove('selected');
+            document.querySelectorAll('.server-card').forEach((card, index) => {
+                if (servers[index].name === server.name) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
             });
-            event.currentTarget.classList.add('selected');
 
             // Connect to server
             await connectToServer(server);
@@ -444,19 +533,76 @@
         function renderTool(tool) {
             const parameters = tool.inputSchema?.properties || {};
             const required = tool.inputSchema?.required || [];
+            const helper = toolExamples[tool.name];
+
+            // Check if this tool expects complex JSON input
+            const isComplexInput = tool.inputSchema?.properties &&
+                                  Object.keys(parameters).length === 1 &&
+                                  (parameters[Object.keys(parameters)[0]].type === 'array' ||
+                                   parameters[Object.keys(parameters)[0]].type === 'object');
 
             return `
                 <div class="tool-card">
                     <div class="tool-name">${tool.name}</div>
                     <div class="tool-description">${tool.description || 'No description'}</div>
+
+                    ${helper ? `
+                        <div class="example-section">
+                            <div class="example-header">
+                                <span>📘 Example</span>
+                                <button class="copy-button" onclick="copyExample('${tool.name}')">Copy</button>
+                            </div>
+                            <div class="example-code" id="example-${tool.name}">${formatExample(helper.example)}</div>
+                            ${helper.tips ? `
+                                <div class="tips-header">💡 Tips:</div>
+                                <ul class="tips-list">
+                                    ${helper.tips.map(tip => `<li>${tip}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
                     <div class="tool-parameters">
-                        ${Object.entries(parameters).map(([name, schema]) => renderParameter(name, schema, required.includes(name))).join('')}
+                        ${isComplexInput ?
+                            `<div class="parameter">
+                                <label>JSON Input:</label>
+                                <textarea class="json-input" id="param-${tool.name}-json" placeholder='${helper ? formatExample(helper.example) : "Enter JSON here..."}'></textarea>
+                            </div>` :
+                            Object.entries(parameters).map(([name, schema]) => renderParameter(name, schema, required.includes(name))).join('')
+                        }
                     </div>
                     <button class="invoke-button" onclick="invokeTool('${tool.name}')">
                         Invoke ${tool.name}
                     </button>
                 </div>
             `;
+        }
+
+        // Add copy function
+        window.copyExample = function(toolName) {
+            const helper = toolExamples[toolName];
+            if (!helper) return;
+
+            const exampleText = formatExample(helper.example);
+
+            // Try to copy to clipboard
+            navigator.clipboard.writeText(exampleText).then(() => {
+                // Also fill the input field if it exists
+                const jsonInput = document.getElementById(`param-${toolName}-json`);
+                if (jsonInput) {
+                    jsonInput.value = exampleText;
+                }
+
+                // Visual feedback
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
         }
 
         function renderParameter(name, schema, isRequired) {
@@ -485,19 +631,32 @@
             if (!tool) return;
 
             // Gather parameters
-            const parameters = {};
+            let parameters = {};
             const properties = tool.inputSchema?.properties || {};
 
-            for (const [name, schema] of Object.entries(properties)) {
-                const element = document.getElementById(`param-${name}`);
-                if (element && element.value) {
-                    // Convert to appropriate type
-                    if (schema.type === 'number') {
-                        parameters[name] = Number(element.value);
-                    } else if (schema.type === 'boolean') {
-                        parameters[name] = element.value === 'true';
-                    } else {
-                        parameters[name] = element.value;
+            // Check if this is a complex JSON input tool
+            const jsonInput = document.getElementById(`param-${toolName}-json`);
+            if (jsonInput) {
+                try {
+                    // Parse the JSON input
+                    parameters = JSON.parse(jsonInput.value);
+                } catch (error) {
+                    alert('Invalid JSON: ' + error.message);
+                    return;
+                }
+            } else {
+                // Regular parameter gathering
+                for (const [name, schema] of Object.entries(properties)) {
+                    const element = document.getElementById(`param-${name}`);
+                    if (element && element.value) {
+                        // Convert to appropriate type
+                        if (schema.type === 'number') {
+                            parameters[name] = Number(element.value);
+                        } else if (schema.type === 'boolean') {
+                            parameters[name] = element.value === 'true';
+                        } else {
+                            parameters[name] = element.value;
+                        }
                     }
                 }
             }

@@ -16,6 +16,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// Serve tool-helpers.js from src directory
+app.get('/tool-helpers.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'tool-helpers.js'));
+});
+
 // Store active connections
 const connections = new Map();
 
