@@ -26,6 +26,11 @@ app.get('/intelligent-helper.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'intelligent-helper.js'));
 });
 
+// Serve server-info.js from src directory
+app.get('/server-info.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'server-info.js'));
+});
+
 // Store active connections
 const connections = new Map();
 

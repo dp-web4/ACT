@@ -411,6 +411,7 @@
     <script type="module">
         import { toolExamples, formatExample } from '/tool-helpers.js';
         import { IntelligentHelper } from '/intelligent-helper.js';
+        import { getServerInfo } from '/server-info.js';
 
         let servers = [];
         let selectedServer = null;
@@ -442,11 +443,16 @@
 
             container.innerHTML = servers.map((server, index) => `
                 <div class="server-card" data-server-index="${index}">
-                    <div class="server-name">
-                        <span class="server-status ${server.available ? 'available' : ''} ${server.connected ? 'connected' : ''}"></span>
-                        ${server.name}
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div class="server-name">
+                                <span class="server-status ${server.available ? 'available' : ''} ${server.connected ? 'connected' : ''}"></span>
+                                ${server.name}
+                            </div>
+                            <div class="server-description">${server.description || 'No description available'}</div>
+                        </div>
+                        <button onclick="event.stopPropagation(); showServerInfo('${server.name}')" style="background: none; border: 1px solid #666; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; color: #666; margin-left: 10px;" title="Server information">?</button>
                     </div>
-                    <div class="server-description">${server.description || 'No description available'}</div>
                     <span class="server-type">${server.type}</span>
                 </div>
             `).join('');
@@ -524,10 +530,13 @@
                 return;
             }
 
+            // Filter out deprecated tools
+            const activeTools = tools.filter(tool => !tool.deprecated);
+
             container.innerHTML = `
                 <div class="tools-section">
-                    <div class="tools-header">Available Tools (${tools.length})</div>
-                    ${tools.map(tool => renderTool(tool)).join('')}
+                    <div class="tools-header">Available Tools (${activeTools.length})</div>
+                    ${activeTools.map(tool => renderTool(tool)).join('')}
                 </div>
             `;
         }
@@ -783,6 +792,76 @@
                 `;
             }
         }
+
+        // Show server info popup
+        window.showServerInfo = function(serverName) {
+            const info = getServerInfo(serverName);
+
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                border: 2px solid #333;
+                border-radius: 8px;
+                padding: 20px;
+                max-width: 500px;
+                max-height: 80vh;
+                overflow-y: auto;
+                z-index: 1000;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            `;
+
+            popup.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin: 0;">${info.name}</h2>
+                    <button onclick="this.parentElement.parentElement.remove(); document.getElementById('info-overlay').remove();" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                </div>
+
+                <p style="color: #666; margin-bottom: 15px;">${info.description}</p>
+
+                <div style="margin-bottom: 15px;">
+                    <h3 style="font-size: 14px; margin-bottom: 8px;">Limitations:</h3>
+                    <ul style="margin: 0; padding-left: 20px; color: #e74c3c;">
+                        ${info.limitations.map(l => `<li style="margin: 4px 0;">${l}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h3 style="font-size: 14px; margin-bottom: 8px;">Examples:</h3>
+                    <ul style="margin: 0; padding-left: 20px; color: #27ae60;">
+                        ${info.examples.map(e => `<li style="margin: 4px 0;">${e}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div style="background: #f0f0f0; padding: 10px; border-radius: 4px;">
+                    <strong style="font-size: 12px;">💡 Tip:</strong>
+                    <div style="font-size: 12px; color: #666; margin-top: 4px;">${info.tips}</div>
+                </div>
+            `;
+
+            document.body.appendChild(popup);
+
+            // Close on click outside
+            const overlay = document.createElement('div');
+            overlay.id = 'info-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.3);
+                z-index: 999;
+            `;
+            overlay.onclick = () => {
+                popup.remove();
+                overlay.remove();
+            };
+            document.body.appendChild(overlay);
+        };
 
         // Initialize on load
         window.addEventListener('load', () => {
