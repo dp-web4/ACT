@@ -410,6 +410,7 @@
 
     <script type="module">
         import { toolExamples, formatExample } from '/tool-helpers.js';
+        import { IntelligentHelper } from '/intelligent-helper.js';
 
         let servers = [];
         let selectedServer = null;
@@ -499,6 +500,7 @@
                 if (!response.ok) throw new Error('Failed to connect');
 
                 const tools = await response.json();
+                selectedServer.tools = tools;  // Store tools for intelligent helper access
                 renderTools(tools);
 
                 // Update connection status
@@ -533,7 +535,12 @@
         function renderTool(tool) {
             const parameters = tool.inputSchema?.properties || {};
             const required = tool.inputSchema?.required || [];
-            const helper = toolExamples[tool.name];
+
+            // Try hardcoded helper first, fall back to intelligent generation
+            let helper = toolExamples[tool.name];
+            if (!helper && tool.inputSchema) {
+                helper = IntelligentHelper.generateToolHelper(tool);
+            }
 
             // Check if this tool expects complex JSON input
             const isComplexInput = tool.inputSchema?.properties &&
@@ -578,9 +585,18 @@
             `;
         }
 
-        // Add copy function
+        // Add copy function with dynamic example support
         window.copyExample = function(toolName) {
-            const helper = toolExamples[toolName];
+            let helper = toolExamples[toolName];
+
+            // If no hardcoded helper, try to generate from current tool
+            if (!helper && selectedServer?.tools) {
+                const tool = selectedServer.tools.find(t => t.name === toolName);
+                if (tool) {
+                    helper = IntelligentHelper.generateToolHelper(tool);
+                }
+            }
+
             if (!helper) return;
 
             const exampleText = formatExample(helper.example);
