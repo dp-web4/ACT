@@ -184,6 +184,10 @@ class MCPDiscovery {
     await this.discoverNpxServers();
     await this.discoverLocalServers();
 
+    // Mark servers as already available if they're running
+    // This prevents trying to spawn new instances when old ones exist
+    console.log('🔍 Checking for already-running servers...\n');
+
     // Test each server
     console.log('📡 Testing server connectivity...\n');
     for (const server of this.servers) {

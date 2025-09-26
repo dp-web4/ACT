@@ -140,7 +140,7 @@ app.get('/api/status/:server', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════╗
 ║     ACT - Agentic Context Tool         ║
@@ -156,4 +156,22 @@ app.listen(PORT, () => {
 ║  • Real-time results                   ║
 ╚════════════════════════════════════════╝
   `);
+});
+
+// Cleanup on exit - just close our connections, don't kill MCP servers
+process.on('SIGINT', async () => {
+  console.log('\n🛑 Shutting down ACT server...');
+
+  // Clear our connection references without killing the MCP servers
+  connections.clear();
+
+  server.close(() => {
+    console.log('✅ ACT server shutdown complete');
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', () => {
+  connections.clear();
+  server.close();
 });

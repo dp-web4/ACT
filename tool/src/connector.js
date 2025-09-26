@@ -371,10 +371,19 @@ class SimpleMCPConnector {
   }
 
   async disconnect() {
-    if (this.process) {
-      this.process.kill();
-      this.process = null;
+    // Just close our connection, don't kill the process
+    // Other applications might be using the same MCP server
+    if (this.process && this.process.stdin) {
+      try {
+        // Close stdin to signal we're done
+        this.process.stdin.end();
+      } catch (error) {
+        console.error('Error closing stdin:', error);
+      }
     }
+
+    // Clean up our references
+    this.process = null;
     this.connected = false;
     this.tools = [];
     this.pendingRequests.clear();
