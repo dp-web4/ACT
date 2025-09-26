@@ -1,141 +1,143 @@
 # ACT Tool - Direct MCP Server Interface
 
-A simple web-based tool that lets you discover and interact with MCP (Model Context Protocol) servers directly, without requiring an AI model as intermediary.
+## 🚧 Experimental Status
+
+This is an **experimental prototype** for exploring direct human interaction with Model Context Protocol (MCP) servers. The tool is in active discovery phase and serves as a learning platform for understanding MCP capabilities and requirements.
+
+## Overview
+
+The ACT (Agentic Context Tool) provides a web-based interface for:
+- **Discovering** available MCP servers
+- **Connecting** directly to MCP servers without AI intermediaries
+- **Invoking** MCP tools through a user-friendly interface
+- **Exploring** MCP server capabilities and data formats
 
 ## Features
 
-- **Server Discovery**: Automatically discovers available MCP servers (npx-based and local)
-- **Direct Connection**: Connect to MCP servers without AI intermediary
-- **Tool Exploration**: Browse available tools and their parameters
-- **Direct Invocation**: Execute tools with custom parameters
-- **Real-time Results**: See responses directly from the servers
+### Current Capabilities
+- 🔍 **Auto-discovery** of MCP servers (npx packages and local configurations)
+- 🔌 **Direct connection** management without killing shared server processes
+- 📝 **Intelligent input helpers** that analyze MCP schemas to provide examples
+- ℹ️ **Server information** with descriptions, limitations, and usage tips
+- 🎯 **Tool filtering** to hide deprecated tools
+- 📋 **Copy-to-clipboard** for examples and results
 
-## Quick Start
+### Supported MCP Servers
+- **Filesystem** - File and directory operations (restricted to `/tmp` for safety)
+- **Git** - Repository operations
+- **Weather** - US weather forecasts and alerts
+- **Memory** - Knowledge graph storage (ephemeral with npx)
+- **Puppeteer** - Browser automation
+- **PostgreSQL** - Database operations
+
+## Installation & Usage
+
+### Prerequisites
+- Node.js 20+
+- npm or yarn
+- Environment variables (optional):
+  - `WEATHER_API_KEY` for weather server
+  - `DATABASE_URL` for PostgreSQL server
+
+### Quick Start
 
 ```bash
 # Install dependencies
-cd tool
 npm install
 
 # Start the server
 npm start
 
-# Or run in development mode with auto-reload
-npm run dev
+# Open in browser
+# Navigate to http://localhost:3000
 ```
 
-Then open http://localhost:3000 in your browser.
+### Usage Tips
 
-## How It Works
+1. **Discovery Phase**: Click "Discover Servers" to find available MCP servers
+2. **Server Info**: Click the ? button next to each server for details
+3. **Connect**: Select a server to connect and view its available tools
+4. **Tool Usage**:
+   - Review the example inputs provided
+   - Fill in the parameter fields
+   - Click "Invoke" to execute the tool
+   - Results appear in the right panel
 
-1. **Discovery Phase**: The tool scans for available MCP servers:
-   - Known npx-runnable servers (filesystem, git, weather, etc.)
-   - Local MCP server configurations in standard locations
-   - Tests connectivity to each discovered server
+### Important Notes
 
-2. **Connection Phase**: When you select a server:
-   - Spawns the MCP server process
-   - Establishes JSON-RPC communication
-   - Retrieves available tools and their schemas
+#### Path Restrictions
+The filesystem server is restricted to `/tmp` directory for security. Always use paths like:
+- ✅ `/tmp/myfile.txt`
+- ✅ `/tmp/myproject/`
+- ❌ `~/Documents/file.txt` (not allowed)
 
-3. **Interaction Phase**: For each tool:
-   - Displays parameters with appropriate input fields
-   - Sends tool invocation requests
-   - Shows results in real-time
+#### Ephemeral Storage
+When using `npx` to run MCP servers, data is **not persistent** between sessions. Each new connection creates a fresh instance without previous state.
+
+#### Process Management
+The tool uses intelligent process management:
+- Discovery finds available servers without spawning them
+- Connect creates connections (spawns if needed)
+- Disconnect closes connections without killing the server process
+- Multiple applications can share the same MCP server
 
 ## Architecture
 
-```
-Browser UI
-    ↓
-Express Server (port 3000)
-    ↓
-MCP Connector (SimpleMCPConnector)
-    ↓
-MCP Server Process (spawned)
-```
-
-## Components
-
-### Frontend (`public/index.html`)
-- Single-page application
-- No framework dependencies
-- Real-time server status updates
-- Dynamic tool parameter forms
-
-### Backend (`src/`)
-- `server.js`: Express API server
-- `discover.js`: MCP server discovery logic
-- `connector.js`: MCP server connection management
+### Components
+- **Express Backend** (`src/server.js`) - REST API for MCP operations
+- **MCP Connector** (`src/connector.js`) - Handles JSON-RPC communication
+- **Discovery System** (`src/discover.js`) - Finds available MCP servers
+- **Web Frontend** (`public/index.html`) - Three-panel UI
+- **Intelligent Helpers** (`src/intelligent-helper.js`) - Schema-based example generation
+- **Server Info** (`src/server-info.js`) - Detailed server documentation
 
 ### API Endpoints
+- `GET /api/discover` - Find available MCP servers
+- `POST /api/connect` - Connect to a specific server
+- `POST /api/invoke` - Execute a tool on connected server
+- `POST /api/disconnect` - Disconnect from server
+- `GET /api/status/:server` - Get server connection status
 
-- `GET /api/discover`: Find available MCP servers
-- `POST /api/connect`: Connect to a specific server
-- `POST /api/invoke`: Execute a tool on connected server
-- `POST /api/disconnect`: Close server connection
-- `GET /api/status/:server`: Get server connection status
+## Development Status
 
-## Supported MCP Servers
+### ✅ Completed
+- Basic MCP server discovery and connection
+- Tool invocation with parameter handling
+- Intelligent input helpers
+- Server information system
+- Process management fixes
 
-Currently discovers:
-- `@modelcontextprotocol/server-filesystem`: File operations
-- `@cyanheads/git-mcp-server`: Git operations
-- `@h1deya/mcp-server-weather`: Weather information
-- `@modelcontextprotocol/server-memory`: Knowledge graph
-- `@modelcontextprotocol/server-puppeteer`: Browser automation
-- `@modelcontextprotocol/server-postgres`: Database operations
+### 🚧 In Progress
+- Enhanced error handling
+- Better UI/UX for complex tool parameters
+- Support for more MCP servers
+- Persistent storage options
 
-## Configuration
+### 📋 Planned
+- Tool result visualization
+- Batch operations
+- Configuration management
+- Advanced filtering and search
 
-Environment variables are loaded from `.env` file in the tool directory.
+## Known Limitations
 
-Create a `.env` file with:
-```bash
-# Weather API key for @h1deya/mcp-server-weather
-WEATHER_API_KEY=your_api_key_here
+1. **Browser Security**: Some operations may be limited by browser security policies
+2. **Complex Parameters**: Tools requiring complex nested JSON may need manual formatting
+3. **Timeout Issues**: Some servers may timeout during discovery
+4. **Platform Specific**: Tested primarily on WSL/Linux environments
 
-# PostgreSQL connection string
-DATABASE_URL=postgresql://localhost/test
-```
+## Contributing
 
-Get your own Weather API key at: https://www.weatherapi.com/
-
-## Development
-
-The connector uses a simplified JSON-RPC implementation for MCP communication. Future versions will integrate the full MCP SDK for better compatibility.
-
-### Adding New Servers
-
-Edit `src/discover.js` and add to the `knownServers` array:
-
-```javascript
-{
-  name: 'my-server',
-  package: '@org/mcp-server-name',
-  description: 'What it does',
-  args: ['--any', '--args'],
-  env: { ANY_ENV: 'value' }
-}
-```
-
-## Limitations
-
-- Currently uses simplified MCP connector (full SDK integration coming)
-- Some MCP servers may require additional configuration
-- Tool results are shown as raw JSON
-
-## Next Steps
-
-This is a starting point that can be expanded with:
-- Full MCP SDK integration
-- Tool result formatting and visualization
-- Server configuration persistence
-- Multi-server simultaneous connections
-- Tool chaining and workflows
-- Authentication and security features
-- LCT integration for Web4 compliance
+This is an experimental tool in active development. Key areas for contribution:
+- Testing with additional MCP servers
+- UI/UX improvements
+- Documentation of MCP tool patterns
+- Error handling enhancements
 
 ## License
 
-Part of the ACT project - AGPL-3.0
+See main ACT repository for license information.
+
+## Acknowledgments
+
+Built to explore the Model Context Protocol (MCP) ecosystem and enable direct human interaction with MCP servers for learning and experimentation.

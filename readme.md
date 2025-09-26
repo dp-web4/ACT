@@ -175,6 +175,10 @@ ATP Cost: Variable by amount
 
 ```
 ACT/
+├── tool/                # 🚧 Experimental MCP Direct Interface
+│   ├── src/            # Server and discovery logic
+│   ├── public/         # Web UI for MCP interaction
+│   └── README.md       # Tool documentation
 ├── core-spec/           # ACT-specific specifications
 │   ├── human-lct-binding.md
 │   ├── agent-pairing.md
@@ -208,6 +212,10 @@ ACT/
     ├── integration/   # Integration tests
     └── e2e/           # End-to-end tests
 ```
+
+### Experimental Tool
+
+The [`tool/`](tool/) directory contains an **experimental prototype** for direct human interaction with MCP servers. This is a discovery and learning platform that allows exploration of MCP capabilities without AI intermediaries. [Learn more →](tool/README.md)
 
 ## Development Roadmap
 
