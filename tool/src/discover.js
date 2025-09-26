@@ -173,7 +173,7 @@ class MCPDiscovery {
       setTimeout(() => {
         proc.kill();
         resolve({ success: false, error: 'Timeout' });
-      }, 5000);
+      }, 2000); // Reduced timeout for faster discovery
     });
   }
 
