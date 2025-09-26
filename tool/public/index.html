@@ -532,6 +532,30 @@
             `;
         }
 
+        // Render field-specific examples
+        function renderFieldExamples(parameters, examples) {
+            if (!examples || typeof examples !== 'object') return '';
+
+            let html = '<div style="font-size: 12px; color: #666; margin: 10px 0;">';
+
+            // For simple objects, show each field's example
+            if (!Array.isArray(examples)) {
+                for (const [key, value] of Object.entries(examples)) {
+                    if (parameters[key]) {
+                        const displayValue = typeof value === 'object' ? JSON.stringify(value) : value;
+                        html += `<div style="margin: 5px 0;"><strong>${key}:</strong> <code style="background: #f4f4f4; padding: 2px 6px; border-radius: 3px;">${displayValue}</code></div>`;
+                    }
+                }
+            } else {
+                // For arrays, show JSON
+                html += `<code style="background: #f4f4f4; padding: 4px; display: block;">${JSON.stringify(examples, null, 2)}</code>`;
+            }
+
+            html += '</div>';
+            return html;
+        }
+        window.renderFieldExamples = renderFieldExamples;
+
         function renderTool(tool) {
             const parameters = tool.inputSchema?.properties || {};
             const required = tool.inputSchema?.required || [];
@@ -553,10 +577,23 @@
                     <div class="tool-name">${tool.name}</div>
                     <div class="tool-description">${tool.description || 'No description'}</div>
 
-                    ${helper ? `
+                    ${helper && !isComplexInput ? `
                         <div class="example-section">
                             <div class="example-header">
-                                <span>📘 Example</span>
+                                <span>📘 Example Values</span>
+                            </div>
+                            ${renderFieldExamples(parameters, helper.example)}
+                            ${helper.tips ? `
+                                <div class="tips-header">💡 Tips:</div>
+                                <ul class="tips-list">
+                                    ${helper.tips.map(tip => `<li>${tip}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    ` : helper && isComplexInput ? `
+                        <div class="example-section">
+                            <div class="example-header">
+                                <span>📘 Example JSON</span>
                                 <button class="copy-button" onclick="copyExample('${tool.name}')">Copy</button>
                             </div>
                             <div class="example-code" id="example-${tool.name}">${formatExample(helper.example)}</div>
@@ -575,7 +612,7 @@
                                 <label>JSON Input:</label>
                                 <textarea class="json-input" id="param-${tool.name}-json" placeholder='${helper ? formatExample(helper.example) : "Enter JSON here..."}'></textarea>
                             </div>` :
-                            Object.entries(parameters).map(([name, schema]) => renderParameter(name, schema, required.includes(name))).join('')
+                            Object.entries(parameters).map(([name, schema]) => renderParameter(name, schema, required.includes(name), helper?.example?.[name])).join('')
                         }
                     </div>
                     <button class="invoke-button" onclick="invokeTool('${tool.name}')">
@@ -621,7 +658,7 @@
             });
         }
 
-        function renderParameter(name, schema, isRequired) {
+        function renderParameter(name, schema, isRequired, exampleValue = null) {
             const inputType = schema.type === 'string' && schema.format !== 'uri' ? 'text' : 'text';
             const isLongText = schema.description?.includes('content') || name.includes('content');
 
@@ -629,7 +666,7 @@
                 return `
                     <div class="parameter">
                         <label>${name}${isRequired ? ' *' : ''}: ${schema.description || ''}</label>
-                        <textarea id="param-${name}" placeholder="${schema.default || ''}">${schema.default || ''}</textarea>
+                        <textarea id="param-${name}" placeholder="${exampleValue || schema.description || ''}">${schema.default || ''}</textarea>
                     </div>
                 `;
             }
@@ -637,7 +674,7 @@
             return `
                 <div class="parameter">
                     <label>${name}${isRequired ? ' *' : ''}: ${schema.description || ''}</label>
-                    <input type="${inputType}" id="param-${name}" value="${schema.default || ''}" placeholder="${schema.default || ''}">
+                    <input type="${inputType}" id="param-${name}" value="${schema.default || ''}" placeholder="${exampleValue || schema.description || ''}">
                 </div>
             `;
         }
