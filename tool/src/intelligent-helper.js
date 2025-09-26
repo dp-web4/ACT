@@ -23,7 +23,8 @@ export class IntelligentHelper {
 
         // Infer from name and description
         if (name.includes('path') || descLower.includes('path')) {
-          return descLower.includes('directory') ? '/example/directory' : 'example/file.txt';
+          // Filesystem server is restricted to /tmp
+          return descLower.includes('directory') ? '/tmp/example_dir' : '/tmp/example.txt';
         }
         if (name.includes('name') || descLower.includes('name')) {
           return 'Example_Name';
@@ -157,6 +158,12 @@ export class IntelligentHelper {
     }
     if (toolName.includes('search') || toolName.includes('find')) {
       tips.push('Supports partial matches unless specified otherwise');
+    }
+
+    // Filesystem-specific tips
+    if (toolName.includes('file') || toolName.includes('directory')) {
+      tips.push('⚠️ Filesystem restricted to /tmp directory for security');
+      tips.push('Use paths like: /tmp/myfile.txt or /tmp/mydir/');
     }
 
     return tips;
