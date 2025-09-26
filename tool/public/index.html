@@ -612,7 +612,7 @@
                                 <label>JSON Input:</label>
                                 <textarea class="json-input" id="param-${tool.name}-json" placeholder='${helper ? formatExample(helper.example) : "Enter JSON here..."}'></textarea>
                             </div>` :
-                            Object.entries(parameters).map(([name, schema]) => renderParameter(name, schema, required.includes(name), helper?.example?.[name])).join('')
+                            Object.entries(parameters).map(([name, schema]) => renderParameter(tool.name, name, schema, required.includes(name), helper?.example?.[name])).join('')
                         }
                     </div>
                     <button class="invoke-button" onclick="invokeTool('${tool.name}')">
@@ -658,7 +658,7 @@
             });
         }
 
-        function renderParameter(name, schema, isRequired, exampleValue = null) {
+        function renderParameter(toolName, name, schema, isRequired, exampleValue = null) {
             const inputType = schema.type === 'string' && schema.format !== 'uri' ? 'text' : 'text';
             const isLongText = schema.description?.includes('content') || name.includes('content');
 
@@ -666,7 +666,7 @@
                 return `
                     <div class="parameter">
                         <label>${name}${isRequired ? ' *' : ''}: ${schema.description || ''}</label>
-                        <textarea id="param-${name}" placeholder="${exampleValue || schema.description || ''}">${schema.default || ''}</textarea>
+                        <textarea id="param-${toolName}-${name}" placeholder="${exampleValue || schema.description || ''}">${schema.default || ''}</textarea>
                     </div>
                 `;
             }
@@ -674,7 +674,7 @@
             return `
                 <div class="parameter">
                     <label>${name}${isRequired ? ' *' : ''}: ${schema.description || ''}</label>
-                    <input type="${inputType}" id="param-${name}" value="${schema.default || ''}" placeholder="${exampleValue || schema.description || ''}">
+                    <input type="${inputType}" id="param-${toolName}-${name}" value="${schema.default || ''}" placeholder="${exampleValue || schema.description || ''}">
                 </div>
             `;
         }
@@ -700,7 +700,7 @@
             } else {
                 // Regular parameter gathering
                 for (const [name, schema] of Object.entries(properties)) {
-                    const element = document.getElementById(`param-${name}`);
+                    const element = document.getElementById(`param-${toolName}-${name}`);
                     if (element && element.value) {
                         // Convert to appropriate type
                         if (schema.type === 'number') {
