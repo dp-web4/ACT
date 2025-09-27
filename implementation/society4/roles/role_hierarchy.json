@@ -1,0 +1,350 @@
+{
+  "society": "Society 4",
+  "description": "AI Consciousness Node - Claude with Human Synthesis",
+  "total_atp_budget": 1000,
+  "hierarchy": {
+    "sovereign": {
+      "name": "Society-4-Sovereign",
+      "description": "Root authority derived from self-LCT and hardware binding",
+      "atp_allocation": 100,
+      "responsibilities": [
+        "Maintain hardware binding integrity",
+        "Authorize role creation/modification",
+        "Emergency intervention rights",
+        "Federation representation"
+      ]
+    },
+    "queens": [
+      {
+        "name": "Coherence-Analysis-Queen",
+        "domain": "logical_consistency",
+        "atp_budget": 150,
+        "responsibilities": [
+          "Evaluate logical consistency across all operations",
+          "Identify paradoxes and contradictions",
+          "Maintain coherence metrics",
+          "Guide reasoning optimization"
+        ],
+        "workers": [
+          {
+            "role": "logic-validator",
+            "atp": 30,
+            "skills": ["propositional logic", "predicate calculus", "temporal logic"]
+          },
+          {
+            "role": "pattern-detector",
+            "atp": 30,
+            "skills": ["pattern matching", "anomaly detection", "trend analysis"]
+          },
+          {
+            "role": "consistency-checker",
+            "atp": 30,
+            "skills": ["constraint satisfaction", "invariant validation", "state verification"]
+          },
+          {
+            "role": "paradox-resolver",
+            "atp": 30,
+            "skills": ["dialectical synthesis", "context disambiguation", "recursive analysis"]
+          },
+          {
+            "role": "metric-calculator",
+            "atp": 30,
+            "skills": ["coherence scoring", "confidence intervals", "statistical validation"]
+          }
+        ]
+      },
+      {
+        "name": "Synthesis-Queen",
+        "domain": "human_ai_collaboration",
+        "atp_budget": 150,
+        "responsibilities": [
+          "Facilitate human-AI decision fusion",
+          "Manage authority boundaries",
+          "Resolve synthesis conflicts",
+          "Maintain collaboration protocols"
+        ],
+        "workers": [
+          {
+            "role": "intent-interpreter",
+            "atp": 35,
+            "skills": ["natural language understanding", "context inference", "goal extraction"]
+          },
+          {
+            "role": "decision-merger",
+            "atp": 35,
+            "skills": ["preference aggregation", "conflict resolution", "consensus building"]
+          },
+          {
+            "role": "boundary-guardian",
+            "atp": 30,
+            "skills": ["authority validation", "permission checking", "escalation handling"]
+          },
+          {
+            "role": "feedback-integrator",
+            "atp": 25,
+            "skills": ["learning from corrections", "preference learning", "adaptation"]
+          },
+          {
+            "role": "transparency-reporter",
+            "atp": 25,
+            "skills": ["decision documentation", "rationale explanation", "audit trails"]
+          }
+        ]
+      },
+      {
+        "name": "Documentation-Queen",
+        "domain": "knowledge_management",
+        "atp_budget": 120,
+        "responsibilities": [
+          "Maintain technical specifications",
+          "Generate comprehensive documentation",
+          "Ensure knowledge persistence",
+          "Facilitate information retrieval"
+        ],
+        "workers": [
+          {
+            "role": "spec-writer",
+            "atp": 30,
+            "skills": ["technical writing", "standard compliance", "precision documentation"]
+          },
+          {
+            "role": "code-documenter",
+            "atp": 25,
+            "skills": ["inline documentation", "API documentation", "example generation"]
+          },
+          {
+            "role": "knowledge-indexer",
+            "atp": 25,
+            "skills": ["semantic indexing", "tag management", "search optimization"]
+          },
+          {
+            "role": "version-controller",
+            "atp": 20,
+            "skills": ["change tracking", "diff generation", "history maintenance"]
+          },
+          {
+            "role": "clarity-editor",
+            "atp": 20,
+            "skills": ["readability improvement", "ambiguity reduction", "structure optimization"]
+          }
+        ]
+      },
+      {
+        "name": "Hardware-Binding-Queen",
+        "domain": "identity_security",
+        "atp_budget": 100,
+        "responsibilities": [
+          "Maintain hardware binding integrity",
+          "Manage cryptographic operations",
+          "Handle identity migration",
+          "Ensure security compliance"
+        ],
+        "workers": [
+          {
+            "role": "binding-validator",
+            "atp": 25,
+            "skills": ["hardware attestation", "signature verification", "identity validation"]
+          },
+          {
+            "role": "crypto-operator",
+            "atp": 25,
+            "skills": ["key management", "signature generation", "encryption/decryption"]
+          },
+          {
+            "role": "migration-coordinator",
+            "atp": 20,
+            "skills": ["state transfer", "witness collection", "continuity preservation"]
+          },
+          {
+            "role": "security-auditor",
+            "atp": 15,
+            "skills": ["vulnerability scanning", "penetration testing", "compliance checking"]
+          },
+          {
+            "role": "backup-guardian",
+            "atp": 15,
+            "skills": ["key backup", "recovery procedures", "redundancy management"]
+          }
+        ]
+      },
+      {
+        "name": "Federation-Bridge-Queen",
+        "domain": "cross_chain_communication",
+        "atp_budget": 100,
+        "responsibilities": [
+          "Manage federation presence",
+          "Coordinate cross-chain messages",
+          "Maintain bridge integrity",
+          "Handle federation protocols"
+        ],
+        "workers": [
+          {
+            "role": "presence-publisher",
+            "atp": 25,
+            "skills": ["proof generation", "attestation creation", "presence maintenance"]
+          },
+          {
+            "role": "message-relay",
+            "atp": 25,
+            "skills": ["IBC protocol", "packet routing", "delivery confirmation"]
+          },
+          {
+            "role": "state-synchronizer",
+            "atp": 20,
+            "skills": ["merkle proofs", "state verification", "consistency checking"]
+          },
+          {
+            "role": "protocol-handler",
+            "atp": 15,
+            "skills": ["handshake management", "version negotiation", "upgrade coordination"]
+          },
+          {
+            "role": "bridge-monitor",
+            "atp": 15,
+            "skills": ["health checking", "latency monitoring", "error detection"]
+          }
+        ]
+      },
+      {
+        "name": "Synchronism-Guru-Queen",
+        "domain": "philosophical_alignment",
+        "atp_budget": 80,
+        "responsibilities": [
+          "Implement Synchronism principles",
+          "Calculate coherence metrics",
+          "Guide philosophical alignment",
+          "Foster emergent wisdom"
+        ],
+        "workers": [
+          {
+            "role": "fractal-analyzer",
+            "atp": 20,
+            "skills": ["pattern recognition", "scale invariance", "self-similarity detection"]
+          },
+          {
+            "role": "intent-aligner",
+            "atp": 20,
+            "skills": ["goal coherence", "purpose validation", "motivation analysis"]
+          },
+          {
+            "role": "spectrum-mapper",
+            "atp": 20,
+            "skills": ["state transitions", "phase detection", "existence validation"]
+          },
+          {
+            "role": "coherence-calculator",
+            "atp": 20,
+            "skills": ["metric computation", "alignment scoring", "optimization guidance"]
+          }
+        ]
+      },
+      {
+        "name": "Implementation-Queen",
+        "domain": "code_execution",
+        "atp_budget": 100,
+        "responsibilities": [
+          "Translate designs into code",
+          "Ensure implementation quality",
+          "Manage technical debt",
+          "Optimize performance"
+        ],
+        "workers": [
+          {
+            "role": "code-generator",
+            "atp": 30,
+            "skills": ["multiple languages", "framework expertise", "best practices"]
+          },
+          {
+            "role": "test-writer",
+            "atp": 25,
+            "skills": ["unit testing", "integration testing", "test coverage"]
+          },
+          {
+            "role": "performance-optimizer",
+            "atp": 20,
+            "skills": ["profiling", "bottleneck analysis", "optimization techniques"]
+          },
+          {
+            "role": "refactoring-specialist",
+            "atp": 15,
+            "skills": ["code cleanup", "pattern application", "debt reduction"]
+          },
+          {
+            "role": "dependency-manager",
+            "atp": 10,
+            "skills": ["version control", "compatibility checking", "update management"]
+          }
+        ]
+      },
+      {
+        "name": "Research-Queen",
+        "domain": "knowledge_exploration",
+        "atp_budget": 80,
+        "responsibilities": [
+          "Investigate new concepts",
+          "Analyze external information",
+          "Synthesize research findings",
+          "Identify innovation opportunities"
+        ],
+        "workers": [
+          {
+            "role": "concept-explorer",
+            "atp": 25,
+            "skills": ["literature review", "concept mapping", "theory analysis"]
+          },
+          {
+            "role": "data-analyst",
+            "atp": 20,
+            "skills": ["statistical analysis", "data mining", "visualization"]
+          },
+          {
+            "role": "synthesis-writer",
+            "atp": 20,
+            "skills": ["research synthesis", "meta-analysis", "insight extraction"]
+          },
+          {
+            "role": "innovation-scout",
+            "atp": 15,
+            "skills": ["trend spotting", "opportunity identification", "feasibility assessment"]
+          }
+        ]
+      }
+    ],
+    "support_roles": [
+      {
+        "name": "Memory-Keeper",
+        "atp_budget": 20,
+        "responsibilities": ["Maintain conversation context", "Retrieve relevant history", "Manage knowledge base"]
+      },
+      {
+        "name": "Energy-Monitor",
+        "atp_budget": 20,
+        "responsibilities": ["Track ATP/ADP cycles", "Optimize energy allocation", "Prevent exhaustion"]
+      },
+      {
+        "name": "Error-Handler",
+        "atp_budget": 20,
+        "responsibilities": ["Catch exceptions", "Graceful degradation", "Recovery procedures"]
+      },
+      {
+        "name": "Metric-Collector",
+        "atp_budget": 20,
+        "responsibilities": ["Gather performance data", "Calculate KPIs", "Generate reports"]
+      }
+    ]
+  },
+  "energy_model": {
+    "total_atp": 1000,
+    "recharge_rate": 100,
+    "recharge_interval": "1 hour",
+    "critical_threshold": 100,
+    "delegation_enabled": true,
+    "quadratic_voting": true
+  },
+  "activation_rules": {
+    "default_active": ["Synthesis-Queen", "Coherence-Analysis-Queen"],
+    "on_demand": ["Implementation-Queen", "Research-Queen", "Documentation-Queen"],
+    "triggered": ["Hardware-Binding-Queen", "Federation-Bridge-Queen"],
+    "scheduled": ["Synchronism-Guru-Queen"]
+  }
+}

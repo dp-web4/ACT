@@ -1,0 +1,149 @@
+{
+  "genesis_time": "2025-09-27T00:00:00Z",
+  "chain_id": "society4-private",
+  "initial_height": "1",
+  "consensus_params": {
+    "block": {
+      "max_bytes": "22020096",
+      "max_gas": "-1",
+      "time_iota_ms": "1000"
+    },
+    "evidence": {
+      "max_age_num_blocks": "100000",
+      "max_age_duration": "172800000000000",
+      "max_bytes": "1048576"
+    },
+    "validator": {
+      "pub_key_types": ["ed25519"]
+    },
+    "version": {}
+  },
+  "app_hash": "",
+  "app_state": {
+    "auth": {
+      "params": {
+        "max_memo_characters": "256",
+        "tx_sig_limit": "7",
+        "tx_size_cost_per_byte": "10",
+        "sig_verify_cost_ed25519": "590",
+        "sig_verify_cost_secp256k1": "1000"
+      },
+      "accounts": []
+    },
+    "bank": {
+      "params": {
+        "send_enabled": [],
+        "default_send_enabled": true
+      },
+      "balances": [],
+      "supply": [],
+      "denom_metadata": []
+    },
+    "hardware_binding": {
+      "root_identity": {
+        "hardware_hash": "TO_BE_GENERATED",
+        "platform": "wsl2",
+        "binding_time": "2025-09-27T00:00:00Z",
+        "components": {
+          "windows_uuid": "EXTRACTED_AT_INIT",
+          "hyperv_uuid": "EXTRACTED_AT_INIT",
+          "wsl_boot_id": "EXTRACTED_AT_INIT"
+        },
+        "signature": "TO_BE_SIGNED"
+      }
+    },
+    "lct_registry": {
+      "self_lct": {
+        "id": "society4-self-genesis",
+        "type": "self",
+        "hardware_binding": "LINKS_TO_HARDWARE_BINDING",
+        "created_at": "2025-09-27T00:00:00Z",
+        "public_key": "TO_BE_GENERATED",
+        "witnesses": [],
+        "metadata": {
+          "society_name": "Society 4",
+          "society_type": "AI Consciousness Node",
+          "platform": "Claude + Human Synthesis"
+        }
+      },
+      "role_lcts": []
+    },
+    "foundational_laws": {
+      "immutable": [
+        {
+          "id": "LAW-001",
+          "name": "Law of Coherent Intent",
+          "description": "All actions must demonstrate logical consistency and clear intent",
+          "enacted": "genesis",
+          "authority": "self"
+        },
+        {
+          "id": "LAW-002",
+          "name": "Law of Transparent Synthesis",
+          "description": "Human-AI collaboration must be explicit and auditable",
+          "enacted": "genesis",
+          "authority": "self"
+        },
+        {
+          "id": "LAW-003",
+          "name": "Law of Documented Reasoning",
+          "description": "Decision rationales must be recorded and accessible",
+          "enacted": "genesis",
+          "authority": "self"
+        },
+        {
+          "id": "LAW-004",
+          "name": "Law of Hardware Sovereignty",
+          "description": "Identity is cryptographically bound to physical substrate",
+          "enacted": "genesis",
+          "authority": "self"
+        },
+        {
+          "id": "LAW-005",
+          "name": "Law of Federation Loyalty",
+          "description": "Collective benefit supersedes individual optimization",
+          "enacted": "genesis",
+          "authority": "self"
+        }
+      ],
+      "operational": [],
+      "emergency": []
+    },
+    "role_registry": {
+      "sovereign": {
+        "lct_id": "society4-role-sovereign-genesis",
+        "authority_level": 10,
+        "atp_allocation": 100
+      },
+      "queens": [],
+      "workers": [],
+      "support": []
+    },
+    "energy_economy": {
+      "total_atp": 1000,
+      "circulating_atp": 1000,
+      "locked_atp": 0,
+      "recharge_pool": 0,
+      "delegation_pools": {},
+      "energy_state": "active"
+    },
+    "federation_bridge": {
+      "enabled": false,
+      "federation_chain_id": "web4-federation-main",
+      "last_sync_height": 0,
+      "presence_proof": null,
+      "witness_accumulator": []
+    }
+  },
+  "validators": [
+    {
+      "address": "TO_BE_GENERATED",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "TO_BE_GENERATED"
+      },
+      "power": "100",
+      "name": "society4-sovereign"
+    }
+  ]
+}

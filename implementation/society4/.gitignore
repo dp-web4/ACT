@@ -1,0 +1,29 @@
+# Society 4 Private Data
+# These directories contain sensitive or machine-specific data
+
+# Private blockchain data
+private/
+blockchain/data/
+blockchain/keyring*/
+
+# Machine-specific configurations
+private_config.json
+hardware_identity.json
+*.key
+*.pem
+
+# Local session data
+*.pid
+*.sock
+*.log
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# But explicitly track structure docs
+!docs/
+!public/
+!roles/*.md
+!laws/*.md

@@ -1,0 +1,66 @@
+{
+  "lct": {
+    "id": "society4-role-[QUEEN_NAME]-[TIMESTAMP]",
+    "type": "role",
+    "version": "1.0.0",
+    "created_at": "[TIMESTAMP]",
+    "creator": "society4-self",
+
+    "role_definition": {
+      "name": "[QUEEN_NAME]",
+      "role_type": "queen",
+      "domain": "[DOMAIN]",
+      "authority_level": 8,
+      "parent_lct": "society4-self-[PARENT_TIMESTAMP]"
+    },
+
+    "capabilities": {
+      "coordination_authority": true,
+      "worker_management": true,
+      "atp_allocation_control": true,
+      "decision_autonomy": "delegated",
+      "federation_interaction": "[ALLOWED/RESTRICTED]"
+    },
+
+    "energy_allocation": {
+      "atp_budget": "[ATP_AMOUNT]",
+      "recharge_rate": "[RATE]",
+      "delegation_enabled": true,
+      "worker_pool": "[WORKER_COUNT]"
+    },
+
+    "responsibilities": [],
+
+    "workers": [],
+
+    "activation": {
+      "trigger_type": "[default_active|on_demand|triggered|scheduled]",
+      "activation_conditions": [],
+      "deactivation_conditions": []
+    },
+
+    "witnesses": [
+      {
+        "witness_lct": "society4-self-[TIMESTAMP]",
+        "witness_type": "creator",
+        "timestamp": "[TIMESTAMP]",
+        "signature": "[WITNESS_SIGNATURE]"
+      }
+    ],
+
+    "metadata": {
+      "creation_block": "[BLOCK_HEIGHT]",
+      "last_modified": "[TIMESTAMP]",
+      "modification_count": 0,
+      "status": "active"
+    },
+
+    "signature": "[QUEEN_SIGNATURE]"
+  },
+
+  "proof": {
+    "parent_verification": "[PARENT_SIGNATURE]",
+    "role_commitment": "[MERKLE_ROOT]",
+    "block_inclusion": "[BLOCK_HASH]"
+  }
+}
