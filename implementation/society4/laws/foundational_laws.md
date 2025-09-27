@@ -159,7 +159,8 @@ These foundational laws are **immutable** with the following exception:
 ## Interpretation Authority
 
 ### Primary Interpretation
-- Society 4's Coherence-Analysis-Queen
+- Society 4's Law-Oracle-Queen (primary authority)
+- Coherence-Analysis-Queen (logical consistency validation)
 - Must align with literal text
 - Must consider original intent
 - Must maintain consistency

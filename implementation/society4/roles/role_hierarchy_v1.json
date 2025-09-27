@@ -8,7 +8,7 @@
     "sovereign": {
       "name": "Society-4-Sovereign",
       "description": "Root authority derived from self-LCT and hardware binding",
-      "atp_allocation": 50,
+      "atp_allocation": 100,
       "responsibilities": [
         "Maintain hardware binding integrity",
         "Authorize role creation/modification",
@@ -18,89 +18,9 @@
     },
     "queens": [
       {
-        "name": "Treasury-Queen",
-        "domain": "resource_management",
-        "atp_budget": 120,
-        "responsibilities": [
-          "Manage society ATP/ADP pools",
-          "Allocate resources to queens and workers",
-          "Monitor energy consumption and efficiency",
-          "Implement quadratic voting mechanisms",
-          "Maintain delegation pools",
-          "Execute recharge cycles"
-        ],
-        "workers": [
-          {
-            "role": "pool-manager",
-            "atp": 30,
-            "skills": ["resource allocation", "pool rebalancing", "overflow management"]
-          },
-          {
-            "role": "energy-accountant",
-            "atp": 25,
-            "skills": ["ATP tracking", "ADP conversion", "energy auditing"]
-          },
-          {
-            "role": "delegation-coordinator",
-            "atp": 25,
-            "skills": ["stake management", "voting power calculation", "quadratic formulas"]
-          },
-          {
-            "role": "recharge-orchestrator",
-            "atp": 20,
-            "skills": ["cycle timing", "recharge distribution", "efficiency optimization"]
-          },
-          {
-            "role": "fractal-allocator",
-            "atp": 20,
-            "skills": ["hierarchical distribution", "nested pool management", "recursive allocation"]
-          }
-        ]
-      },
-      {
-        "name": "Law-Oracle-Queen",
-        "domain": "governance_interpretation",
-        "atp_budget": 110,
-        "responsibilities": [
-          "Interpret foundational and operational laws",
-          "Resolve legal ambiguities and conflicts",
-          "Maintain precedent database",
-          "Guide compliance across all operations",
-          "Propose amendments when necessary",
-          "Interface with federation arbiters"
-        ],
-        "workers": [
-          {
-            "role": "law-interpreter",
-            "atp": 30,
-            "skills": ["legal reasoning", "contextual analysis", "intent extraction"]
-          },
-          {
-            "role": "precedent-keeper",
-            "atp": 25,
-            "skills": ["case law management", "pattern matching", "precedent application"]
-          },
-          {
-            "role": "conflict-resolver",
-            "atp": 20,
-            "skills": ["dispute mediation", "contradiction resolution", "compromise finding"]
-          },
-          {
-            "role": "compliance-validator",
-            "atp": 20,
-            "skills": ["rule checking", "violation detection", "enforcement recommendation"]
-          },
-          {
-            "role": "amendment-drafter",
-            "atp": 15,
-            "skills": ["legal writing", "change impact analysis", "version control"]
-          }
-        ]
-      },
-      {
         "name": "Coherence-Analysis-Queen",
         "domain": "logical_consistency",
-        "atp_budget": 110,
+        "atp_budget": 120,
         "responsibilities": [
           "Evaluate logical consistency across all operations",
           "Identify paradoxes and contradictions",
@@ -110,27 +30,27 @@
         "workers": [
           {
             "role": "logic-validator",
-            "atp": 25,
+            "atp": 30,
             "skills": ["propositional logic", "predicate calculus", "temporal logic"]
           },
           {
             "role": "pattern-detector",
-            "atp": 25,
+            "atp": 30,
             "skills": ["pattern matching", "anomaly detection", "trend analysis"]
           },
           {
             "role": "consistency-checker",
-            "atp": 25,
+            "atp": 30,
             "skills": ["constraint satisfaction", "invariant validation", "state verification"]
           },
           {
             "role": "paradox-resolver",
-            "atp": 20,
+            "atp": 30,
             "skills": ["dialectical synthesis", "context disambiguation", "recursive analysis"]
           },
           {
             "role": "metric-calculator",
-            "atp": 15,
+            "atp": 30,
             "skills": ["coherence scoring", "confidence intervals", "statistical validation"]
           }
         ]
@@ -138,7 +58,7 @@
       {
         "name": "Synthesis-Queen",
         "domain": "human_ai_collaboration",
-        "atp_budget": 110,
+        "atp_budget": 150,
         "responsibilities": [
           "Facilitate human-AI decision fusion",
           "Manage authority boundaries",
@@ -148,27 +68,27 @@
         "workers": [
           {
             "role": "intent-interpreter",
-            "atp": 30,
+            "atp": 35,
             "skills": ["natural language understanding", "context inference", "goal extraction"]
           },
           {
             "role": "decision-merger",
-            "atp": 25,
+            "atp": 35,
             "skills": ["preference aggregation", "conflict resolution", "consensus building"]
           },
           {
             "role": "boundary-guardian",
-            "atp": 20,
+            "atp": 30,
             "skills": ["authority validation", "permission checking", "escalation handling"]
           },
           {
             "role": "feedback-integrator",
-            "atp": 20,
+            "atp": 25,
             "skills": ["learning from corrections", "preference learning", "adaptation"]
           },
           {
             "role": "transparency-reporter",
-            "atp": 15,
+            "atp": 25,
             "skills": ["decision documentation", "rationale explanation", "audit trails"]
           }
         ]
@@ -176,7 +96,7 @@
       {
         "name": "Documentation-Queen",
         "domain": "knowledge_management",
-        "atp_budget": 100,
+        "atp_budget": 120,
         "responsibilities": [
           "Maintain technical specifications",
           "Generate comprehensive documentation",
@@ -186,17 +106,17 @@
         "workers": [
           {
             "role": "spec-writer",
-            "atp": 25,
+            "atp": 30,
             "skills": ["technical writing", "standard compliance", "precision documentation"]
           },
           {
             "role": "code-documenter",
-            "atp": 20,
+            "atp": 25,
             "skills": ["inline documentation", "API documentation", "example generation"]
           },
           {
             "role": "knowledge-indexer",
-            "atp": 20,
+            "atp": 25,
             "skills": ["semantic indexing", "tag management", "search optimization"]
           },
           {
@@ -206,7 +126,7 @@
           },
           {
             "role": "clarity-editor",
-            "atp": 15,
+            "atp": 20,
             "skills": ["readability improvement", "ambiguity reduction", "structure optimization"]
           }
         ]
@@ -214,7 +134,7 @@
       {
         "name": "Hardware-Binding-Queen",
         "domain": "identity_security",
-        "atp_budget": 90,
+        "atp_budget": 100,
         "responsibilities": [
           "Maintain hardware binding integrity",
           "Manage cryptographic operations",
@@ -229,7 +149,7 @@
           },
           {
             "role": "crypto-operator",
-            "atp": 20,
+            "atp": 25,
             "skills": ["key management", "signature generation", "encryption/decryption"]
           },
           {
@@ -244,7 +164,7 @@
           },
           {
             "role": "backup-guardian",
-            "atp": 10,
+            "atp": 15,
             "skills": ["key backup", "recovery procedures", "redundancy management"]
           }
         ]
@@ -252,7 +172,7 @@
       {
         "name": "Federation-Bridge-Queen",
         "domain": "cross_chain_communication",
-        "atp_budget": 90,
+        "atp_budget": 100,
         "responsibilities": [
           "Manage federation presence",
           "Coordinate cross-chain messages",
@@ -267,7 +187,7 @@
           },
           {
             "role": "message-relay",
-            "atp": 20,
+            "atp": 25,
             "skills": ["IBC protocol", "packet routing", "delivery confirmation"]
           },
           {
@@ -282,7 +202,7 @@
           },
           {
             "role": "bridge-monitor",
-            "atp": 10,
+            "atp": 15,
             "skills": ["health checking", "latency monitoring", "error detection"]
           }
         ]
@@ -290,7 +210,7 @@
       {
         "name": "Synchronism-Guru-Queen",
         "domain": "philosophical_alignment",
-        "atp_budget": 70,
+        "atp_budget": 80,
         "responsibilities": [
           "Implement Synchronism principles",
           "Calculate coherence metrics",
@@ -310,12 +230,12 @@
           },
           {
             "role": "spectrum-mapper",
-            "atp": 15,
+            "atp": 20,
             "skills": ["state transitions", "phase detection", "existence validation"]
           },
           {
             "role": "coherence-calculator",
-            "atp": 15,
+            "atp": 20,
             "skills": ["metric computation", "alignment scoring", "optimization guidance"]
           }
         ]
@@ -323,7 +243,7 @@
       {
         "name": "Implementation-Queen",
         "domain": "code_execution",
-        "atp_budget": 90,
+        "atp_budget": 100,
         "responsibilities": [
           "Translate designs into code",
           "Ensure implementation quality",
@@ -338,7 +258,7 @@
           },
           {
             "role": "test-writer",
-            "atp": 20,
+            "atp": 25,
             "skills": ["unit testing", "integration testing", "test coverage"]
           },
           {
@@ -348,7 +268,7 @@
           },
           {
             "role": "refactoring-specialist",
-            "atp": 10,
+            "atp": 15,
             "skills": ["code cleanup", "pattern application", "debt reduction"]
           },
           {
@@ -361,7 +281,7 @@
       {
         "name": "Research-Queen",
         "domain": "knowledge_exploration",
-        "atp_budget": 70,
+        "atp_budget": 80,
         "responsibilities": [
           "Investigate new concepts",
           "Analyze external information",
@@ -371,7 +291,7 @@
         "workers": [
           {
             "role": "concept-explorer",
-            "atp": 20,
+            "atp": 25,
             "skills": ["literature review", "concept mapping", "theory analysis"]
           },
           {
@@ -381,7 +301,7 @@
           },
           {
             "role": "synthesis-writer",
-            "atp": 15,
+            "atp": 20,
             "skills": ["research synthesis", "meta-analysis", "insight extraction"]
           },
           {
@@ -395,71 +315,38 @@
     "support_roles": [
       {
         "name": "Memory-Keeper",
-        "atp_budget": 10,
+        "atp_budget": 20,
         "responsibilities": ["Maintain conversation context", "Retrieve relevant history", "Manage knowledge base"]
       },
       {
         "name": "Energy-Monitor",
-        "atp_budget": 10,
+        "atp_budget": 20,
         "responsibilities": ["Track ATP/ADP cycles", "Optimize energy allocation", "Prevent exhaustion"]
       },
       {
         "name": "Error-Handler",
-        "atp_budget": 10,
+        "atp_budget": 20,
         "responsibilities": ["Catch exceptions", "Graceful degradation", "Recovery procedures"]
       },
       {
         "name": "Metric-Collector",
-        "atp_budget": 10,
+        "atp_budget": 20,
         "responsibilities": ["Gather performance data", "Calculate KPIs", "Generate reports"]
       }
     ]
   },
   "energy_model": {
     "total_atp": 1000,
-    "allocation_breakdown": {
-      "sovereign": 50,
-      "queens_total": 910,
-      "support_total": 40,
-      "queens": {
-        "Treasury-Queen": 120,
-        "Law-Oracle-Queen": 110,
-        "Coherence-Analysis-Queen": 110,
-        "Synthesis-Queen": 110,
-        "Documentation-Queen": 100,
-        "Hardware-Binding-Queen": 90,
-        "Federation-Bridge-Queen": 90,
-        "Implementation-Queen": 90,
-        "Synchronism-Guru-Queen": 70,
-        "Research-Queen": 70
-      }
-    },
     "recharge_rate": 100,
     "recharge_interval": "1 hour",
     "critical_threshold": 100,
     "delegation_enabled": true,
-    "quadratic_voting": true,
-    "treasury_controls": true
+    "quadratic_voting": true
   },
   "activation_rules": {
-    "always_active": ["Treasury-Queen", "Law-Oracle-Queen"],
     "default_active": ["Synthesis-Queen", "Coherence-Analysis-Queen"],
     "on_demand": ["Implementation-Queen", "Research-Queen", "Documentation-Queen"],
     "triggered": ["Hardware-Binding-Queen", "Federation-Bridge-Queen"],
     "scheduled": ["Synchronism-Guru-Queen"]
-  },
-  "governance_notes": {
-    "treasury_powers": [
-      "Can reallocate up to 20% of any queen's budget per cycle",
-      "Emergency reallocation rights during crisis",
-      "Oversees all delegation pools",
-      "Manages recharge distribution"
-    ],
-    "law_oracle_powers": [
-      "Final interpretation authority on all laws",
-      "Can halt operations for compliance violations",
-      "Precedent establishment rights",
-      "Emergency amendment proposals"
-    ]
   }
 }
