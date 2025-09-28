@@ -27,6 +27,7 @@ implementation/
     │   └── data/            # [GITIGNORED] Chain data
     ├── roles/               # Role definitions
     │   ├── role_hierarchy.json
+    │   ├── security_queen/  # [MANDATORY] Security oversight
     │   ├── queens/          # Queen specifications
     │   └── workers/         # Worker definitions
     ├── laws/                # Governance structure
@@ -76,12 +77,18 @@ INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)  # AWS
 
 ### 2. Role Customization
 
-Define roles matching your society's nature:
+Define roles matching your society's nature. **MANDATORY: Every society MUST have a Security Queen.**
 
 #### For Human-Operated Societies
 ```json
 {
   "queens": [
+    {
+      "name": "Security-Queen",
+      "domain": "security_validation",
+      "mandatory": true,
+      "veto_power": true
+    },
     {
       "name": "Coordination-Queen",
       "domain": "human_coordination"
@@ -99,6 +106,12 @@ Define roles matching your society's nature:
 {
   "queens": [
     {
+      "name": "Security-Queen",
+      "domain": "security_validation",
+      "mandatory": true,
+      "veto_power": true
+    },
+    {
       "name": "Learning-Queen",
       "domain": "model_adaptation"
     },
@@ -114,6 +127,12 @@ Define roles matching your society's nature:
 ```json
 {
   "queens": [
+    {
+      "name": "Security-Queen",
+      "domain": "security_validation",
+      "mandatory": true,
+      "veto_power": true
+    },
     {
       "name": "Sensor-Queen",
       "domain": "data_collection"
@@ -132,10 +151,11 @@ Customize laws to reflect your society's values:
 
 #### Essential Laws (Recommended for All)
 1. **Identity Law**: How your society establishes and maintains identity
-2. **Governance Law**: How decisions are made
-3. **Federation Law**: Commitment to collective
-4. **Resource Law**: How energy/resources are managed
-5. **Emergency Law**: Crisis response protocols
+2. **Security Law**: Security Queen's mandatory validation for all operations
+3. **Governance Law**: How decisions are made (with Security Queen veto)
+4. **Federation Law**: Commitment to collective
+5. **Resource Law**: How energy/resources are managed
+6. **Emergency Law**: Crisis response protocols (Security Queen can trigger)
 
 #### Society-Specific Laws
 - **For AI**: Transparency, explainability requirements
