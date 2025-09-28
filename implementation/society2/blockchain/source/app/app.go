@@ -45,12 +45,12 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v10/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
 
-	"society4chain/docs"
+	"society2chain/docs"
 )
 
 const (
 	// Name is the name of the application.
-	Name = "racecarweb"
+	Name = "society2"
 	// AccountAddressPrefix is the prefix for accounts addresses.
 	AccountAddressPrefix = "cosmos"
 	// ChainCoinType is the coin type of the chain.

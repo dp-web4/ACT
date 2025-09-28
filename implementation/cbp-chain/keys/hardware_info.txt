@@ -1,13 +1,0 @@
-CBP Machine Hardware Information
-================================
-Generated: 2025-09-28 06:08:44 UTC
-Hostname: cbp
-WSL UUID: bafc3dcf-7427-4acb-9aea-e589fe6ccdc1
-Kernel: 6.6.87.2-microsoft-standard-WSL2
-Architecture: x86_64
-CPU: Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz
-CPU Cores: 8
-Memory: 12249304 KB
-Filesystem UUID: 3c6322ef-e1f3-460d-a873-e69ce6184f67
-Hardware ID: a51d4dc7e7295190a37d68177bfc0354b4901ce30ab39cb2b4bbe8f9143f0dbe
-Seed: 81d717b2ab6c933190b092fa0b63ae653695aa47fc94fa3f0346316b51921ba6

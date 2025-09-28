@@ -1,19 +1,0 @@
-{
-  "machine_id": "a51d4dc7e7295190a37d68177bfc0354b4901ce30ab39cb2b4bbe8f9143f0dbe",
-  "hostname": "cbp",
-  "wsl_uuid": "bafc3dcf-7427-4acb-9aea-e589fe6ccdc1",
-  "created": "2025-09-28T06:08:45Z",
-  "hardware": {
-    "cpu": "Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz",
-    "cores": 8,
-    "memory_kb": 12249304,
-    "kernel": "6.6.87.2-microsoft-standard-WSL2",
-    "arch": "x86_64"
-  },
-  "chain_config": {
-    "chain_id": "cbp-chain-a51d4dc7",
-    "moniker": "cbp-validator",
-    "home": "/mnt/c/exe/projects/ai-agents/ACT/implementation/cbp-chain"
-  },
-  "seed": "81d717b2ab6c933190b092fa0b63ae653695aa47fc94fa3f0346316b51921ba6"
-}

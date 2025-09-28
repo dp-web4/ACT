@@ -71,3 +71,13 @@ implementation/ledger/society[0-9]*/
 # Test and vendor directories
 vendor/
 testdata/
+
+# Security - NEVER commit keys or sensitive hardware info
+**/keys/
+hardware_info.txt
+machine_id.json
+hardware_attestation.json
+*.key
+*.pem
+*.seed
+*_seed.txt
