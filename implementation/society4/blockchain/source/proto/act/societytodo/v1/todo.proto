@@ -1,0 +1,609 @@
+syntax = "proto3";
+package act.societytodo.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
+import "act/energycycle/v1/energy.proto";
+import "act/trusttensor/v1/trust.proto";
+
+option go_package = "github.com/dp-web4/act/x/societytodo/types";
+
+// SocietyTodoList represents a society's todo management system
+message SocietyTodoList {
+  string society_lct = 1;
+  string list_id = 2;
+
+  // Wake/Sleep cycle state
+  SocietyState state = 3;
+
+  // Current cycle information
+  CycleInfo current_cycle = 4 [(gogoproto.nullable) = false];
+
+  // ATP management
+  AtpBudget atp_budget = 5 [(gogoproto.nullable) = false];
+
+  // Active todos organized by priority
+  repeated TodoItem active_todos = 6 [(gogoproto.nullable) = false];
+
+  // Completed todos (for ADP generation tracking)
+  repeated TodoItem completed_todos = 7 [(gogoproto.nullable) = false];
+
+  // Delegation pools
+  repeated DelegationPool delegation_pools = 8 [(gogoproto.nullable) = false];
+
+  // Cross-society sharing configuration
+  FederationConfig federation_config = 9 [(gogoproto.nullable) = false];
+
+  google.protobuf.Timestamp created_at = 10 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp updated_at = 11 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// Society operational states
+enum SocietyState {
+  SOCIETY_STATE_UNSPECIFIED = 0;
+  SOCIETY_STATE_AWAKENING = 1;    // Transitioning from sleep to wake
+  SOCIETY_STATE_ACTIVE = 2;       // Fully operational, processing todos
+  SOCIETY_STATE_CONSERVING = 3;   // Reduced activity, selective processing
+  SOCIETY_STATE_SLEEPING = 4;     // Dormant, emergency-only processing
+  SOCIETY_STATE_HIBERNATING = 5;  // Deep sleep, maintenance only
+}
+
+// Cycle information for energy management
+message CycleInfo {
+  uint64 cycle_number = 1;
+  google.protobuf.Timestamp cycle_start = 2 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  uint64 cycle_duration_seconds = 3;
+
+  // Energy efficiency metrics
+  string energy_efficiency = 4 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Performance metrics
+  uint32 todos_completed = 5;
+  uint32 todos_failed = 6;
+
+  // Next cycle prediction
+  google.protobuf.Timestamp next_wake_time = 7 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp next_sleep_time = 8 [(gogoproto.stdtime) = true];
+}
+
+// ATP budget management for todo execution
+message AtpBudget {
+  // Total ATP allocated to todo system
+  string total_allocated = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Available ATP for new todos
+  string available = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Reserved ATP for high-priority tasks
+  string reserved = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // ATP consumption rate limits
+  string max_per_todo = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  string max_per_cycle = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Emergency reserve (never consumed during normal operation)
+  string emergency_reserve = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// Individual todo item
+message TodoItem {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+
+  // Requesting citizen
+  string requester_lct = 4;
+
+  // Priority and scheduling
+  TodoPriority priority = 5;
+  TodoStatus status = 6;
+
+  // ATP cost estimation and tracking
+  AtpCostAnalysis atp_cost = 7 [(gogoproto.nullable) = false];
+
+  // Execution requirements
+  repeated string required_capabilities = 8;
+  repeated string required_roles = 9;
+
+  // Assigned executor (can be AI agent, human, or role)
+  string assigned_executor = 10;
+
+  // Trust requirements
+  TrustRequirement trust_requirement = 11 [(gogoproto.nullable) = false];
+
+  // Delegations received
+  repeated DelegationVote delegations = 12 [(gogoproto.nullable) = false];
+
+  // Dependencies
+  repeated string depends_on = 13; // Other todo IDs
+  repeated string blocks = 14;     // Todo IDs blocked by this
+
+  // Timing constraints
+  google.protobuf.Timestamp created_at = 15 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp deadline = 16 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp started_at = 17 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp completed_at = 18 [(gogoproto.stdtime) = true];
+
+  // Execution results
+  TodoResult result = 19;
+
+  // Cross-society sharing
+  bool shareable = 20;
+  repeated string shared_with_societies = 21;
+}
+
+// Priority levels for todo scheduling
+enum TodoPriority {
+  TODO_PRIORITY_UNSPECIFIED = 0;
+  TODO_PRIORITY_LOW = 1;         // Background tasks, no urgency
+  TODO_PRIORITY_NORMAL = 2;      // Standard citizen requests
+  TODO_PRIORITY_HIGH = 3;        // Important society functions
+  TODO_PRIORITY_CRITICAL = 4;    // Emergency, safety-critical
+  TODO_PRIORITY_EMERGENCY = 5;   // Society survival, immediate action
+}
+
+// Status tracking for todo lifecycle
+enum TodoStatus {
+  TODO_STATUS_UNSPECIFIED = 0;
+  TODO_STATUS_PENDING = 1;       // Waiting for ATP allocation
+  TODO_STATUS_QUEUED = 2;        // Allocated, waiting for execution
+  TODO_STATUS_ASSIGNED = 3;      // Assigned to executor
+  TODO_STATUS_IN_PROGRESS = 4;   // Currently being executed
+  TODO_STATUS_BLOCKED = 5;       // Waiting for dependencies
+  TODO_STATUS_PAUSED = 6;        // Execution paused (sleep cycle)
+  TODO_STATUS_COMPLETED = 7;     // Successfully completed
+  TODO_STATUS_FAILED = 8;        // Execution failed
+  TODO_STATUS_CANCELLED = 9;     // Cancelled by requester/society
+  TODO_STATUS_EXPIRED = 10;      // Deadline passed without completion
+}
+
+// ATP cost analysis and tracking
+message AtpCostAnalysis {
+  // Estimated costs
+  string estimated_compute_cost = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  string estimated_network_cost = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  string estimated_storage_cost = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Total estimated cost
+  string total_estimated = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Actual consumption (updated during execution)
+  string actual_consumed = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // ATP locked for this todo
+  string locked_atp = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Cost estimation confidence (0-100)
+  uint32 estimation_confidence = 7;
+
+  // Cost model used for estimation
+  string cost_model_version = 8;
+}
+
+// Trust requirements for todo execution
+message TrustRequirement {
+  // Minimum trust tensor values required
+  act.trusttensor.v1.TrustTensor min_trust = 1 [(gogoproto.nullable) = false];
+
+  // Minimum value tensor for economic alignment
+  act.trusttensor.v1.ValueTensor min_value = 2 [(gogoproto.nullable) = false];
+
+  // Maximum trust distance from requester
+  uint32 max_trust_distance = 3;
+
+  // Required witness confirmations
+  uint32 required_witnesses = 4;
+
+  // MRH context requirements
+  bool require_mrh_overlap = 5;
+  uint32 min_mrh_overlap_degree = 6;
+}
+
+// Delegation voting for ATP allocation priority
+message DelegationVote {
+  string delegator_lct = 1;
+
+  // ATP delegated to boost this todo's priority
+  string delegated_atp = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Vote weight based on delegator's trust/stake
+  string vote_weight = 3 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Reason for delegation
+  string reason = 4;
+
+  google.protobuf.Timestamp delegated_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+
+  // Delegation expiry
+  google.protobuf.Timestamp expires_at = 6 [(gogoproto.stdtime) = true];
+}
+
+// Delegation pool for organizing citizen ATP contributions
+message DelegationPool {
+  string pool_id = 1;
+  string name = 2;
+  string description = 3;
+
+  // Pool category/theme
+  string category = 4;
+
+  // Total ATP contributed to pool
+  string total_atp = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Available ATP in pool
+  string available_atp = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Pool contributors
+  repeated PoolContributor contributors = 7 [(gogoproto.nullable) = false];
+
+  // Automatic allocation rules
+  repeated AllocationRule allocation_rules = 8 [(gogoproto.nullable) = false];
+
+  // Pool governance
+  PoolGovernance governance = 9 [(gogoproto.nullable) = false];
+
+  google.protobuf.Timestamp created_at = 10 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// Pool contributor tracking
+message PoolContributor {
+  string lct_id = 1;
+
+  string contributed_atp = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Voting power in pool decisions
+  string voting_power = 3 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  google.protobuf.Timestamp contributed_at = 4 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+
+  // Contribution terms
+  bool permanent_contribution = 5;
+  google.protobuf.Timestamp contribution_expiry = 6 [(gogoproto.stdtime) = true];
+}
+
+// Rules for automatic ATP allocation from pools
+message AllocationRule {
+  string rule_id = 1;
+  string name = 2;
+
+  // Conditions for automatic allocation
+  repeated AllocationCondition conditions = 3 [(gogoproto.nullable) = false];
+
+  // Amount to allocate when conditions met
+  string allocation_amount = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Maximum allocations per cycle
+  uint32 max_allocations_per_cycle = 5;
+
+  // Rule priority (higher = processed first)
+  uint32 priority = 6;
+
+  bool enabled = 7;
+
+  google.protobuf.Timestamp created_at = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// Conditions for automatic allocation rules
+message AllocationCondition {
+  ConditionType type = 1;
+  string parameter = 2;
+  string value = 3;
+  ComparisonOperator operator = 4;
+}
+
+enum ConditionType {
+  CONDITION_TYPE_UNSPECIFIED = 0;
+  CONDITION_TYPE_TODO_PRIORITY = 1;
+  CONDITION_TYPE_REQUESTER_TRUST = 2;
+  CONDITION_TYPE_CATEGORY_MATCH = 3;
+  CONDITION_TYPE_TIME_OF_DAY = 4;
+  CONDITION_TYPE_SOCIETY_STATE = 5;
+  CONDITION_TYPE_ATP_COST = 6;
+  CONDITION_TYPE_EXECUTOR_TYPE = 7;
+}
+
+enum ComparisonOperator {
+  COMPARISON_OPERATOR_UNSPECIFIED = 0;
+  COMPARISON_OPERATOR_EQUALS = 1;
+  COMPARISON_OPERATOR_NOT_EQUALS = 2;
+  COMPARISON_OPERATOR_GREATER_THAN = 3;
+  COMPARISON_OPERATOR_LESS_THAN = 4;
+  COMPARISON_OPERATOR_GREATER_EQUAL = 5;
+  COMPARISON_OPERATOR_LESS_EQUAL = 6;
+  COMPARISON_OPERATOR_CONTAINS = 7;
+  COMPARISON_OPERATOR_MATCHES_REGEX = 8;
+}
+
+// Pool governance for democratic decision making
+message PoolGovernance {
+  // Voting thresholds for pool decisions
+  uint32 allocation_threshold_percent = 1;  // % needed to approve allocations
+  uint32 rule_change_threshold_percent = 2; // % needed to change rules
+
+  // Voting period for proposals
+  uint64 voting_period_seconds = 3;
+
+  // Quorum requirements
+  uint32 min_quorum_percent = 4;
+
+  // Pool administrators (can make emergency decisions)
+  repeated string administrators = 5;
+}
+
+// Todo execution results
+message TodoResult {
+  bool success = 1;
+  string result_data = 2;
+  string error_message = 3;
+
+  // R6 Framework validation
+  act.energycycle.v1.R6Validation r6_validation = 4 [(gogoproto.nullable) = false];
+
+  // ADP generated from completion
+  string adp_generated = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Performance metrics
+  uint64 execution_time_seconds = 6;
+  string actual_atp_consumed = 7 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Quality assessment
+  uint32 quality_score = 8; // 0-100
+  repeated string quality_metrics = 9;
+
+  // Impact on society
+  SocietyImpact society_impact = 10 [(gogoproto.nullable) = false];
+}
+
+// Impact assessment of todo completion
+message SocietyImpact {
+  // Trust tensor changes for involved parties
+  repeated TrustImpact trust_impacts = 1 [(gogoproto.nullable) = false];
+
+  // Economic impact
+  string economic_value_generated = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Social impact metrics
+  uint32 citizens_affected = 3;
+  string social_satisfaction_score = 4 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Knowledge value generated
+  string knowledge_contribution = 5 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// Trust impact tracking
+message TrustImpact {
+  string lct_id = 1;
+  act.trusttensor.v1.TrustTensor trust_delta = 2 [(gogoproto.nullable) = false];
+  act.trusttensor.v1.ValueTensor value_delta = 3 [(gogoproto.nullable) = false];
+  string reason = 4;
+}
+
+// Cross-society federation configuration
+message FederationConfig {
+  bool enable_sharing = 1;
+  bool enable_receiving = 2;
+
+  // Trusted societies for todo sharing
+  repeated TrustedSociety trusted_societies = 3 [(gogoproto.nullable) = false];
+
+  // Sharing policies
+  repeated SharingPolicy sharing_policies = 4 [(gogoproto.nullable) = false];
+
+  // ATP limits for cross-society todos
+  string max_atp_per_external_todo = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  string max_atp_per_society_per_cycle = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// Trusted society for federation
+message TrustedSociety {
+  string society_lct = 1;
+  string society_name = 2;
+
+  // Trust level for this society
+  act.trusttensor.v1.TrustTensor trust_level = 3 [(gogoproto.nullable) = false];
+
+  // Maximum ATP allocation to this society
+  string max_atp_allocation = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Federation established timestamp
+  google.protobuf.Timestamp federated_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// Policies for sharing todos with other societies
+message SharingPolicy {
+  string policy_id = 1;
+  string name = 2;
+
+  // Categories of todos to share
+  repeated string shared_categories = 3;
+
+  // Minimum priority level to share
+  TodoPriority min_priority_to_share = 4;
+
+  // Trust requirements for receiving societies
+  act.trusttensor.v1.TrustTensor min_society_trust = 5 [(gogoproto.nullable) = false];
+
+  // ATP cost sharing model
+  CostSharingModel cost_sharing = 6;
+
+  bool enabled = 7;
+}
+
+// Models for sharing ATP costs across societies
+enum CostSharingModel {
+  COST_SHARING_MODEL_UNSPECIFIED = 0;
+  COST_SHARING_MODEL_REQUESTER_PAYS = 1;     // Requesting society pays all
+  COST_SHARING_MODEL_EXECUTOR_PAYS = 2;      // Executing society pays all
+  COST_SHARING_MODEL_SPLIT_50_50 = 3;        // Split costs evenly
+  COST_SHARING_MODEL_PROPORTIONAL = 4;       // Based on benefit received
+  COST_SHARING_MODEL_AUCTION = 5;            // Auction-based pricing
+}
+
+// Citizen request for adding todos
+message CitizenTodoRequest {
+  string request_id = 1;
+  string requester_lct = 2;
+  string society_lct = 3;
+
+  // Requested todo details
+  string title = 4;
+  string description = 5;
+  TodoPriority requested_priority = 6;
+
+  // Timing preferences
+  google.protobuf.Timestamp preferred_start_time = 7 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp deadline = 8 [(gogoproto.stdtime) = true];
+
+  // ATP contribution from requester
+  string offered_atp = 9 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Requirements specification
+  repeated string required_capabilities = 10;
+  string preferred_executor = 11;
+
+  // Justification for the request
+  string justification = 12;
+  repeated bytes supporting_evidence = 13;
+
+  // Request status
+  RequestStatus status = 14;
+  string status_reason = 15;
+
+  // Society review
+  google.protobuf.Timestamp reviewed_at = 16 [(gogoproto.stdtime) = true];
+  string reviewed_by = 17;
+
+  google.protobuf.Timestamp created_at = 18 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// Status of citizen todo requests
+enum RequestStatus {
+  REQUEST_STATUS_UNSPECIFIED = 0;
+  REQUEST_STATUS_PENDING = 1;        // Awaiting society review
+  REQUEST_STATUS_UNDER_REVIEW = 2;   // Being evaluated by society
+  REQUEST_STATUS_APPROVED = 3;       // Approved, todo created
+  REQUEST_STATUS_REJECTED = 4;       // Rejected by society
+  REQUEST_STATUS_NEEDS_MORE_INFO = 5; // Requires additional information
+  REQUEST_STATUS_CANCELLED = 6;      // Cancelled by requester
+}

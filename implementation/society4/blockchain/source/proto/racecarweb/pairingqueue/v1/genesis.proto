@@ -1,0 +1,17 @@
+syntax = "proto3";
+package racecarweb.pairingqueue.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/pairingqueue/v1/params.proto";
+
+option go_package = "racecar-web/x/pairingqueue/types";
+
+// GenesisState defines the pairingqueue module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

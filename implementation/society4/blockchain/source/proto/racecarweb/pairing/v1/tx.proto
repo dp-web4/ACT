@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package racecarweb.pairing.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/pairing/v1/params.proto";
+
+option go_package = "racecar-web/x/pairing/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // InitiateBidirectionalPairing defines the InitiateBidirectionalPairing RPC.
+  rpc InitiateBidirectionalPairing(MsgInitiateBidirectionalPairing) returns (MsgInitiateBidirectionalPairingResponse);
+
+  // CompletePairing defines the CompletePairing RPC.
+  rpc CompletePairing(MsgCompletePairing) returns (MsgCompletePairingResponse);
+
+  // RevokePairing defines the RevokePairing RPC.
+  rpc RevokePairing(MsgRevokePairing) returns (MsgRevokePairingResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "racecarweb/x/pairing/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgInitiateBidirectionalPairing defines the MsgInitiateBidirectionalPairing message.
+message MsgInitiateBidirectionalPairing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_a = 2;
+  string component_b = 3;
+  string operational_context = 4;
+  string proxy_id = 5;
+  bool force_immediate = 6;
+}
+
+// MsgInitiateBidirectionalPairingResponse defines the MsgInitiateBidirectionalPairingResponse message.
+message MsgInitiateBidirectionalPairingResponse {
+  string challenge_id = 1;
+  string lct_id = 2;
+  string status = 3;
+  string queue_id = 4;
+}
+
+// MsgCompletePairing defines the MsgCompletePairing message.
+message MsgCompletePairing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string challenge_id = 2;
+  string component_a_auth = 3;
+  string component_b_auth = 4;
+  string session_context = 5;
+}
+
+// MsgCompletePairingResponse defines the MsgCompletePairingResponse message.
+message MsgCompletePairingResponse {
+  string lct_id = 1;
+  string session_keys = 2;
+  string trust_summary = 3;
+}
+
+// MsgRevokePairing defines the MsgRevokePairing message.
+message MsgRevokePairing {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  string reason = 3;
+  bool notify_offline = 4;
+}
+
+// MsgRevokePairingResponse defines the MsgRevokePairingResponse message.
+message MsgRevokePairingResponse {}

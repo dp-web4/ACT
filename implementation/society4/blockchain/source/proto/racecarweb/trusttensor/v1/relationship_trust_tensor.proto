@@ -1,0 +1,20 @@
+syntax = "proto3";
+package racecarweb.trusttensor.v1;
+
+option go_package = "racecar-web/x/trusttensor/types";
+
+// RelationshipTrustTensor defines the RelationshipTrustTensor message.
+message RelationshipTrustTensor {
+  string tensor_id = 1;
+  string lct_id = 2;
+  string tensor_type = 3;
+  string talent_score = 4;
+  string training_score = 5;
+  string temperament_score = 6;
+  string context = 7;
+  int64 created_at = 8;
+  int64 updated_at = 9;
+  int64 version = 10;
+  int64 evidence_count = 11;  // Number of evidence points for learning rate calculation
+  string context_modifier = 12; // Context-specific modifier for trust calculations
+}

@@ -1,0 +1,57 @@
+syntax = "proto3";
+package racecarweb.energycycle.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// SocietyPool represents a society's ATP/ADP token pool
+message SocietyPool {
+  // Society LCT identifier
+  string society_lct = 1;
+
+  // ATP balance (charged energy tokens)
+  cosmos.base.v1beta1.Coin atp_balance = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coin"
+  ];
+
+  // ADP balance (discharged energy tokens)
+  cosmos.base.v1beta1.Coin adp_balance = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coin"
+  ];
+
+  // Last update timestamp
+  int64 last_update = 4;
+
+  // Total minted (historical)
+  string total_minted = 5;
+
+  // Total discharged (work performed)
+  string total_discharged = 6;
+
+  // Total recharged (energy added)
+  string total_recharged = 7;
+
+  // Metadata for additional properties
+  map<string, string> metadata = 8;
+
+  // Society status (active, dormant, hibernating, etc.)
+  string metabolic_state = 9;
+
+  // Treasury role LCT that can mint
+  string treasury_role = 10;
+}
+
+// QueryGetSocietyPoolRequest is the request for querying a society pool
+message QueryGetSocietyPoolRequest {
+  string society_lct = 1;
+}
+
+// QueryGetSocietyPoolResponse is the response for querying a society pool
+message QueryGetSocietyPoolResponse {
+  SocietyPool pool = 1;
+}

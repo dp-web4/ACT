@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package racecarweb.trusttensor.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "racecarweb/trusttensor/v1/params.proto";
+
+option go_package = "racecar-web/x/trusttensor/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/racecar-web/trusttensor/v1/params";
+  }
+
+  // GetRelationshipTensor Queries a list of GetRelationshipTensor items.
+  rpc GetRelationshipTensor(QueryGetRelationshipTensorRequest) returns (QueryGetRelationshipTensorResponse) {
+    option (google.api.http).get = "/racecar-web/trusttensor/v1/get_relationship_tensor/{lct_id}/{tensor_type}";
+  }
+
+  // CalculateRelationshipTrust Queries a list of CalculateRelationshipTrust items.
+  rpc CalculateRelationshipTrust(QueryCalculateRelationshipTrustRequest) returns (QueryCalculateRelationshipTrustResponse) {
+    option (google.api.http).get = "/racecar-web/trusttensor/v1/calculate_relationship_trust/{lct_id}/{context}";
+  }
+
+  // GetTensorHistory Queries a list of GetTensorHistory items.
+  rpc GetTensorHistory(QueryGetTensorHistoryRequest) returns (QueryGetTensorHistoryResponse) {
+    option (google.api.http).get = "/racecar-web/trusttensor/v1/get_tensor_history/{tensor_id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetRelationshipTensorRequest defines the QueryGetRelationshipTensorRequest message.
+message QueryGetRelationshipTensorRequest {
+  string lct_id = 1;
+  string tensor_type = 2;
+}
+
+// QueryGetRelationshipTensorResponse defines the QueryGetRelationshipTensorResponse message.
+message QueryGetRelationshipTensorResponse {
+  string relationship_trust_tensor = 1;
+}
+
+// QueryCalculateRelationshipTrustRequest defines the QueryCalculateRelationshipTrustRequest message.
+message QueryCalculateRelationshipTrustRequest {
+  string lct_id = 1;
+  string context = 2;
+}
+
+// QueryCalculateRelationshipTrustResponse defines the QueryCalculateRelationshipTrustResponse message.
+message QueryCalculateRelationshipTrustResponse {
+  string trust_score = 1;
+  string factors = 2;
+}
+
+// QueryGetTensorHistoryRequest defines the QueryGetTensorHistoryRequest message.
+message QueryGetTensorHistoryRequest {
+  string tensor_id = 1;
+}
+
+// QueryGetTensorHistoryResponse defines the QueryGetTensorHistoryResponse message.
+message QueryGetTensorHistoryResponse {
+  string tensor_entries = 1;
+}

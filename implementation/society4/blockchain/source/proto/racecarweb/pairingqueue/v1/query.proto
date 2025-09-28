@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package racecarweb.pairingqueue.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "racecarweb/pairingqueue/v1/params.proto";
+
+option go_package = "racecar-web/x/pairingqueue/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/racecar-web/pairingqueue/v1/params";
+  }
+
+  // GetQueuedRequests Queries a list of GetQueuedRequests items.
+  rpc GetQueuedRequests(QueryGetQueuedRequestsRequest) returns (QueryGetQueuedRequestsResponse) {
+    option (google.api.http).get = "/racecar-web/pairingqueue/v1/get_queued_requests/{component_id}";
+  }
+
+  // GetRequestStatus Queries a list of GetRequestStatus items.
+  rpc GetRequestStatus(QueryGetRequestStatusRequest) returns (QueryGetRequestStatusResponse) {
+    option (google.api.http).get = "/racecar-web/pairingqueue/v1/get_request_status/{request_id}";
+  }
+
+  // ListProxyQueue Queries a list of ListProxyQueue items.
+  rpc ListProxyQueue(QueryListProxyQueueRequest) returns (QueryListProxyQueueResponse) {
+    option (google.api.http).get = "/racecar-web/pairingqueue/v1/list_proxy_queue/{proxy_id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetQueuedRequestsRequest defines the QueryGetQueuedRequestsRequest message.
+message QueryGetQueuedRequestsRequest {
+  string component_id = 1;
+}
+
+// QueryGetQueuedRequestsResponse defines the QueryGetQueuedRequestsResponse message.
+message QueryGetQueuedRequestsResponse {
+  string pairing_requests = 1;
+}
+
+// QueryGetRequestStatusRequest defines the QueryGetRequestStatusRequest message.
+message QueryGetRequestStatusRequest {
+  string request_id = 1;
+}
+
+// QueryGetRequestStatusResponse defines the QueryGetRequestStatusResponse message.
+message QueryGetRequestStatusResponse {
+  string pairing_request = 1;
+}
+
+// QueryListProxyQueueRequest defines the QueryListProxyQueueRequest message.
+message QueryListProxyQueueRequest {
+  string proxy_id = 1;
+}
+
+// QueryListProxyQueueResponse defines the QueryListProxyQueueResponse message.
+message QueryListProxyQueueResponse {
+  string offline_operations = 1;
+}
