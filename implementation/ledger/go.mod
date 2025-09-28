@@ -1,6 +1,6 @@
 module racecarweb
 
-go 1.24.0
+go 1.24
 
 replace (
 	// Fix Go 1.24 compatibility with sonic library
