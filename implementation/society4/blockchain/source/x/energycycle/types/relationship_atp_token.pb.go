@@ -153,7 +153,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/energycycle/v1/relationship_atp_token.proto", fileDescriptor_e01f84c14a514d12)
+	proto.RegisterFile("society4chain/energycycle/v1/relationship_atp_token.proto", fileDescriptor_e01f84c14a514d12)
 }
 
 var fileDescriptor_e01f84c14a514d12 = []byte{

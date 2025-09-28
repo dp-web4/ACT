@@ -76,7 +76,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/lctmanager/module/v1/module.proto", fileDescriptor_9bd4d739f72bffc5)
+	proto.RegisterFile("society4chain/lctmanager/module/v1/module.proto", fileDescriptor_9bd4d739f72bffc5)
 }
 
 var fileDescriptor_9bd4d739f72bffc5 = []byte{

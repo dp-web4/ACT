@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"racecarweb/x/societytodo/types"
+	"society4chain/x/societytodo/types"
 )
 
 type msgServer struct {

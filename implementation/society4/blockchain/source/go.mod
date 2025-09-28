@@ -1,4 +1,4 @@
-module racecarweb
+module society4chain
 
 go 1.24.0
 

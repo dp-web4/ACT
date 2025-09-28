@@ -45,7 +45,7 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v10/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
 
-	"racecarweb/docs"
+	"society4chain/docs"
 )
 
 const (

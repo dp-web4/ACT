@@ -495,7 +495,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/trusttensor/v1/tx.proto", fileDescriptor_587efd0e0e8cf3cb)
+	proto.RegisterFile("society4chain/trusttensor/v1/tx.proto", fileDescriptor_587efd0e0e8cf3cb)
 }
 
 var fileDescriptor_587efd0e0e8cf3cb = []byte{
@@ -741,7 +741,7 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/trusttensor/v1/tx.proto",
+	Metadata: "society4chain/trusttensor/v1/tx.proto",
 }
 
 func (m *MsgUpdateParams) Marshal() (dAtA []byte, err error) {

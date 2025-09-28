@@ -536,7 +536,7 @@ func init() {
 	proto.RegisterType((*MsgRevokePairingResponse)(nil), "racecarweb.pairing.v1.MsgRevokePairingResponse")
 }
 
-func init() { proto.RegisterFile("racecarweb/pairing/v1/tx.proto", fileDescriptor_81d7d37064c45cab) }
+func init() { proto.RegisterFile("society4chain/pairing/v1/tx.proto", fileDescriptor_81d7d37064c45cab) }
 
 var fileDescriptor_81d7d37064c45cab = []byte{
 	// 793 bytes of a gzipped FileDescriptorProto
@@ -788,7 +788,7 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/pairing/v1/tx.proto",
+	Metadata: "society4chain/pairing/v1/tx.proto",
 }
 
 func (m *MsgUpdateParams) Marshal() (dAtA []byte, err error) {

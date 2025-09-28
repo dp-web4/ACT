@@ -76,7 +76,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/pairingqueue/v1/genesis.proto", fileDescriptor_37a84aa771bc1512)
+	proto.RegisterFile("society4chain/pairingqueue/v1/genesis.proto", fileDescriptor_37a84aa771bc1512)
 }
 
 var fileDescriptor_37a84aa771bc1512 = []byte{

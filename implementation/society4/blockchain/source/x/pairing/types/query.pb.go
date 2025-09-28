@@ -438,7 +438,7 @@ func init() {
 	proto.RegisterType((*QueryListActivePairingsResponse)(nil), "racecarweb.pairing.v1.QueryListActivePairingsResponse")
 }
 
-func init() { proto.RegisterFile("racecarweb/pairing/v1/query.proto", fileDescriptor_93c877ed7f6384f6) }
+func init() { proto.RegisterFile("society4chain/pairing/v1/query.proto", fileDescriptor_93c877ed7f6384f6) }
 
 var fileDescriptor_93c877ed7f6384f6 = []byte{
 	// 722 bytes of a gzipped FileDescriptorProto
@@ -684,7 +684,7 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/pairing/v1/query.proto",
+	Metadata: "society4chain/pairing/v1/query.proto",
 }
 
 func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {

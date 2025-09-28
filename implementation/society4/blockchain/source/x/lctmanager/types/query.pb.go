@@ -423,7 +423,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/lctmanager/v1/query.proto", fileDescriptor_667fcbfb88eed80d)
+	proto.RegisterFile("society4chain/lctmanager/v1/query.proto", fileDescriptor_667fcbfb88eed80d)
 }
 
 var fileDescriptor_667fcbfb88eed80d = []byte{
@@ -666,7 +666,7 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/lctmanager/v1/query.proto",
+	Metadata: "society4chain/lctmanager/v1/query.proto",
 }
 
 func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {

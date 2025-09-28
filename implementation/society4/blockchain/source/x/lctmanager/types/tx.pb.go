@@ -1359,7 +1359,7 @@ func init() {
 	proto.RegisterType((*MsgVerifyLCTChallengeResponse)(nil), "racecarweb.lctmanager.v1.MsgVerifyLCTChallengeResponse")
 }
 
-func init() { proto.RegisterFile("racecarweb/lctmanager/v1/tx.proto", fileDescriptor_2aab7cf165c3e8a2) }
+func init() { proto.RegisterFile("society4chain/lctmanager/v1/tx.proto", fileDescriptor_2aab7cf165c3e8a2) }
 
 var fileDescriptor_2aab7cf165c3e8a2 = []byte{
 	// 1471 bytes of a gzipped FileDescriptorProto
@@ -1881,7 +1881,7 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/lctmanager/v1/tx.proto",
+	Metadata: "society4chain/lctmanager/v1/tx.proto",
 }
 
 func (m *MsgUpdateParams) Marshal() (dAtA []byte, err error) {

@@ -16,9 +16,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"racecarweb/x/societytodo/client/cli"
-	"racecarweb/x/societytodo/keeper"
-	"racecarweb/x/societytodo/types"
+	"society4chain/x/societytodo/client/cli"
+	"society4chain/x/societytodo/keeper"
+	"society4chain/x/societytodo/types"
 )
 
 var (

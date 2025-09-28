@@ -177,7 +177,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/componentregistry/v1/pairing_authorization.proto", fileDescriptor_1edc59acd907d758)
+	proto.RegisterFile("society4chain/componentregistry/v1/pairing_authorization.proto", fileDescriptor_1edc59acd907d758)
 }
 
 var fileDescriptor_1edc59acd907d758 = []byte{

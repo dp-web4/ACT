@@ -951,7 +951,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/energycycle/v1/tx.proto", fileDescriptor_a8d02ba67591d698)
+	proto.RegisterFile("society4chain/energycycle/v1/tx.proto", fileDescriptor_a8d02ba67591d698)
 }
 
 var fileDescriptor_a8d02ba67591d698 = []byte{
@@ -1342,7 +1342,7 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/energycycle/v1/tx.proto",
+	Metadata: "society4chain/energycycle/v1/tx.proto",
 }
 
 func (m *MsgUpdateParams) Marshal() (dAtA []byte, err error) {

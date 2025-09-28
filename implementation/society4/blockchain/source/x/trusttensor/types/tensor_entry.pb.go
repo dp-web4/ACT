@@ -129,7 +129,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/trusttensor/v1/tensor_entry.proto", fileDescriptor_0f241719d1668f50)
+	proto.RegisterFile("society4chain/trusttensor/v1/tensor_entry.proto", fileDescriptor_0f241719d1668f50)
 }
 
 var fileDescriptor_0f241719d1668f50 = []byte{

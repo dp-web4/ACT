@@ -129,7 +129,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/pairing/v1/pairing_challenge.proto", fileDescriptor_dbb250d721894eca)
+	proto.RegisterFile("society4chain/pairing/v1/pairing_challenge.proto", fileDescriptor_dbb250d721894eca)
 }
 
 var fileDescriptor_dbb250d721894eca = []byte{

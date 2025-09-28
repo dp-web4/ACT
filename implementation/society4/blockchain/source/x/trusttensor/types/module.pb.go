@@ -76,7 +76,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/trusttensor/module/v1/module.proto", fileDescriptor_8f725a732f7f5f66)
+	proto.RegisterFile("society4chain/trusttensor/module/v1/module.proto", fileDescriptor_8f725a732f7f5f66)
 }
 
 var fileDescriptor_8f725a732f7f5f66 = []byte{

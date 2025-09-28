@@ -397,7 +397,7 @@ func init() {
 }
 
 func init() {
-	proto.RegisterFile("racecarweb/pairingqueue/v1/query.proto", fileDescriptor_29103d1ed40a6368)
+	proto.RegisterFile("society4chain/pairingqueue/v1/query.proto", fileDescriptor_29103d1ed40a6368)
 }
 
 var fileDescriptor_29103d1ed40a6368 = []byte{
@@ -637,7 +637,7 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "racecarweb/pairingqueue/v1/query.proto",
+	Metadata: "society4chain/pairingqueue/v1/query.proto",
 }
 
 func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {
