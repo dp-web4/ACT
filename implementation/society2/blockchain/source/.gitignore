@@ -1,0 +1,62 @@
+# Binaries and executables
+society4chaind
+racecarwebd
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build artifacts
+/build/
+/dist/
+*.o
+*.a
+
+# Validator information (contains private keys!)
+validator.info
+*.mnemonic
+*.seed
+
+# Chain data directory (contains private keys!)
+.society4chain/
+.racecarweb/
+
+# Private keys and sensitive data
+*.key
+*.pem
+*.priv
+*_private*
+keyring-*
+*.keystore
+
+# Hardware binding (may contain sensitive system info)
+hardware_binding.json
+
+# Test and temporary files
+*.test
+*.tmp
+*.temp
+*.log
+*.swp
+*.swo
+*~
+
+# Go specific
+vendor/
+go.work
+go.work.sum
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local config
+*.local
+.env
+.env.local

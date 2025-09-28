@@ -1,0 +1,603 @@
+syntax = "proto3";
+package act.societytodo.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dp-web4/act/x/societytodo/types";
+
+// State machine for society wake/sleep cycles
+message SocietyStateMachine {
+  string society_lct = 1;
+
+  // Current state
+  SocietyState current_state = 2;
+
+  // State history for analysis
+  repeated StateTransition state_history = 3 [(gogoproto.nullable) = false];
+
+  // Energy management
+  EnergyProfile energy_profile = 4 [(gogoproto.nullable) = false];
+
+  // Performance metrics
+  PerformanceMetrics performance = 5 [(gogoproto.nullable) = false];
+
+  // Wake/sleep scheduling
+  CycleSchedule schedule = 6 [(gogoproto.nullable) = false];
+
+  // Emergency protocols
+  EmergencyProtocols emergency_protocols = 7 [(gogoproto.nullable) = false];
+
+  google.protobuf.Timestamp last_updated = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+// State transition tracking
+message StateTransition {
+  SocietyState from_state = 1;
+  SocietyState to_state = 2;
+  StateTransitionTrigger trigger = 3;
+  string trigger_data = 4;
+
+  // Energy levels at transition
+  string atp_level = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Performance metrics at transition
+  string performance_score = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Duration in previous state
+  uint64 duration_seconds = 7;
+
+  google.protobuf.Timestamp transitioned_at = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+
+  // Reason for transition
+  string reason = 9;
+}
+
+// Triggers for state transitions
+enum StateTransitionTrigger {
+  STATE_TRANSITION_TRIGGER_UNSPECIFIED = 0;
+  STATE_TRANSITION_TRIGGER_SCHEDULED = 1;     // Planned cycle transition
+  STATE_TRANSITION_TRIGGER_ATP_LOW = 2;       // Low energy conservation
+  STATE_TRANSITION_TRIGGER_ATP_HIGH = 3;      // High energy activation
+  STATE_TRANSITION_TRIGGER_PERFORMANCE = 4;   // Performance threshold
+  STATE_TRANSITION_TRIGGER_EMERGENCY = 5;     // Emergency situation
+  STATE_TRANSITION_TRIGGER_MANUAL = 6;        // Manual override
+  STATE_TRANSITION_TRIGGER_EXTERNAL = 7;      // External society request
+  STATE_TRANSITION_TRIGGER_CONSENSUS = 8;     // Citizen consensus
+}
+
+// Energy profile for optimized cycle management
+message EnergyProfile {
+  // Current energy status
+  string current_atp = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  string peak_atp = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Energy thresholds for state transitions
+  EnergyThresholds thresholds = 3 [(gogoproto.nullable) = false];
+
+  // Consumption patterns
+  repeated EnergyConsumptionPattern consumption_patterns = 4 [(gogoproto.nullable) = false];
+
+  // Generation capabilities
+  EnergyGeneration generation = 5 [(gogoproto.nullable) = false];
+
+  // Efficiency metrics
+  string current_efficiency = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  string optimal_efficiency = 7 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// Energy thresholds for state management
+message EnergyThresholds {
+  // Awakening threshold (from hibernating/sleeping to active)
+  string wake_threshold = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Conservation threshold (from active to conserving)
+  string conservation_threshold = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Sleep threshold (from conserving to sleeping)
+  string sleep_threshold = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Hibernation threshold (from sleeping to hibernating)
+  string hibernation_threshold = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Emergency activation threshold (immediate wake from any state)
+  string emergency_threshold = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Critical shutdown threshold (force hibernation)
+  string critical_shutdown_threshold = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// Energy consumption patterns for prediction
+message EnergyConsumptionPattern {
+  string pattern_name = 1;
+
+  // Time-based patterns
+  repeated HourlyConsumption hourly_patterns = 2 [(gogoproto.nullable) = false];
+  repeated DailyConsumption daily_patterns = 3 [(gogoproto.nullable) = false];
+
+  // Activity-based patterns
+  map<string, int64> activity_costs = 4; // activity -> ATP cost
+
+  // Seasonal adjustments
+  repeated SeasonalAdjustment seasonal_adjustments = 5 [(gogoproto.nullable) = false];
+
+  // Confidence in pattern
+  string confidence_score = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message HourlyConsumption {
+  uint32 hour = 1; // 0-23
+  string average_atp_consumption = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string peak_atp_consumption = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message DailyConsumption {
+  uint32 day_of_week = 1; // 0-6 (Sunday-Saturday)
+  string total_atp_consumption = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  uint32 average_todos_completed = 3;
+}
+
+message SeasonalAdjustment {
+  uint32 month = 1; // 1-12
+  string consumption_multiplier = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string reason = 3;
+}
+
+// Energy generation capabilities
+message EnergyGeneration {
+  // ADP to ATP conversion efficiency
+  string conversion_efficiency = 1 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Generation sources
+  repeated GenerationSource sources = 2 [(gogoproto.nullable) = false];
+
+  // Current generation rate
+  string current_generation_rate = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Peak generation capability
+  string peak_generation_rate = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message GenerationSource {
+  string source_type = 1; // "completed_todos", "trust_building", "knowledge_sharing"
+  string generation_rate = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  bool enabled = 3;
+}
+
+// Performance metrics for state optimization
+message PerformanceMetrics {
+  // Current cycle performance
+  CyclePerformance current_cycle = 1 [(gogoproto.nullable) = false];
+
+  // Historical averages
+  repeated CyclePerformance historical_cycles = 2 [(gogoproto.nullable) = false];
+
+  // Performance targets
+  PerformanceTargets targets = 3 [(gogoproto.nullable) = false];
+
+  // Optimization suggestions
+  repeated OptimizationSuggestion suggestions = 4 [(gogoproto.nullable) = false];
+}
+
+message CyclePerformance {
+  uint64 cycle_number = 1;
+
+  // Todo completion metrics
+  uint32 todos_completed = 2;
+  uint32 todos_failed = 3;
+  uint32 todos_cancelled = 4;
+
+  // Energy efficiency
+  string energy_efficiency = 5 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Citizen satisfaction
+  string citizen_satisfaction = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Response time metrics
+  uint64 average_response_time_seconds = 7;
+  uint64 max_response_time_seconds = 8;
+
+  // Trust impact
+  string net_trust_change = 9 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  google.protobuf.Timestamp cycle_start = 10 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp cycle_end = 11 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+message PerformanceTargets {
+  string target_energy_efficiency = 1 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  uint32 target_todos_per_cycle = 2;
+
+  string target_citizen_satisfaction = 3 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  uint64 target_response_time_seconds = 4;
+
+  string target_trust_growth = 5 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message OptimizationSuggestion {
+  string suggestion_id = 1;
+  OptimizationType type = 2;
+  string description = 3;
+
+  // Estimated impact
+  string estimated_efficiency_gain = 4 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Implementation cost
+  string implementation_cost = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // Priority
+  uint32 priority = 6;
+
+  google.protobuf.Timestamp suggested_at = 7 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+}
+
+enum OptimizationType {
+  OPTIMIZATION_TYPE_UNSPECIFIED = 0;
+  OPTIMIZATION_TYPE_SCHEDULE_ADJUSTMENT = 1;
+  OPTIMIZATION_TYPE_THRESHOLD_TUNING = 2;
+  OPTIMIZATION_TYPE_ALLOCATION_STRATEGY = 3;
+  OPTIMIZATION_TYPE_DELEGATION_RULES = 4;
+  OPTIMIZATION_TYPE_FEDERATION_CONFIG = 5;
+}
+
+// Cycle scheduling for predictable operations
+message CycleSchedule {
+  // Default cycle parameters
+  uint64 default_wake_duration_seconds = 1;
+  uint64 default_sleep_duration_seconds = 2;
+
+  // Scheduled wake/sleep times
+  repeated ScheduledTransition scheduled_transitions = 3 [(gogoproto.nullable) = false];
+
+  // Adaptive scheduling
+  bool enable_adaptive_scheduling = 4;
+  AdaptiveScheduling adaptive_config = 5;
+
+  // Time zone for society operations
+  string time_zone = 6;
+
+  // Override schedule for special periods
+  repeated ScheduleOverride overrides = 7 [(gogoproto.nullable) = false];
+}
+
+message ScheduledTransition {
+  google.protobuf.Timestamp scheduled_time = 1 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  SocietyState target_state = 2;
+  string reason = 3;
+  uint32 priority = 4; // Higher priority overrides lower priority
+}
+
+message AdaptiveScheduling {
+  // Learning parameters
+  string learning_rate = 1 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // Adaptation factors
+  repeated AdaptationFactor factors = 2 [(gogoproto.nullable) = false];
+
+  // Maximum deviation from default schedule
+  uint64 max_schedule_deviation_seconds = 3;
+
+  // Minimum evaluation period before adaptation
+  uint64 min_evaluation_period_seconds = 4;
+}
+
+message AdaptationFactor {
+  string factor_name = 1;
+  string weight = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  bool enabled = 3;
+}
+
+message ScheduleOverride {
+  string override_id = 1;
+  string name = 2;
+  google.protobuf.Timestamp start_time = 3 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp end_time = 4 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  SocietyState forced_state = 5;
+  string reason = 6;
+  bool active = 7;
+}
+
+// Emergency protocols for critical situations
+message EmergencyProtocols {
+  // Emergency triggers
+  repeated EmergencyTrigger triggers = 1 [(gogoproto.nullable) = false];
+
+  // Emergency responses
+  repeated EmergencyResponse responses = 2 [(gogoproto.nullable) = false];
+
+  // Emergency contacts
+  repeated string emergency_contacts = 3; // LCT IDs
+
+  // Escalation procedures
+  EscalationProcedure escalation = 4 [(gogoproto.nullable) = false];
+
+  // Current emergency status
+  EmergencyStatus current_emergency = 5;
+}
+
+message EmergencyTrigger {
+  string trigger_id = 1;
+  string name = 2;
+  EmergencyTriggerType type = 3;
+
+  // Trigger conditions
+  repeated TriggerCondition conditions = 4 [(gogoproto.nullable) = false];
+
+  // Severity level
+  EmergencySeverity severity = 5;
+
+  // Auto-activation
+  bool auto_activate = 6;
+
+  bool enabled = 7;
+}
+
+enum EmergencyTriggerType {
+  EMERGENCY_TRIGGER_TYPE_UNSPECIFIED = 0;
+  EMERGENCY_TRIGGER_TYPE_ATP_CRITICAL = 1;     // Critical energy shortage
+  EMERGENCY_TRIGGER_TYPE_SYSTEM_FAILURE = 2;   // System component failure
+  EMERGENCY_TRIGGER_TYPE_SECURITY_BREACH = 3;  // Security incident
+  EMERGENCY_TRIGGER_TYPE_EXTERNAL_THREAT = 4;  // External attack/threat
+  EMERGENCY_TRIGGER_TYPE_CONSENSUS_FAILURE = 5; // Governance breakdown
+  EMERGENCY_TRIGGER_TYPE_PERFORMANCE_CRITICAL = 6; // Severe performance degradation
+}
+
+enum EmergencySeverity {
+  EMERGENCY_SEVERITY_UNSPECIFIED = 0;
+  EMERGENCY_SEVERITY_LOW = 1;        // Minor issue, monitoring
+  EMERGENCY_SEVERITY_MEDIUM = 2;     // Significant issue, intervention needed
+  EMERGENCY_SEVERITY_HIGH = 3;       // Major issue, immediate action required
+  EMERGENCY_SEVERITY_CRITICAL = 4;   // Life-threatening, emergency protocols
+  EMERGENCY_SEVERITY_CATASTROPHIC = 5; // Society survival at risk
+}
+
+message TriggerCondition {
+  string parameter = 1;
+  ComparisonOperator operator = 2;
+  string value = 3;
+  uint64 duration_seconds = 4; // Condition must persist for this duration
+}
+
+message EmergencyResponse {
+  string response_id = 1;
+  string name = 2;
+  EmergencySeverity triggered_by_severity = 3;
+
+  // Response actions
+  repeated ResponseAction actions = 4 [(gogoproto.nullable) = false];
+
+  // Resource allocation
+  string emergency_atp_allocation = 5 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+
+  // State override
+  SocietyState emergency_state = 6;
+
+  // Communication
+  string notification_message = 7;
+  repeated string notify_societies = 8; // Other societies to notify
+
+  // Duration
+  uint64 max_duration_seconds = 9;
+}
+
+message ResponseAction {
+  string action_id = 1;
+  EmergencyActionType type = 2;
+  string parameters = 3; // JSON-encoded action parameters
+  uint32 priority = 4;   // Execution order
+}
+
+enum EmergencyActionType {
+  EMERGENCY_ACTION_TYPE_UNSPECIFIED = 0;
+  EMERGENCY_ACTION_TYPE_STATE_CHANGE = 1;      // Force state transition
+  EMERGENCY_ACTION_TYPE_ATP_INJECTION = 2;     // Emergency ATP allocation
+  EMERGENCY_ACTION_TYPE_SHUTDOWN_SERVICES = 3; // Shut down non-critical services
+  EMERGENCY_ACTION_TYPE_NOTIFY_CITIZENS = 4;   // Send emergency notifications
+  EMERGENCY_ACTION_TYPE_REQUEST_FEDERATION_HELP = 5; // Ask other societies for help
+  EMERGENCY_ACTION_TYPE_LOCK_SYSTEM = 6;       // Lock system for security
+  EMERGENCY_ACTION_TYPE_BACKUP_DATA = 7;       // Emergency data backup
+}
+
+message EscalationProcedure {
+  repeated EscalationLevel levels = 1 [(gogoproto.nullable) = false];
+  uint64 escalation_timeout_seconds = 2; // Time before auto-escalation
+  bool enable_auto_escalation = 3;
+}
+
+message EscalationLevel {
+  uint32 level = 1;
+  string name = 2;
+  repeated string responsible_lcts = 3; // LCTs responsible at this level
+  string required_consensus_threshold = 4 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string authority_override_threshold = 5 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message EmergencyStatus {
+  bool is_emergency = 1;
+  string emergency_id = 2;
+  EmergencySeverity severity = 3;
+  string description = 4;
+  uint32 current_escalation_level = 5;
+
+  google.protobuf.Timestamp started_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp estimated_resolution = 7 [(gogoproto.stdtime) = true];
+
+  // Active responses
+  repeated string active_responses = 8;
+
+  // Contact status
+  repeated EmergencyContact contact_status = 9 [(gogoproto.nullable) = false];
+}
+
+message EmergencyContact {
+  string lct_id = 1;
+  bool contacted = 2;
+  bool responded = 3;
+  google.protobuf.Timestamp contacted_at = 4 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp responded_at = 5 [(gogoproto.stdtime) = true];
+  string response = 6;
+}
+
+// Comparison operators reused from todo.proto
+enum ComparisonOperator {
+  COMPARISON_OPERATOR_UNSPECIFIED = 0;
+  COMPARISON_OPERATOR_EQUALS = 1;
+  COMPARISON_OPERATOR_NOT_EQUALS = 2;
+  COMPARISON_OPERATOR_GREATER_THAN = 3;
+  COMPARISON_OPERATOR_LESS_THAN = 4;
+  COMPARISON_OPERATOR_GREATER_EQUAL = 5;
+  COMPARISON_OPERATOR_LESS_EQUAL = 6;
+  COMPARISON_OPERATOR_CONTAINS = 7;
+  COMPARISON_OPERATOR_MATCHES_REGEX = 8;
+}
+
+// Society states reused from todo.proto
+enum SocietyState {
+  SOCIETY_STATE_UNSPECIFIED = 0;
+  SOCIETY_STATE_AWAKENING = 1;    // Transitioning from sleep to wake
+  SOCIETY_STATE_ACTIVE = 2;       // Fully operational, processing todos
+  SOCIETY_STATE_CONSERVING = 3;   // Reduced activity, selective processing
+  SOCIETY_STATE_SLEEPING = 4;     // Dormant, emergency-only processing
+  SOCIETY_STATE_HIBERNATING = 5;  // Deep sleep, maintenance only
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package racecarweb.pairing.v1;
+
+option go_package = "racecar-web/x/pairing/types";
+
+// PairingSession defines the PairingSession message.
+message PairingSession {
+  string session_id = 1;
+  string lct_id = 2;
+  string session_keys = 3;
+  int64 established_at = 4;
+  int64 expires_at = 5;
+  string status = 6;
+}

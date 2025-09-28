@@ -1,0 +1,12 @@
+{
+  "society_name": "society2",
+  "chain_id": "web4-society2-001",
+  "hardware_id": "fbd1be810abd57fffef06e73cf1a1c36cd9ec8d9551ff16653b9dfa62e867258",
+  "created": "2025-09-28T06:17:23Z",
+  "hardware": {
+    "hostname": "cbp",
+    "cpu": "Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz",
+    "cores": 8,
+    "memory_kb": 12249304
+  }
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+package racecarweb.pairing.v1;
+
+option go_package = "racecar-web/x/pairing/types";
+
+// PairingChallenge defines the PairingChallenge message.
+message PairingChallenge {
+  string challenge_id = 1;
+  string requester_component = 2;
+  string target_component = 3;
+  string challenge_data = 4;
+  string response_data = 5;
+  int64 expires_at = 6;
+  string status = 7;
+  string proxy_component = 8;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+package racecarweb.pairingqueue.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "racecar-web/x/pairingqueue/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "racecarweb/x/pairingqueue/Params";
+  option (gogoproto.equal) = true;
+}

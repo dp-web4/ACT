@@ -1,0 +1,68 @@
+{
+  "federation": {
+    "enabled": true,
+    "society2": {
+      "chain_id": "web4-society2-001",
+      "rpc": "http://localhost:26557",
+      "api": "http://localhost:1217",
+      "grpc": "localhost:9091",
+      "type": "democratic",
+      "characteristics": {
+        "governance": "1-citizen-1-vote",
+        "consensus": "proof-of-contribution",
+        "energy": "renewable",
+        "openness": "high"
+      }
+    },
+    "society4": {
+      "chain_id": "web4-society4-001",
+      "rpc": "http://localhost:26657",
+      "api": "http://localhost:1317",
+      "grpc": "localhost:9090",
+      "type": "hierarchical",
+      "characteristics": {
+        "governance": "role-based",
+        "consensus": "proof-of-stake",
+        "energy": "traditional",
+        "openness": "medium"
+      }
+    },
+    "bridges": [
+      {
+        "name": "society2-society4-bridge",
+        "type": "ibc",
+        "source": "society2",
+        "destination": "society4",
+        "channels": {
+          "token_transfer": "channel-0",
+          "trust_tensor": "channel-1",
+          "lct_pairing": "channel-2"
+        },
+        "policies": {
+          "auto_relay": true,
+          "trust_threshold": 0.5,
+          "energy_exchange_rate": 1.2
+        }
+      }
+    ],
+    "interoperability": {
+      "protocols": ["ibc", "xcm", "atomic-swap"],
+      "shared_modules": ["trusttensor", "energycycle"],
+      "consensus_bridge": {
+        "enabled": true,
+        "validation": "cross-chain-proof"
+      }
+    },
+    "governance": {
+      "federation_proposals": {
+        "society2_voting": "democratic",
+        "society4_voting": "hierarchical",
+        "passage_requirement": "both_approve"
+      },
+      "dispute_resolution": {
+        "mechanism": "arbitration",
+        "arbiter": "neutral-dao"
+      }
+    }
+  }
+}

@@ -1,0 +1,614 @@
+syntax = "proto3";
+package act.societytodo.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/timestamp.proto";
+import "act/energycycle/v1/energy.proto";
+import "act/trusttensor/v1/trust.proto";
+import "act/lctmanager/v1/lct.proto";
+
+option go_package = "github.com/dp-web4/act/x/societytodo/types";
+
+// Integration point with LCT Manager
+message LctIntegration {
+  // LCT validation for todo operations
+  message LctValidation {
+    string lct_id = 1;
+    act.lctmanager.v1.LCTStatus required_status = 2;
+    repeated string required_rights = 3;
+    act.lctmanager.v1.MRH required_mrh_overlap = 4 [(gogoproto.nullable) = false];
+    bool require_active_pairing = 5;
+  }
+
+  // LCT role verification for todo execution
+  message RoleVerification {
+    string lct_id = 1;
+    string todo_id = 2;
+    repeated string verified_roles = 3;
+    repeated string verified_capabilities = 4;
+    string verification_score = 5 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    google.protobuf.Timestamp verified_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  // Birth certificate integration for new citizens
+  message BirthCertificateIntegration {
+    string new_citizen_lct = 1;
+    act.lctmanager.v1.BirthCertificate certificate = 2 [(gogoproto.nullable) = false];
+
+    // Initial ATP allocation from birth certificate
+    string initial_atp_granted = 3 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    // Initial todo permissions
+    repeated string granted_todo_rights = 4;
+    repeated string todo_responsibilities = 5;
+  }
+}
+
+// Integration point with Energy Cycle module
+message EnergyCycleIntegration {
+  // ATP allocation for todo execution
+  message AtpAllocation {
+    string todo_id = 1;
+    string executor_lct = 2;
+
+    // ATP amounts
+    string allocated_amount = 3 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    string consumed_amount = 4 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    string remaining_amount = 5 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    // Allocation tracking
+    google.protobuf.Timestamp allocated_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+    google.protobuf.Timestamp expires_at = 7 [(gogoproto.stdtime) = true];
+
+    // Lock status for execution guarantee
+    bool locked = 8;
+    string lock_reason = 9;
+  }
+
+  // ADP generation from completed todos
+  message AdpGeneration {
+    string todo_id = 1;
+    string executor_lct = 2;
+
+    // ADP generated
+    act.energycycle.v1.ADP generated_adp = 3 [(gogoproto.nullable) = false];
+
+    // Quality factors affecting ADP amount
+    QualityFactors quality_factors = 4 [(gogoproto.nullable) = false];
+
+    // Distribution of generated ADP
+    repeated AdpDistribution distributions = 5 [(gogoproto.nullable) = false];
+  }
+
+  message QualityFactors {
+    // Execution quality (0-100)
+    uint32 execution_quality = 1;
+
+    // Timeliness (early=bonus, late=penalty)
+    string timeliness_factor = 2 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+
+    // Innovation/efficiency bonus
+    string innovation_bonus = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+
+    // Collaboration factor (for multi-LCT todos)
+    string collaboration_factor = 4 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+
+    // Society benefit factor
+    string society_benefit_factor = 5 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+  }
+
+  message AdpDistribution {
+    string recipient_lct = 1;
+    string adp_amount = 2 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+    string percentage = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    string reason = 4;
+  }
+
+  // Energy cycle monitoring for state transitions
+  message EnergyMonitoring {
+    string society_lct = 1;
+
+    // Current energy status
+    act.energycycle.v1.ATP current_atp = 2 [(gogoproto.nullable) = false];
+
+    // Energy consumption rate
+    string consumption_rate_per_second = 3 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    // Energy generation rate
+    string generation_rate_per_second = 4 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    // Predicted energy levels
+    repeated EnergyPrediction predictions = 5 [(gogoproto.nullable) = false];
+
+    google.protobuf.Timestamp last_updated = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  message EnergyPrediction {
+    google.protobuf.Timestamp time = 1 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+    string predicted_atp = 2 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+    string confidence = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+  }
+}
+
+// Integration point with Trust Tensor module
+message TrustTensorIntegration {
+  // Trust calculation for todo delegation
+  message TrustCalculation {
+    string from_lct = 1;
+    string to_lct = 2;
+    string todo_id = 3;
+
+    // Calculated trust for this specific todo
+    act.trusttensor.v1.TrustTensor calculated_trust = 4 [(gogoproto.nullable) = false];
+    act.trusttensor.v1.ValueTensor calculated_value = 5 [(gogoproto.nullable) = false];
+
+    // Trust path through MRH
+    repeated string trust_path = 6;
+    uint32 trust_distance = 7;
+
+    // Confidence in trust calculation
+    string calculation_confidence = 8 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+
+    google.protobuf.Timestamp calculated_at = 9 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  // Trust impact from todo completion
+  message TrustImpact {
+    string todo_id = 1;
+
+    // Trust changes for all involved parties
+    repeated TrustChange trust_changes = 2 [(gogoproto.nullable) = false];
+
+    // Network-wide trust effects
+    NetworkTrustEffect network_effect = 3 [(gogoproto.nullable) = false];
+  }
+
+  message TrustChange {
+    string lct_id = 1;
+    act.trusttensor.v1.TrustTensor trust_delta = 2 [(gogoproto.nullable) = false];
+    act.trusttensor.v1.ValueTensor value_delta = 3 [(gogoproto.nullable) = false];
+    string change_reason = 4;
+    string change_magnitude = 5 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+  }
+
+  message NetworkTrustEffect {
+    // Overall network trust health
+    string network_trust_score = 1 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+
+    // Propagation effects
+    repeated TrustPropagation propagations = 2 [(gogoproto.nullable) = false];
+  }
+
+  message TrustPropagation {
+    string source_lct = 1;
+    string target_lct = 2;
+    string propagated_trust_delta = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    uint32 propagation_hops = 4;
+  }
+}
+
+// Integration point with MRH module
+message MrhIntegration {
+  // Context boundary checking for todo visibility
+  message ContextBoundary {
+    string society_lct = 1;
+    string todo_id = 2;
+
+    // MRH context for this todo
+    MrhContext context = 3 [(gogoproto.nullable) = false];
+
+    // Visibility rules
+    repeated VisibilityRule visibility_rules = 4 [(gogoproto.nullable) = false];
+  }
+
+  message MrhContext {
+    string center_lct = 1;
+    uint32 context_radius = 2;
+    repeated string included_lcts = 3;
+    repeated string excluded_lcts = 4;
+
+    // Context overlaps with other societies
+    repeated ContextOverlap overlaps = 5 [(gogoproto.nullable) = false];
+  }
+
+  message ContextOverlap {
+    string other_society_lct = 1;
+    repeated string shared_lcts = 2;
+    string overlap_percentage = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+  }
+
+  message VisibilityRule {
+    string rule_id = 1;
+    VisibilityScope scope = 2;
+    repeated string applicable_lcts = 3;
+    bool can_view = 4;
+    bool can_request = 5;
+    bool can_delegate = 6;
+    bool can_execute = 7;
+  }
+
+  enum VisibilityScope {
+    VISIBILITY_SCOPE_UNSPECIFIED = 0;
+    VISIBILITY_SCOPE_PRIVATE = 1;      // Only todo creator
+    VISIBILITY_SCOPE_SOCIETY = 2;      // Society members only
+    VISIBILITY_SCOPE_MRH_BOUND = 3;    // MRH-bound entities
+    VISIBILITY_SCOPE_MRH_PAIRED = 4;   // MRH-paired entities
+    VISIBILITY_SCOPE_FEDERATION = 5;   // Federated societies
+    VISIBILITY_SCOPE_PUBLIC = 6;       // All entities
+  }
+
+  // Witness network for todo validation
+  message WitnessNetwork {
+    string todo_id = 1;
+
+    // Required witnesses for validation
+    repeated WitnessRequirement witness_requirements = 2 [(gogoproto.nullable) = false];
+
+    // Actual witnesses
+    repeated TodoWitness witnesses = 3 [(gogoproto.nullable) = false];
+
+    // Witness consensus
+    WitnessConsensus consensus = 4 [(gogoproto.nullable) = false];
+  }
+
+  message WitnessRequirement {
+    uint32 min_witnesses = 1;
+    uint32 max_trust_distance = 2;
+    string min_trust_level = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    repeated string required_roles = 4;
+  }
+
+  message TodoWitness {
+    string witness_lct = 1;
+    act.lctmanager.v1.WitnessSignature signature = 2 [(gogoproto.nullable) = false];
+    string attestation = 3;
+    google.protobuf.Timestamp witnessed_at = 4 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  message WitnessConsensus {
+    bool consensus_reached = 1;
+    uint32 consensus_percentage = 2;
+    string consensus_score = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    google.protobuf.Timestamp consensus_time = 4 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+}
+
+// Integration point with Pairing module
+message PairingIntegration {
+  // Device/agent pairing for todo execution
+  message ExecutorPairing {
+    string todo_id = 1;
+    string executor_lct = 2;
+
+    // Paired devices for execution
+    repeated PairedDevice paired_devices = 3 [(gogoproto.nullable) = false];
+
+    // Pairing session for todo execution
+    ExecutionSession execution_session = 4 [(gogoproto.nullable) = false];
+  }
+
+  message PairedDevice {
+    string device_id = 1;
+    string device_type = 2; // "mobile", "desktop", "iot", "ai_agent"
+    repeated string capabilities = 3;
+    string pairing_session_id = 4;
+    bool active = 5;
+    google.protobuf.Timestamp paired_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  message ExecutionSession {
+    string session_id = 1;
+    string executor_lct = 2;
+    string todo_id = 3;
+
+    // Session security
+    bytes session_key = 4;
+    string security_level = 5;
+
+    // Execution environment
+    repeated string required_capabilities = 6;
+    repeated string available_capabilities = 7;
+
+    // Session status
+    SessionStatus status = 8;
+    google.protobuf.Timestamp established_at = 9 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+    google.protobuf.Timestamp expires_at = 10 [(gogoproto.stdtime) = true];
+  }
+
+  enum SessionStatus {
+    SESSION_STATUS_UNSPECIFIED = 0;
+    SESSION_STATUS_ESTABLISHING = 1;
+    SESSION_STATUS_ACTIVE = 2;
+    SESSION_STATUS_SUSPENDED = 3;
+    SESSION_STATUS_EXPIRED = 4;
+    SESSION_STATUS_TERMINATED = 5;
+  }
+
+  // Cross-device collaboration for complex todos
+  message CollaborationSession {
+    string collaboration_id = 1;
+    string todo_id = 2;
+
+    // Participating devices/agents
+    repeated CollaborationParticipant participants = 3 [(gogoproto.nullable) = false];
+
+    // Collaboration protocol
+    string protocol_version = 4;
+    repeated string communication_channels = 5;
+
+    // Task distribution
+    repeated TaskDistribution task_distribution = 6 [(gogoproto.nullable) = false];
+  }
+
+  message CollaborationParticipant {
+    string lct_id = 1;
+    string device_id = 2;
+    repeated string assigned_roles = 3;
+    repeated string capabilities = 4;
+    bool lead_participant = 5;
+  }
+
+  message TaskDistribution {
+    string subtask_id = 1;
+    string assigned_to_lct = 2;
+    string assigned_to_device = 3;
+    string estimated_atp_cost = 4 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+    google.protobuf.Timestamp assigned_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+}
+
+// Integration point with Component Registry
+message ComponentRegistryIntegration {
+  // Component verification for todo execution
+  message ComponentVerification {
+    string todo_id = 1;
+    string component_id = 2;
+    string component_type = 3;
+
+    // Verification results
+    bool verified = 4;
+    string verification_hash = 5;
+    repeated string verified_capabilities = 6;
+
+    // Component metadata
+    string version = 7;
+    repeated string dependencies = 8;
+    repeated string security_attestations = 9;
+
+    google.protobuf.Timestamp verified_at = 10 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  // Component capability matching
+  message CapabilityMatching {
+    string todo_id = 1;
+    repeated string required_capabilities = 2;
+
+    // Available components
+    repeated AvailableComponent available_components = 3 [(gogoproto.nullable) = false];
+
+    // Matching results
+    repeated ComponentMatch matches = 4 [(gogoproto.nullable) = false];
+  }
+
+  message AvailableComponent {
+    string component_id = 1;
+    string component_name = 2;
+    repeated string provided_capabilities = 3;
+    string trust_score = 4 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    string atp_cost_per_use = 5 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+  }
+
+  message ComponentMatch {
+    string component_id = 1;
+    repeated string matched_capabilities = 2;
+    string match_score = 3 [
+      (cosmos_proto.scalar) = "cosmos.Dec",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+      (gogoproto.nullable) = false
+    ];
+    bool recommended = 4;
+  }
+}
+
+// Cross-module event system for real-time coordination
+message CrossModuleEvents {
+  // Todo lifecycle events
+  message TodoLifecycleEvent {
+    string event_id = 1;
+    string todo_id = 2;
+    TodoEventType event_type = 3;
+    string event_data = 4; // JSON-encoded event-specific data
+
+    // Source module
+    string source_module = 5;
+
+    // Target modules (empty = broadcast to all)
+    repeated string target_modules = 6;
+
+    // Event priority
+    EventPriority priority = 7;
+
+    google.protobuf.Timestamp event_time = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  enum TodoEventType {
+    TODO_EVENT_TYPE_UNSPECIFIED = 0;
+    TODO_EVENT_TYPE_CREATED = 1;
+    TODO_EVENT_TYPE_ASSIGNED = 2;
+    TODO_EVENT_TYPE_STARTED = 3;
+    TODO_EVENT_TYPE_PAUSED = 4;
+    TODO_EVENT_TYPE_RESUMED = 5;
+    TODO_EVENT_TYPE_COMPLETED = 6;
+    TODO_EVENT_TYPE_FAILED = 7;
+    TODO_EVENT_TYPE_CANCELLED = 8;
+    TODO_EVENT_TYPE_ATP_ALLOCATED = 9;
+    TODO_EVENT_TYPE_ATP_CONSUMED = 10;
+    TODO_EVENT_TYPE_DELEGATED = 11;
+    TODO_EVENT_TYPE_TRUST_UPDATED = 12;
+  }
+
+  enum EventPriority {
+    EVENT_PRIORITY_UNSPECIFIED = 0;
+    EVENT_PRIORITY_LOW = 1;
+    EVENT_PRIORITY_NORMAL = 2;
+    EVENT_PRIORITY_HIGH = 3;
+    EVENT_PRIORITY_CRITICAL = 4;
+  }
+
+  // Society state events
+  message SocietyStateEvent {
+    string event_id = 1;
+    string society_lct = 2;
+    SocietyState from_state = 3;
+    SocietyState to_state = 4;
+    string trigger_reason = 5;
+
+    // Energy levels at transition
+    string atp_level = 6 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    google.protobuf.Timestamp event_time = 7 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  // Energy events
+  message EnergyEvent {
+    string event_id = 1;
+    EnergyEventType event_type = 2;
+    string lct_id = 3;
+
+    string atp_amount = 4 [
+      (cosmos_proto.scalar) = "cosmos.Int",
+      (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+      (gogoproto.nullable) = false
+    ];
+
+    string related_todo_id = 5;
+    google.protobuf.Timestamp event_time = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  }
+
+  enum EnergyEventType {
+    ENERGY_EVENT_TYPE_UNSPECIFIED = 0;
+    ENERGY_EVENT_TYPE_ATP_ALLOCATED = 1;
+    ENERGY_EVENT_TYPE_ATP_CONSUMED = 2;
+    ENERGY_EVENT_TYPE_ATP_REFUNDED = 3;
+    ENERGY_EVENT_TYPE_ADP_GENERATED = 4;
+    ENERGY_EVENT_TYPE_ENERGY_LOW = 5;
+    ENERGY_EVENT_TYPE_ENERGY_CRITICAL = 6;
+  }
+}
+
+// Reuse society state enum
+enum SocietyState {
+  SOCIETY_STATE_UNSPECIFIED = 0;
+  SOCIETY_STATE_AWAKENING = 1;
+  SOCIETY_STATE_ACTIVE = 2;
+  SOCIETY_STATE_CONSERVING = 3;
+  SOCIETY_STATE_SLEEPING = 4;
+  SOCIETY_STATE_HIBERNATING = 5;
+}
