@@ -1,0 +1,178 @@
+syntax = "proto3";
+package racecarweb.societytodo.v1;
+
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+import "racecarweb/societytodo/v1/society_todo.proto";
+
+option go_package = "racecar-web/x/societytodo/types";
+
+// Msg defines the societytodo Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // CreateSocietyTodoList initializes a todo list for a society
+  rpc CreateSocietyTodoList(MsgCreateSocietyTodoList) returns (MsgCreateSocietyTodoListResponse);
+  
+  // RequestTodo allows citizens to request new todos
+  rpc RequestTodo(MsgRequestTodo) returns (MsgRequestTodoResponse);
+  
+  // DelegateATP allows citizens to delegate ATP to pools
+  rpc DelegateATP(MsgDelegateATP) returns (MsgDelegateATPResponse);
+  
+  // ProcessTodo handles todo execution
+  rpc ProcessTodo(MsgProcessTodo) returns (MsgProcessTodoResponse);
+  
+  // ShareTodo enables cross-society todo sharing
+  rpc ShareTodo(MsgShareTodo) returns (MsgShareTodoResponse);
+  
+  // UndelegateATP allows withdrawing delegated ATP
+  rpc UndelegateATP(MsgUndelegateATP) returns (MsgUndelegateATPResponse);
+}
+
+// MsgCreateSocietyTodoList creates a new todo list for a society
+message MsgCreateSocietyTodoList {
+  option (cosmos.msg.v1.signer) = "creator";
+  
+  string creator = 1;
+  string society_lct = 2;
+  string initial_budget = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  int64 cycle_duration_seconds = 4;
+}
+
+message MsgCreateSocietyTodoListResponse {
+  string society_lct = 1;
+  SocietyState initial_state = 2;
+}
+
+// MsgRequestTodo creates a citizen request for a new todo
+message MsgRequestTodo {
+  option (cosmos.msg.v1.signer) = "citizen_lct";
+  
+  string citizen_lct = 1;
+  string society_lct = 2;
+  string title = 3;
+  string description = 4;
+  TodoPriority priority = 5;
+  uint32 estimated_complexity = 6;
+}
+
+message MsgRequestTodoResponse {
+  string request_id = 1;
+  string atp_cost = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string status = 3;
+}
+
+// MsgDelegateATP delegates ATP to a pool
+message MsgDelegateATP {
+  option (cosmos.msg.v1.signer) = "citizen_lct";
+  
+  string citizen_lct = 1;
+  string society_lct = 2;
+  DelegationPool pool = 3;
+  string amount = 4 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  int64 lock_period_seconds = 5;
+}
+
+message MsgDelegateATPResponse {
+  string delegation_id = 1;
+  string voting_power = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  google.protobuf.Timestamp unlocks_at = 3 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+}
+
+// ProcessAction represents the action to take on a todo
+enum ProcessAction {
+  PROCESS_ACTION_UNSPECIFIED = 0;
+  PROCESS_ACTION_START = 1;
+  PROCESS_ACTION_COMPLETE = 2;
+  PROCESS_ACTION_FAIL = 3;
+  PROCESS_ACTION_CANCEL = 4;
+}
+
+// MsgProcessTodo processes a todo item
+message MsgProcessTodo {
+  option (cosmos.msg.v1.signer) = "executor_lct";
+  
+  string executor_lct = 1;
+  string todo_id = 2;
+  ProcessAction action = 3;
+  string proof = 4;
+  string quality_score = 5 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  string reason = 6; // For failures or cancellations
+}
+
+message MsgProcessTodoResponse {
+  string status = 1;
+  string adp_generated = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// ShareModel represents how costs/rewards are shared
+enum ShareModel {
+  SHARE_MODEL_UNSPECIFIED = 0;
+  SHARE_MODEL_EQUAL = 1;      // 50/50 split
+  SHARE_MODEL_PROPORTIONAL = 2; // Based on contribution
+  SHARE_MODEL_AUCTION = 3;     // Competitive bidding
+  SHARE_MODEL_TRUST_BASED = 4; // Automatic based on trust
+}
+
+// MsgShareTodo shares a todo with other societies
+message MsgShareTodo {
+  option (cosmos.msg.v1.signer) = "society_lct";
+  
+  string society_lct = 1;
+  string todo_id = 2;
+  repeated string target_societies = 3;
+  ShareModel share_model = 4;
+  string trust_threshold = 5 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message MsgShareTodoResponse {
+  string share_id = 1;
+  repeated string accepted_by = 2;
+}
+
+// MsgUndelegateATP withdraws delegated ATP
+message MsgUndelegateATP {
+  option (cosmos.msg.v1.signer) = "citizen_lct";
+  
+  string citizen_lct = 1;
+  string delegation_id = 2;
+}
+
+message MsgUndelegateATPResponse {
+  string amount_returned = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+}

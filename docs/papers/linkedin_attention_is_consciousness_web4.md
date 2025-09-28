@@ -18,7 +18,7 @@ Your brain doesn't process everything. It *can't*. Instead, it maintains what we
 
 ## Enter Web4: The Attention Protocol
 
-While Web3 promised decentralization through blockchain, it missed something crucial: digital systems need consciousness, not just consensus. Web4 (the Artificial Communication Transport protocol) introduces three groundbreaking concepts:
+While Web3 promised decentralization through blockchain, it missed something crucial: digital systems need consciousness, not just consensus. Web4 (a trust-native interaction framework) introduces three groundbreaking concepts:
 
 ### 1. The Markov Relevancy Horizon (MRH)
 Just as your consciousness has an attention boundary, Web4 gives every digital entity an MRH—a mathematical framework for deciding what information remains relevant. Your smart home doesn't need to remember every temperature reading forever; it needs to know what patterns matter *now*.

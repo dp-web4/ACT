@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+package racecarweb.componentregistry.v1;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "racecar-web/x/componentregistry/types";
+
+// Component represents a physical or virtual component in the system
+// Privacy-focused: Only stores anonymous hashes and minimal verification data on-chain
+message Component {
+  // Anonymous component identifier (SHA-256 hash of real component ID)
+  string component_id = 1;
+  
+  // Anonymous manufacturer identifier (SHA-256 hash of manufacturer ID)
+  string manufacturer_hash = 2;
+  
+  // Anonymous component category (SHA-256 hash of component category)
+  string category_hash = 3;
+  
+  // Anonymous authorization rules hash (SHA-256 hash of off-chain rules)
+  string authorization_rules_hash = 4;
+  
+  // Component status (active, revoked, suspended)
+  string status = 5;
+  
+  // Registration timestamp
+  google.protobuf.Timestamp registered_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Cryptographic trust anchor (no commercial data)
+  string trust_anchor = 7;
+  
+  // Last verification timestamp
+  google.protobuf.Timestamp last_verified_at = 8 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Verification metadata (off-chain storage reference)
+  string verification_metadata = 9;
+  
+  // Component relationships (LCT IDs) - also hashed
+  repeated string relationship_hashes = 10;
+  
+  // LCT ID for this component (LCT-mediated trust) - hashed
+  string lct_hash = 11;
+  
+  // Device key half (encrypted, stored by LCT)
+  bytes encrypted_device_key_half = 12;
+  
+  // Legacy fields for backward compatibility (deprecated)
+  string manufacturer_id = 13;  // DEPRECATED: Use manufacturer_hash instead
+  string component_type = 14;   // DEPRECATED: Use category_hash instead
+  string hardware_specs = 15;   // DEPRECATED: Moved off-chain
+  string quality_score = 16;    // DEPRECATED: Moved off-chain
+  string capabilities = 17;     // DEPRECATED: Moved off-chain
+  repeated string relationship_ids = 18;  // DEPRECATED: Use relationship_hashes instead
+  string lct_id = 19;           // DEPRECATED: Use lct_hash instead
+  string authorization_rules = 20;  // DEPRECATED: Use authorization_rules_hash instead
+  google.protobuf.Timestamp created_at = 21 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];  // DEPRECATED: Use registered_at instead
+}
+
+// ComponentVerification represents the verification status of a component
+message ComponentVerification {
+  // Component ID being verified (hash)
+  string component_id = 1;
+  
+  // Verification status (verified, pending, rejected)
+  string status = 2;
+  
+  // Verification timestamp
+  google.protobuf.Timestamp verified_at = 3 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Verification method (manual, automated, etc)
+  string verification_method = 4;
+  
+  // Verification evidence (hash of off-chain data)
+  string verification_evidence = 5;
+  
+  // Verification notes
+  string notes = 6;
+}
+
+// ComponentPairingRule defines rules for component pairing
+message ComponentPairingRule {
+  // Source component type (hashed)
+  string source_type_hash = 1;
+  
+  // Target component type (hashed)
+  string target_type_hash = 2;
+  
+  // Minimum quality score required
+  string min_quality_score = 3;
+  
+  // Required capabilities (JSON array) - hashed
+  string required_capabilities_hash = 4;
+  
+  // Maximum relationships allowed
+  uint32 max_relationships = 5;
+  
+  // Whether bidirectional pairing is required
+  bool bidirectional_required = 6;
+  
+  // Additional validation rules (JSON) - hashed
+  string validation_rules_hash = 7;
+}
+
+// AnonymousPairingAuthorization represents anonymous pairing authorization
+message AnonymousPairingAuthorization {
+  // Anonymous authorization ID
+  string auth_id = 1;
+  
+  // Hash of component A
+  string component_hash_a = 2;
+  
+  // Hash of component B
+  string component_hash_b = 3;
+  
+  // Hash of actual authorization rules
+  string rule_hash = 4;
+  
+  // Authorization status
+  string status = 5;
+  
+  // Expiration timestamp
+  google.protobuf.Timestamp expires_at = 6 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Minimum trust score requirement (no commercial context)
+  string trust_score_requirement = 7;
+  
+  // Authorization level (basic, enhanced, critical)
+  string authorization_level = 8;
+}
+
+// AnonymousRevocationEvent represents anonymous revocation events
+message AnonymousRevocationEvent {
+  // Anonymous revocation ID
+  string revocation_id = 1;
+  
+  // Hash of revoked target (component/rule)
+  string target_hash = 2;
+  
+  // Revocation type (INDIVIDUAL, PATTERN, BLANKET)
+  string revocation_type = 3;
+  
+  // Urgency level (IMMEDIATE, URGENT, STANDARD)
+  string urgency_level = 4;
+  
+  // When revocation takes effect
+  google.protobuf.Timestamp effective_at = 5 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  
+  // Reason category (SAFETY, SECURITY, OTHER) - no details
+  string reason_category = 6;
+  
+  // Hash of who initiated (no manufacturer names)
+  string initiator_hash = 7;
+}
+
+// Component status constants
+enum ComponentStatus {
+  COMPONENT_STATUS_UNSPECIFIED = 0;
+  COMPONENT_STATUS_PENDING = 1;
+  COMPONENT_STATUS_ACTIVE = 2;
+  COMPONENT_STATUS_INACTIVE = 3;
+  COMPONENT_STATUS_MAINTENANCE = 4;
+  COMPONENT_STATUS_RETIRED = 5;
+  COMPONENT_STATUS_REVOKED = 6;
+  COMPONENT_STATUS_SUSPENDED = 7;
+}
+
+// Verification status constants
+enum VerificationStatus {
+  VERIFICATION_STATUS_UNSPECIFIED = 0;
+  VERIFICATION_STATUS_PENDING = 1;
+  VERIFICATION_STATUS_VERIFIED = 2;
+  VERIFICATION_STATUS_REJECTED = 3;
+  VERIFICATION_STATUS_EXPIRED = 4;
+} 

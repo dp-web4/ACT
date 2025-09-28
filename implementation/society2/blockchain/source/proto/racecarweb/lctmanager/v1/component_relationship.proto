@@ -1,0 +1,13 @@
+syntax = "proto3";
+package racecarweb.lctmanager.v1;
+
+option go_package = "racecar-web/x/lctmanager/types";
+
+// ComponentRelationship defines the ComponentRelationship message.
+message ComponentRelationship {
+  string relationship_id = 1;
+  string component_id = 2;
+  string related_lcts = 3;
+  string relationship_type = 4;
+  string status = 5;
+}

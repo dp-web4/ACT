@@ -1,0 +1,87 @@
+syntax = "proto3";
+package racecarweb.societytodo.v1;
+
+import "gogoproto/gogo.proto";
+import "racecarweb/societytodo/v1/society_todo.proto";
+
+option go_package = "racecar-web/x/societytodo/types";
+
+// GenesisState defines the societytodo module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [(gogoproto.nullable) = false];
+  
+  // society_todo_lists contains all society todo lists
+  repeated SocietyTodoList society_todo_lists = 2 [(gogoproto.nullable) = false];
+  
+  // todo_items contains all todo items
+  repeated TodoItem todo_items = 3 [(gogoproto.nullable) = false];
+  
+  // citizen_requests contains all citizen requests
+  repeated CitizenRequest citizen_requests = 4 [(gogoproto.nullable) = false];
+  
+  // atp_delegations contains all ATP delegations
+  repeated ATPDelegation atp_delegations = 5 [(gogoproto.nullable) = false];
+  
+  // wake_sleep_cycles contains cycle history
+  repeated WakeSleepCycle wake_sleep_cycles = 6 [(gogoproto.nullable) = false];
+  
+  // todo_sequence tracks the next todo ID
+  uint64 todo_sequence = 7;
+  
+  // request_sequence tracks the next request ID
+  uint64 request_sequence = 8;
+  
+  // delegation_sequence tracks the next delegation ID
+  uint64 delegation_sequence = 9;
+}
+
+// Params defines the parameters for the societytodo module.
+message Params {
+  // min_atp_for_request is the minimum ATP required to submit a request
+  string min_atp_for_request = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  
+  // min_trust_for_critical is the minimum trust level for critical todos
+  string min_trust_for_critical = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // base_atp_cost is the base ATP cost for a todo
+  string base_atp_cost = 3 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  
+  // emergency_reserve_percentage is the percentage of ATP reserved for emergencies
+  string emergency_reserve_percentage = 4 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // default_cycle_duration_seconds is the default cycle duration
+  int64 default_cycle_duration_seconds = 5;
+  
+  // min_delegation_lock_seconds is the minimum lock period for delegations
+  int64 min_delegation_lock_seconds = 6;
+  
+  // adp_efficiency_bonus is the bonus multiplier for ADP generation
+  string adp_efficiency_bonus = 7 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // max_active_todos_per_society is the maximum number of active todos
+  uint32 max_active_todos_per_society = 8;
+  
+  // enable_cross_society_sharing enables todo sharing between societies
+  bool enable_cross_society_sharing = 9;
+}

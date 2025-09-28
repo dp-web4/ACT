@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package racecarweb.trusttensor.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/trusttensor/v1/params.proto";
+
+option go_package = "racecar-web/x/trusttensor/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // CreateRelationshipTensor defines the CreateRelationshipTensor RPC.
+  rpc CreateRelationshipTensor(MsgCreateRelationshipTensor) returns (MsgCreateRelationshipTensorResponse);
+
+  // UpdateTensorScore defines the UpdateTensorScore RPC.
+  rpc UpdateTensorScore(MsgUpdateTensorScore) returns (MsgUpdateTensorScoreResponse);
+
+  // AddTensorWitness defines the AddTensorWitness RPC.
+  rpc AddTensorWitness(MsgAddTensorWitness) returns (MsgAddTensorWitnessResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "racecarweb/x/trusttensor/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgCreateRelationshipTensor defines the MsgCreateRelationshipTensor message.
+message MsgCreateRelationshipTensor {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  string tensor_type = 3;
+  string context = 4;
+}
+
+// MsgCreateRelationshipTensorResponse defines the MsgCreateRelationshipTensorResponse message.
+message MsgCreateRelationshipTensorResponse {
+  string tensor_id = 1;
+}
+
+// MsgUpdateTensorScore defines the MsgUpdateTensorScore message.
+message MsgUpdateTensorScore {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string tensor_id = 2;
+  string dimension = 3;
+  string value = 4;
+  string context = 5;
+  string witness_data = 6;
+}
+
+// MsgUpdateTensorScoreResponse defines the MsgUpdateTensorScoreResponse message.
+message MsgUpdateTensorScoreResponse {}
+
+// MsgAddTensorWitness defines the MsgAddTensorWitness message.
+message MsgAddTensorWitness {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string tensor_id = 2;
+  string dimension = 3;
+  string witness_lct = 4;
+  string confidence = 5;
+  string evidence_hash = 6;
+}
+
+// MsgAddTensorWitnessResponse defines the MsgAddTensorWitnessResponse message.
+message MsgAddTensorWitnessResponse {}

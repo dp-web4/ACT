@@ -1,0 +1,19 @@
+syntax = "proto3";
+package racecarweb.energycycle.v1;
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// RelationshipAdpToken defines the RelationshipAdpToken message.
+message RelationshipAdpToken {
+  string token_id = 1;
+  string original_atp_id = 2;
+  string lct_id = 3;
+  int64 discharged_at = 4;
+  string value_score = 5;
+  string confirmation_data = 6;
+  string energy_efficiency = 7;  // Energy efficiency achieved
+  string trust_validation = 8;   // Trust validation score
+  int64 validation_block = 9;    // Block height when validated
+  string operation_context = 10; // Context of the discharge operation
+  int64 version = 11;            // Version for updates
+}

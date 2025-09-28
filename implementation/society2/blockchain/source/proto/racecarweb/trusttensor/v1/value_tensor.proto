@@ -1,0 +1,15 @@
+syntax = "proto3";
+package racecarweb.trusttensor.v1;
+
+option go_package = "racecar-web/x/trusttensor/types";
+
+// ValueTensor defines the ValueTensor message.
+message ValueTensor {
+  string tensor_id = 1;
+  string lct_id = 2;
+  string operation_id = 3;
+  string valuation_score = 4;
+  string veracity_score = 5;
+  string validity_score = 6;
+  int64 created_at = 7;
+}

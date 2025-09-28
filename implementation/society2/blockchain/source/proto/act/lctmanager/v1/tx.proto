@@ -1,0 +1,132 @@
+syntax = "proto3";
+package act.lctmanager.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "cosmos/msg/v1/msg.proto";
+import "act/lctmanager/v1/lct.proto";
+
+option go_package = "github.com/dp-web4/act/x/lctmanager/types";
+
+// Msg defines the lctmanager Msg service
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // CreateLCT creates a new Linked Context Token
+  rpc CreateLCT(MsgCreateLCT) returns (MsgCreateLCTResponse);
+  
+  // UpdateMRH updates the Markov Relevancy Horizon
+  rpc UpdateMRH(MsgUpdateMRH) returns (MsgUpdateMRHResponse);
+  
+  // BindLCT creates a binding relationship
+  rpc BindLCT(MsgBindLCT) returns (MsgBindLCTResponse);
+  
+  // PairLCT creates a pairing relationship
+  rpc PairLCT(MsgPairLCT) returns (MsgPairLCTResponse);
+  
+  // WitnessLCT adds a witness signature
+  rpc WitnessLCT(MsgWitnessLCT) returns (MsgWitnessLCTResponse);
+  
+  // IssueBirthCertificate issues a birth certificate for a new entity
+  rpc IssueBirthCertificate(MsgIssueBirthCertificate) returns (MsgIssueBirthCertificateResponse);
+}
+
+// MsgCreateLCT creates a new LCT
+message MsgCreateLCT {
+  option (cosmos.msg.v1.signer) = "creator";
+  
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string entity_type = 2;
+  bytes ed25519_public_key = 3;
+  bytes x25519_public_key = 4;
+  bytes binding_signature = 5;
+  string did = 6;
+}
+
+message MsgCreateLCTResponse {
+  string lct_id = 1;
+}
+
+// MsgUpdateMRH updates MRH relationships
+message MsgUpdateMRH {
+  option (cosmos.msg.v1.signer) = "creator";
+  
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_id = 2;
+  repeated string add_bound = 3;
+  repeated string add_paired = 4;
+  repeated string add_witnessing = 5;
+  repeated string add_broadcast = 6;
+  repeated string remove_bound = 7;
+  repeated string remove_paired = 8;
+  repeated string remove_witnessing = 9;
+  repeated string remove_broadcast = 10;
+}
+
+message MsgUpdateMRHResponse {
+  bool success = 1;
+}
+
+// MsgBindLCT creates a binding relationship
+message MsgBindLCT {
+  option (cosmos.msg.v1.signer) = "creator";
+  
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string source_lct = 2;
+  string target_lct = 3;
+  string relationship_type = 4;
+}
+
+message MsgBindLCTResponse {
+  bool success = 1;
+}
+
+// MsgPairLCT creates a pairing relationship
+message MsgPairLCT {
+  option (cosmos.msg.v1.signer) = "creator";
+  
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string lct_a = 2;
+  string lct_b = 3;
+  bytes shared_secret = 4; // Encrypted with X25519
+}
+
+message MsgPairLCTResponse {
+  bool success = 1;
+}
+
+// MsgWitnessLCT adds a witness signature
+message MsgWitnessLCT {
+  option (cosmos.msg.v1.signer) = "witness";
+  
+  string witness = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string witness_lct = 2;
+  string target_lct = 3;
+  bytes signature = 4;
+  uint32 confidence = 5;
+}
+
+message MsgWitnessLCTResponse {
+  bool success = 1;
+}
+
+// MsgIssueBirthCertificate issues a birth certificate
+message MsgIssueBirthCertificate {
+  option (cosmos.msg.v1.signer) = "issuer";
+  
+  string issuer = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string issuer_lct = 2;
+  string recipient_lct = 3;
+  string society = 4;
+  repeated string rights = 5;
+  repeated string responsibilities = 6;
+  string initial_atp = 7 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message MsgIssueBirthCertificateResponse {
+  bool success = 1;
+}

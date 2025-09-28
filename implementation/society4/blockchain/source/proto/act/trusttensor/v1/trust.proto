@@ -1,0 +1,78 @@
+syntax = "proto3";
+package act.trusttensor.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/dp-web4/act/x/trusttensor/types";
+
+// TrustTensor represents T3 (Trust) dimensions
+message TrustTensor {
+  // Competence (formerly Talent)
+  string competence = 1 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Reliability (formerly Training)
+  string reliability = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Transparency (formerly Temperament)
+  string transparency = 3 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// ValueTensor represents V3 (Value) dimensions
+message ValueTensor {
+  // Economic value
+  string economic = 1 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Social value
+  string social = 2 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Knowledge value
+  string knowledge = 3 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// TrustRelationship defines trust between two entities
+message TrustRelationship {
+  string source_lct = 1;
+  string target_lct = 2;
+  TrustTensor trust = 3 [(gogoproto.nullable) = false];
+  ValueTensor value = 4 [(gogoproto.nullable) = false];
+  
+  // Trust degradation with distance
+  uint32 distance = 5;
+  string degradation_factor = 6 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Trust-as-gravity calculation
+  string gravity_coefficient = 7 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}

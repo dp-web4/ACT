@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package racecarweb.pairingqueue.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/pairingqueue/v1/params.proto";
+
+option go_package = "racecar-web/x/pairingqueue/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // QueuePairingRequest defines the QueuePairingRequest RPC.
+  rpc QueuePairingRequest(MsgQueuePairingRequest) returns (MsgQueuePairingRequestResponse);
+
+  // ProcessOfflineQueue defines the ProcessOfflineQueue RPC.
+  rpc ProcessOfflineQueue(MsgProcessOfflineQueue) returns (MsgProcessOfflineQueueResponse);
+
+  // CancelRequest defines the CancelRequest RPC.
+  rpc CancelRequest(MsgCancelRequest) returns (MsgCancelRequestResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "racecarweb/x/pairingqueue/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgQueuePairingRequest defines the MsgQueuePairingRequest message.
+message MsgQueuePairingRequest {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string initiator_id = 2;
+  string target_id = 3;
+  string request_type = 4;
+  string proxy_id = 5;
+}
+
+// MsgQueuePairingRequestResponse defines the MsgQueuePairingRequestResponse message.
+message MsgQueuePairingRequestResponse {
+  string request_id = 1;
+  string status = 2;
+}
+
+// MsgProcessOfflineQueue defines the MsgProcessOfflineQueue message.
+message MsgProcessOfflineQueue {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string component_id = 2;
+}
+
+// MsgProcessOfflineQueueResponse defines the MsgProcessOfflineQueueResponse message.
+message MsgProcessOfflineQueueResponse {
+  int64 processed_count = 1;
+  int64 failed_count = 2;
+}
+
+// MsgCancelRequest defines the MsgCancelRequest message.
+message MsgCancelRequest {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string request_id = 2;
+  string reason = 3;
+}
+
+// MsgCancelRequestResponse defines the MsgCancelRequestResponse message.
+message MsgCancelRequestResponse {}

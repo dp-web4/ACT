@@ -1,0 +1,159 @@
+syntax = "proto3";
+package racecarweb.societytodo.v1;
+
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "racecarweb/societytodo/v1/society_todo.proto";
+
+option go_package = "racecar-web/x/societytodo/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // GetSocietyTodoList retrieves a society's todo list
+  rpc GetSocietyTodoList(QueryGetSocietyTodoListRequest) returns (QueryGetSocietyTodoListResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/society/{society_lct}/todolist";
+  }
+  
+  // ListTodos lists todos for a society
+  rpc ListTodos(QueryListTodosRequest) returns (QueryListTodosResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/society/{society_lct}/todos";
+  }
+  
+  // GetTodo retrieves a specific todo
+  rpc GetTodo(QueryGetTodoRequest) returns (QueryGetTodoResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/todo/{todo_id}";
+  }
+  
+  // ListCitizenRequests lists pending citizen requests
+  rpc ListCitizenRequests(QueryListCitizenRequestsRequest) returns (QueryListCitizenRequestsResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/society/{society_lct}/requests";
+  }
+  
+  // GetDelegations retrieves citizen delegations
+  rpc GetDelegations(QueryGetDelegationsRequest) returns (QueryGetDelegationsResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/citizen/{citizen_lct}/delegations";
+  }
+  
+  // GetPoolStats retrieves delegation pool statistics
+  rpc GetPoolStats(QueryGetPoolStatsRequest) returns (QueryGetPoolStatsResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/society/{society_lct}/pool/{pool}";
+  }
+  
+  // GetCycleHistory retrieves wake/sleep cycle history
+  rpc GetCycleHistory(QueryGetCycleHistoryRequest) returns (QueryGetCycleHistoryResponse) {
+    option (google.api.http).get = "/racecarweb/societytodo/v1/society/{society_lct}/cycles";
+  }
+}
+
+// QueryGetSocietyTodoListRequest is request type for GetSocietyTodoList RPC
+message QueryGetSocietyTodoListRequest {
+  string society_lct = 1;
+}
+
+// QueryGetSocietyTodoListResponse is response type for GetSocietyTodoList RPC
+message QueryGetSocietyTodoListResponse {
+  SocietyTodoList todo_list = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryListTodosRequest is request type for ListTodos RPC
+message QueryListTodosRequest {
+  string society_lct = 1;
+  TodoStatus status_filter = 2;
+  TodoPriority priority_filter = 3;
+  cosmos.base.query.v1beta1.PageRequest pagination = 4;
+}
+
+// QueryListTodosResponse is response type for ListTodos RPC
+message QueryListTodosResponse {
+  repeated TodoItem todos = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// QueryGetTodoRequest is request type for GetTodo RPC
+message QueryGetTodoRequest {
+  string todo_id = 1;
+}
+
+// QueryGetTodoResponse is response type for GetTodo RPC
+message QueryGetTodoResponse {
+  TodoItem todo = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryListCitizenRequestsRequest is request type for ListCitizenRequests RPC
+message QueryListCitizenRequestsRequest {
+  string society_lct = 1;
+  string status_filter = 2; // pending, accepted, rejected
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+// QueryListCitizenRequestsResponse is response type for ListCitizenRequests RPC
+message QueryListCitizenRequestsResponse {
+  repeated CitizenRequest requests = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// QueryGetDelegationsRequest is request type for GetDelegations RPC
+message QueryGetDelegationsRequest {
+  string citizen_lct = 1;
+  bool active_only = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+// QueryGetDelegationsResponse is response type for GetDelegations RPC
+message QueryGetDelegationsResponse {
+  repeated ATPDelegation delegations = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// DelegationPoolStats tracks statistics for a delegation pool
+message DelegationPoolStats {
+  DelegationPool pool = 1;
+  string total_delegated = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  uint32 active_delegators = 3;
+  string total_voting_power = 4 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+  uint32 todos_supported = 5;
+  string atp_spent = 6 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string adp_earned = 7 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+// QueryGetPoolStatsRequest is request type for GetPoolStats RPC
+message QueryGetPoolStatsRequest {
+  string society_lct = 1;
+  DelegationPool pool = 2;
+}
+
+// QueryGetPoolStatsResponse is response type for GetPoolStats RPC
+message QueryGetPoolStatsResponse {
+  DelegationPoolStats stats = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryGetCycleHistoryRequest is request type for GetCycleHistory RPC
+message QueryGetCycleHistoryRequest {
+  string society_lct = 1;
+  uint64 start_cycle = 2;
+  uint64 end_cycle = 3;
+  cosmos.base.query.v1beta1.PageRequest pagination = 4;
+}
+
+// QueryGetCycleHistoryResponse is response type for GetCycleHistory RPC
+message QueryGetCycleHistoryResponse {
+  repeated WakeSleepCycle cycles = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

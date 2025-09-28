@@ -1,0 +1,61 @@
+syntax = "proto3";
+package act.shared.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/dp-web4/act/types";
+
+// R6Framework defines the six Rs for role execution
+message R6Framework {
+  repeated string rules = 1;
+  repeated string roles = 2;
+  repeated string request = 3;
+  repeated string reference = 4;
+  repeated string resource = 5;
+  repeated string result = 6;
+}
+
+// Web4Transaction represents any Web4-compliant transaction
+message Web4Transaction {
+  string id = 1;
+  TransactionType type = 2;
+  string from_lct = 3;
+  string to_lct = 4;
+  bytes data = 5;
+  bytes signature = 6;
+  repeated WitnessSignature witnesses = 7 [(gogoproto.nullable) = false];
+  bool validated = 8;
+}
+
+enum TransactionType {
+  TRANSACTION_TYPE_UNSPECIFIED = 0;
+  // LCT operations
+  TRANSACTION_TYPE_LCT_CREATE = 1;
+  TRANSACTION_TYPE_LCT_BIND = 2;
+  TRANSACTION_TYPE_LCT_PAIR = 3;
+  TRANSACTION_TYPE_LCT_WITNESS = 4;
+  // ATP/ADP operations
+  TRANSACTION_TYPE_ATP_TRANSFER = 10;
+  TRANSACTION_TYPE_ATP_ALLOCATE = 11;
+  TRANSACTION_TYPE_ADP_GENERATE = 12;
+  TRANSACTION_TYPE_ADP_CLAIM = 13;
+  // Role operations
+  TRANSACTION_TYPE_ROLE_CREATE = 20;
+  TRANSACTION_TYPE_ROLE_ASSIGN = 21;
+  TRANSACTION_TYPE_ROLE_EXECUTE = 22;
+  TRANSACTION_TYPE_ROLE_COMPLETE = 23;
+  // Society operations
+  TRANSACTION_TYPE_SOCIETY_CREATE = 30;
+  TRANSACTION_TYPE_SOCIETY_JOIN = 31;
+  TRANSACTION_TYPE_SOCIETY_LEAVE = 32;
+  TRANSACTION_TYPE_SOCIETY_LAW = 33;
+}
+
+// WitnessSignature for validation
+message WitnessSignature {
+  string lct_id = 1;
+  bytes signature = 2;
+  int64 timestamp = 3;
+  uint32 confidence = 4;
+}

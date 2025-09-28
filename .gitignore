@@ -63,10 +63,21 @@ desktop.ini
 /racecar-webd
 implementation/ledger/racecarwebd
 implementation/ledger/racecar-webd
-society[0-9]*/
+# Society blockchain data directories in ledger/
+implementation/ledger/society[0-9]*/
 *.log
 *.pid
 
 # Test and vendor directories
 vendor/
 testdata/
+
+# Security - NEVER commit keys or sensitive hardware info
+**/keys/
+hardware_info.txt
+machine_id.json
+hardware_attestation.json
+*.key
+*.pem
+*.seed
+*_seed.txt

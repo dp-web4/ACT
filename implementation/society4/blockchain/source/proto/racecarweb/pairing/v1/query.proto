@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package racecarweb.pairing.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "racecarweb/pairing/v1/params.proto";
+
+option go_package = "racecar-web/x/pairing/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/racecar-web/pairing/v1/params";
+  }
+
+  // ValidateBidirectionalAuth Queries a list of ValidateBidirectionalAuth items.
+  rpc ValidateBidirectionalAuth(QueryValidateBidirectionalAuthRequest) returns (QueryValidateBidirectionalAuthResponse) {
+    option (google.api.http).get = "/racecar-web/pairing/v1/validate_bidirectional_auth/{component_a}/{component_b}/{context}";
+  }
+
+  // GetPairingStatus Queries a list of GetPairingStatus items.
+  rpc GetPairingStatus(QueryGetPairingStatusRequest) returns (QueryGetPairingStatusResponse) {
+    option (google.api.http).get = "/racecar-web/pairing/v1/get_pairing_status/{challenge_id}";
+  }
+
+  // ListActivePairings Queries a list of ListActivePairings items.
+  rpc ListActivePairings(QueryListActivePairingsRequest) returns (QueryListActivePairingsResponse) {
+    option (google.api.http).get = "/racecar-web/pairing/v1/list_active_pairings/{component_id}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryValidateBidirectionalAuthRequest defines the QueryValidateBidirectionalAuthRequest message.
+message QueryValidateBidirectionalAuthRequest {
+  string component_a = 1;
+  string component_b = 2;
+  string context = 3;
+}
+
+// QueryValidateBidirectionalAuthResponse defines the QueryValidateBidirectionalAuthResponse message.
+message QueryValidateBidirectionalAuthResponse {
+  bool a_can_pair_b = 1;
+  bool b_can_pair_a = 2;
+  string required_conditions = 3;
+}
+
+// QueryGetPairingStatusRequest defines the QueryGetPairingStatusRequest message.
+message QueryGetPairingStatusRequest {
+  string challenge_id = 1;
+}
+
+// QueryGetPairingStatusResponse defines the QueryGetPairingStatusResponse message.
+message QueryGetPairingStatusResponse {
+  string pairing_challenge = 1;
+}
+
+// QueryListActivePairingsRequest defines the QueryListActivePairingsRequest message.
+message QueryListActivePairingsRequest {
+  string component_id = 1;
+}
+
+// QueryListActivePairingsResponse defines the QueryListActivePairingsResponse message.
+message QueryListActivePairingsResponse {
+  string active_lcts = 1;
+  int64 pairing_count = 2;
+}
