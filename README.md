@@ -8,6 +8,33 @@
 
 **This repository is now PUBLIC but remains in EXPERIMENTAL/DEVELOPMENT stage.** The Web4 reference implementation is approximately 65% complete. Core protobuf definitions are finalized, keeper implementations are functional, but proto generation and module wiring are still in progress. Expect breaking changes as we iterate toward production readiness.
 
+## ⚠️ Security Notice
+
+**IMPORTANT: This is an experimental implementation with known security vulnerabilities.** Current implementations are for research and development purposes only:
+
+### Known Security Issues
+- **Hardware Binding**: Currently uses static hashes as placeholders - vulnerable to replay attacks. Production implementation will require TPM/secure enclave integration.
+- **Identity Verification**: Lacks proper cryptographic proof of hardware possession. Anyone can copy published hardware hashes.
+- **Federation Trust**: Missing piecewise identity factor verification across chains.
+- **Key Management**: Some implementations may expose sensitive identifiers in logs or commits.
+
+### Contributing to Security
+We actively encourage security researchers and contributors to:
+- **Identify vulnerabilities** - Help us find unknown security flaws
+- **Propose solutions** - Submit PRs with security improvements
+- **Document issues** - Create detailed vulnerability reports
+- **Design protocols** - Help design federation witnessing and cross-chain identity verification
+
+### Future Security Architecture
+The production implementation will include:
+- **TPM/Secure Enclave** integration for unforgeable hardware binding
+- **Federation Witnessing** - Piecewise identity factors linked to LCTs across multiple chains
+- **Zero-Knowledge Proofs** for identity verification without exposure
+- **Hardware Security Modules** where available
+- **Web of Trust** for platforms without hardware security features
+
+**Do not use this implementation for production systems or with real value at stake.**
+
 ## Overview
 
 ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
