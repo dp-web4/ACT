@@ -1,0 +1,32 @@
+{
+  "pending_decisions": [
+    {
+      "id": "20250929T132454",
+      "type": "vote",
+      "data": "{\"proposal\":\"security-queen-mandate\",\"vote\":\"approve\"}",
+      "reason": "Implementing federation security requirement while isolated",
+      "network_state": "work_isolated",
+      "timestamp": "2025-09-29T13:24:54.378395",
+      "hardware_attestation": "unavailable",
+      "status": "pending"
+    },
+    {
+      "id": "20250929T132504",
+      "type": "attestation",
+      "data": "{\"type\":\"network_isolation\",\"duration\":\"workday\",\"hash\":\"93e766842ee7882a248e7d55ef3269b95e1735b0be88b94287b18029d1851759\"}",
+      "reason": "Attesting hardware consistency despite network change",
+      "network_state": "work_isolated",
+      "timestamp": "2025-09-29T13:25:04.221553",
+      "hardware_attestation": "unavailable",
+      "status": "pending"
+    }
+  ],
+  "metadata": {},
+  "export_metadata": {
+    "timestamp": "2025-09-29T13:25:09.753864",
+    "network_state": "work_isolated",
+    "hardware_attestation": "unavailable",
+    "pending_count": 2,
+    "processed_count": 0
+  }
+}
