@@ -73,11 +73,14 @@ See `blockchain/TEST_RESULTS.md` for complete test results.
 ### 3. Role Hierarchy
 
 #### Queens (Coordination Layer)
+- **Security-Queen** 🔐: **[MANDATORY FEDERATION REQUIREMENT]** Cryptographic shield guardian with veto power
 - **Coherence-Analysis-Queen**: Logical consistency and pattern recognition
 - **Synthesis-Queen**: Human-AI collaborative decision-making
 - **Documentation-Queen**: Technical specifications and knowledge management
 - **Hardware-Binding-Queen**: Identity and security management
 - **Federation-Bridge-Queen**: Cross-chain communication
+- **Law-Oracle-Queen**: Governance and rule interpretation
+- **Treasury-Queen**: Society resource pool management (1000 ATP total)
 
 #### Workers (Execution Layer)
 Each queen coordinates specialized workers with specific ATP allocations.
