@@ -584,6 +584,88 @@ class SproutEdgeScheduler:
         with open(RESILIENCE_LOG, 'w') as f:
             json.dump(log, f, indent=2)
             
+    def run_daemon(self):
+        """Run scheduler as continuous daemon."""
+        print("🌱 Starting Sprout Edge Scheduler daemon...")
+        print("   15W power budget, edge-optimized")
+        print("   Press Ctrl+C to stop")
+
+        cycle_interval = 60  # Check every minute
+        last_cycle_check = None
+
+        try:
+            while True:
+                current_time = datetime.now()
+                current_minute = current_time.strftime("%H:%M")
+
+                # Execute cycle activities once per cycle
+                if current_minute != last_cycle_check:
+                    last_cycle_check = current_minute
+
+                    # Check and execute current cycle
+                    self.check_and_execute_cycle()
+
+                    # Regenerate ATP every hour
+                    if current_time.minute == 0:
+                        self.regenerate_atp()
+                        print(f"⚡ ATP regenerated at {current_time.strftime('%H:%M')}")
+
+                    # Check thermal every 30 minutes
+                    if current_time.minute % 30 == 0:
+                        temp = self.check_thermal_state()
+                        if temp > 75:
+                            print(f"⚠️ High temperature: {temp:.1f}°C")
+                            self.transition_state(EdgeState.CONSERVING, "Thermal throttling")
+
+                    # Check connectivity every 15 minutes
+                    if current_time.minute % 15 == 0:
+                        connected = self.check_connectivity()
+                        if not connected and self.current_state != EdgeState.RESILIENT:
+                            self.handle_disconnection()
+                        elif connected and self.current_state == EdgeState.RESILIENT:
+                            self.transition_state(EdgeState.WITNESSING, "Connection restored")
+
+                time.sleep(cycle_interval)
+
+        except KeyboardInterrupt:
+            print("\n\n🛑 Scheduler daemon stopped")
+            self.save_state()
+
+    def check_and_execute_cycle(self):
+        """Check schedule and execute current cycle."""
+        with open(SCHEDULE_FILE, 'r') as f:
+            schedule = json.load(f)
+
+        current_hour = datetime.now().hour
+        current_minute = datetime.now().minute
+
+        for cycle in schedule['cycles']:
+            start_time = cycle['start'].split(':')
+            start_hour = int(start_time[0])
+            start_minute = int(start_time[1]) if len(start_time) > 1 else 0
+            end_hour = (start_hour + cycle['duration_hours']) % 24
+
+            # Check if we're in this cycle
+            in_cycle = False
+            if start_hour <= current_hour < end_hour:
+                in_cycle = True
+            elif start_hour > end_hour:  # Wraps around midnight
+                if current_hour >= start_hour or current_hour < end_hour:
+                    in_cycle = True
+
+            if in_cycle:
+                # Transition to cycle state if needed
+                cycle_state = EdgeState(cycle['state'])
+                if self.current_state != cycle_state:
+                    self.transition_state(cycle_state, f"Scheduled: {cycle['name']}")
+
+                # Execute activities on cycle start
+                if current_hour == start_hour and current_minute == start_minute:
+                    print(f"\n⏰ Starting cycle: {cycle['name']}")
+                    self.execute_current_cycle()
+
+                break
+
     def display_status(self):
         """Display edge scheduler status."""
         print("\n" + "="*60)
@@ -656,7 +738,8 @@ def main():
         'thermal': lambda: print(f"Temperature: {scheduler.check_thermal_state():.1f}°C"),
         'power': lambda: print(json.dumps(scheduler.get_power_usage(), indent=2)),
         'disconnect': scheduler.handle_disconnection,
-        'witness': lambda: scheduler.witness_attestation()
+        'witness': lambda: scheduler.witness_attestation(),
+        'run': scheduler.run_daemon
     }
     
     if command in commands:
