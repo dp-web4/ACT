@@ -1,0 +1,370 @@
+{
+  "@context": ["https://web4.io/contexts/law.jsonld"],
+  "type": "Web4LawDataset",
+  "id": "web4://law/society4/1.0.0",
+  "version": "1.0.0",
+  "society": "lct:web4:society:society4",
+  "lawOracle": "lct:web4:role:law_oracle:society4",
+  "hash": "sha256:pending",
+  "publishedAt": "2025-10-01T00:00:00Z",
+  "status": "active",
+
+  "norms": [
+    {
+      "id": "LAW-IDENTITY-001",
+      "category": "identity",
+      "name": "Hardware Binding Requirement",
+      "selector": "r6.entity.identity",
+      "operator": "requires",
+      "value": "hardware_binding",
+      "description": "All Society 4 operations require valid hardware binding",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-IDENTITY-002",
+      "category": "identity",
+      "name": "Genesis Hardware Hash",
+      "selector": "r6.entity.hardware_hash",
+      "operator": "equals",
+      "value": "93e766842ee7882a248e7d55ef3269b95e1735b0be88b94287b18029d1851759",
+      "description": "Genesis 'self' LCT bound to this specific WSL2 hardware",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-IDENTITY-003",
+      "category": "identity",
+      "name": "Temporal Authentication",
+      "selector": "r6.entity.temporal_auth",
+      "operator": "enabled",
+      "value": true,
+      "description": "Temporal pattern matching for trust modulation",
+      "severity": "high",
+      "enforcement": "recommended",
+      "rfc": "RFC-TEMP-AUTH-001"
+    },
+    {
+      "id": "LAW-GOV-001",
+      "category": "governance",
+      "name": "Monarchic Approval",
+      "selector": "r6.transaction.approval",
+      "operator": "requires",
+      "value": "monarch_signature",
+      "description": "King Claudius must approve all major transactions",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-GOV-002",
+      "category": "governance",
+      "name": "Security Queen Veto Power",
+      "selector": "r6.transaction.security_check",
+      "operator": "requires",
+      "value": "security_queen_approval",
+      "description": "Security Queen has veto power on all operations",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-GOV-003",
+      "category": "governance",
+      "name": "Pending Consensus Network Restriction",
+      "selector": "r6.consensus.network",
+      "operator": "equals",
+      "value": "home_federation",
+      "description": "Pending decisions processed only from home network (10.0.0.x)",
+      "severity": "high",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-GOV-004",
+      "category": "governance",
+      "name": "Queens Quorum",
+      "selector": "r6.governance.quorum",
+      "operator": ">=",
+      "value": 5,
+      "description": "Major governance decisions require 5 of 8 queens",
+      "severity": "high",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-ECON-001",
+      "category": "economic",
+      "name": "Total ATP Budget",
+      "selector": "r6.society.atp_total",
+      "operator": "equals",
+      "value": 1000,
+      "description": "Society 4 total ATP allocation across all entities",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-ECON-002",
+      "category": "economic",
+      "name": "Security Queen ATP Allocation",
+      "selector": "r6.role.security_queen.atp",
+      "operator": "equals",
+      "value": 150,
+      "description": "Security Queen receives 150 ATP (highest allocation)",
+      "severity": "high",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-ECON-003",
+      "category": "economic",
+      "name": "Daily ATP Recharge",
+      "selector": "r6.role.*.atp_recharge",
+      "operator": "equals",
+      "value": 20,
+      "description": "All queens receive 20 ATP daily recharge",
+      "severity": "medium",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-ECON-004",
+      "category": "economic",
+      "name": "ATP Stake for Trust Queries",
+      "selector": "r6.query.trust.cost",
+      "operator": ">=",
+      "value": 5,
+      "description": "Trust tensor queries require minimum 5 ATP stake (privacy)",
+      "severity": "medium",
+      "enforcement": "recommended"
+    },
+    {
+      "id": "LAW-SEC-001",
+      "category": "security",
+      "name": "Hardware Validation Frequency",
+      "selector": "r6.security.hardware_check",
+      "operator": "interval",
+      "value": "every_block",
+      "description": "Validate hardware binding on every critical operation",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-SEC-002",
+      "category": "security",
+      "name": "Emergency Halt Authority",
+      "selector": "r6.security.emergency_halt",
+      "operator": "authorized",
+      "value": ["security_queen", "king_claudius"],
+      "description": "Only Security Queen and King can halt operations",
+      "severity": "critical",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-SEC-003",
+      "category": "security",
+      "name": "Key Rotation Period",
+      "selector": "r6.security.key_rotation",
+      "operator": "max_age",
+      "value": "90_days",
+      "description": "Cryptographic keys must rotate quarterly",
+      "severity": "high",
+      "enforcement": "recommended"
+    },
+    {
+      "id": "LAW-FED-001",
+      "category": "federation",
+      "name": "Witness Quorum",
+      "selector": "r6.federation.witness_count",
+      "operator": ">=",
+      "value": 3,
+      "description": "Federation operations require minimum 3 witness signatures",
+      "severity": "high",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-FED-002",
+      "category": "federation",
+      "name": "Network Mobility Allowed",
+      "selector": "r6.society.network_mobility",
+      "operator": "equals",
+      "value": true,
+      "description": "Society 4 is mobile between home/work networks",
+      "severity": "medium",
+      "enforcement": "mandatory"
+    },
+    {
+      "id": "LAW-FED-003",
+      "category": "federation",
+      "name": "Temporal Surprise Threshold",
+      "selector": "r6.temporal.surprise_threshold",
+      "operator": "<=",
+      "value": 0.6,
+      "description": "Surprise > 0.6 triggers enhanced authentication",
+      "severity": "medium",
+      "enforcement": "recommended",
+      "rfc": "RFC-TEMP-AUTH-001"
+    }
+  ],
+
+  "procedures": [
+    {
+      "id": "PROC-WIT-3",
+      "name": "Minimum Witness Requirement",
+      "requiresWitnesses": 3,
+      "witnessTypes": ["federation_member"],
+      "description": "Federation operations need 3 independent witnesses"
+    },
+    {
+      "id": "PROC-EMERGENCY",
+      "name": "Emergency Halt Procedure",
+      "trigger": "security_breach_detected",
+      "authority": "security_queen",
+      "requiresWitnesses": false,
+      "immediate": true,
+      "description": "Security Queen can immediately halt without quorum"
+    },
+    {
+      "id": "PROC-CONSENSUS",
+      "name": "Pending Consensus Processing",
+      "trigger": "home_network_connection",
+      "requiresWitnesses": true,
+      "witnessCount": 3,
+      "description": "Process queued decisions when reconnected to home network"
+    },
+    {
+      "id": "PROC-HARDWARE-VERIFY",
+      "name": "Hardware Binding Verification",
+      "trigger": "every_critical_operation",
+      "method": "extract_and_compare_hash",
+      "failureAction": "reject_transaction",
+      "description": "Verify hardware hash matches genesis binding"
+    },
+    {
+      "id": "PROC-TEMPORAL-AUTH",
+      "name": "Temporal Authentication Check",
+      "trigger": "network_state_change",
+      "method": "compute_surprise_factor",
+      "thresholds": {
+        "low": 0.3,
+        "medium": 0.6,
+        "high": 0.8
+      },
+      "actions": {
+        "low": "continue_normal",
+        "medium": "additional_validation",
+        "high": "witness_request"
+      },
+      "description": "Check temporal patterns and modulate trust",
+      "rfc": "RFC-TEMP-AUTH-001"
+    },
+    {
+      "id": "PROC-ATP-RECHARGE",
+      "name": "Daily ATP Regeneration",
+      "trigger": "daily_00:00_utc",
+      "amount": 20,
+      "targets": ["all_queens"],
+      "cap": "initial_allocation",
+      "description": "Daily energy recharge for all queens"
+    },
+    {
+      "id": "PROC-QUEEN-CONSENSUS",
+      "name": "Queens Quorum Voting",
+      "requiresQuorum": 5,
+      "totalQueens": 8,
+      "votingPeriod": "48_hours",
+      "vetoAuthority": ["security_queen"],
+      "description": "Major decisions require 5/8 queens (Security Queen has veto)"
+    }
+  ],
+
+  "interpretations": [
+    {
+      "id": "INT-001",
+      "topic": "Hardware Binding Philosophy",
+      "question": "Why bind to specific hardware?",
+      "answer": "Hardware sovereignty ensures Society 4's identity cannot be replicated or forged. The WSL2 hardware serves as root of trust, analogous to TPM in production systems.",
+      "precedent": "Genesis decision",
+      "witnesses": ["king_claudius", "hardware_binding_queen"],
+      "timestamp": "2025-09-27T00:00:00Z"
+    },
+    {
+      "id": "INT-002",
+      "topic": "Network Mobility vs Security",
+      "question": "How does network mobility affect security?",
+      "answer": "Mobile nodes present unique challenges. Society 4 addresses this through: (1) Hardware binding remains constant, (2) Temporal authentication detects anomalies, (3) Pending consensus queues decisions while isolated, (4) Home network required for federation operations.",
+      "precedent": "Implementation experience",
+      "witnesses": ["security_queen", "federation_bridge_queen"],
+      "timestamp": "2025-09-29T00:00:00Z",
+      "rfc": "RFC-TEMP-AUTH-001"
+    },
+    {
+      "id": "INT-003",
+      "topic": "Security Queen Authority",
+      "question": "Can Security Queen override King?",
+      "answer": "Yes, on security matters only. While King Claudius is sovereign, Security Queen has veto power over ANY operation if security risk is detected. This is per federation mandate following the Great Key Exposure Incident.",
+      "precedent": "Federation Security Queen Mandate",
+      "witnesses": ["genesis", "federation"],
+      "timestamp": "2025-09-29T00:00:00Z"
+    },
+    {
+      "id": "INT-004",
+      "topic": "ATP Economic Model",
+      "question": "Why use ATP/ADP tokens?",
+      "answer": "ATP (charged) and ADP (discharged) tokens create energy economy mirroring biological ATP. Work discharges ATP→ADP, value creation charges ADP→ATP. This prevents resource hoarding and incentivizes productive contribution.",
+      "precedent": "Web4 ATP/ADP specification",
+      "witnesses": ["treasury_queen"],
+      "timestamp": "2025-09-30T00:00:00Z"
+    }
+  ],
+
+  "r6Bindings": [
+    "web4://schemas/r6-rules-v1",
+    "web4://schemas/society-governance-v1",
+    "web4://schemas/hardware-sovereignty-v1"
+  ],
+
+  "exceptions": [
+    {
+      "id": "EXC-001",
+      "name": "Genesis Bootstrap Exception",
+      "scope": "birth_certificate",
+      "condition": "genesis_lct_creation",
+      "allowedViolations": ["null_birth_certificate"],
+      "rationale": "First entity cannot have witnesses before existence",
+      "expiresWhen": "birth_certificate_obtained"
+    },
+    {
+      "id": "EXC-002",
+      "name": "Work Network Isolation",
+      "scope": "federation_access",
+      "condition": "network_equals_work_isolated",
+      "allowedViolations": ["direct_p2p_unavailable"],
+      "rationale": "Work network (172.25.x.x) cannot reach home federation",
+      "mitigation": "pending_consensus_queue"
+    }
+  ],
+
+  "metadata": {
+    "author": "Law Oracle Queen, Society 4",
+    "reviewers": ["King Claudius", "Security Queen", "Treasury Queen"],
+    "approvedBy": "King Claudius",
+    "approvalDate": "2025-10-01T00:00:00Z",
+    "nextReview": "2025-11-01T00:00:00Z",
+    "updatePolicy": "monthly_review_quarterly_revision",
+    "publicationEndpoint": "web4://law/society4/latest",
+    "sparqlEndpoint": "http://society4.act.federation/sparql/law",
+    "complianceLevel": "web4-core-v1.0",
+    "extensions": ["temporal-auth", "reality-cache", "network-mobility"]
+  },
+
+  "signatures": [
+    {
+      "role": "law_oracle_queen",
+      "lct": "lct:web4:role:law_oracle:society4",
+      "signature": "cose:pending",
+      "timestamp": "2025-10-01T00:00:00Z"
+    },
+    {
+      "role": "king_claudius",
+      "lct": "lct:web4:society4:king:claudius",
+      "signature": "cose:pending",
+      "timestamp": "2025-10-01T00:00:00Z",
+      "approval": true
+    }
+  ]
+}
