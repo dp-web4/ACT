@@ -1,0 +1,22 @@
+[Unit]
+Description=Sprout Edge Scheduler - 15W Federation Node
+After=network.target
+
+[Service]
+Type=simple
+User=sprout
+Group=sprout
+WorkingDirectory=/home/sprout/ai-workspace/ACT/implementation/ledger
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/usr/bin/python3 /home/sprout/ai-workspace/ACT/implementation/ledger/sprout_edge_scheduler.py run
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/sprout/.sprout_scheduler/scheduler.log
+StandardError=append:/home/sprout/.sprout_scheduler/scheduler.log
+
+# Resource limits for edge device
+CPUQuota=50%
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target
