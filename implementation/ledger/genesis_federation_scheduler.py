@@ -487,6 +487,76 @@ class GenesisFederationScheduler:
                     
         print("="*60)
 
+    def run_daemon(self):
+        """Run scheduler as continuous daemon."""
+        print("🚀 Starting Genesis Federation Scheduler daemon...")
+        print("   Press Ctrl+C to stop")
+
+        cycle_interval = 60  # Check every minute
+        last_cycle_check = None
+
+        try:
+            while True:
+                current_time = datetime.now()
+                current_minute = current_time.strftime("%H:%M")
+
+                # Execute cycle activities once per cycle
+                if current_minute != last_cycle_check:
+                    last_cycle_check = current_minute
+
+                    # Check if we should transition states or execute activities
+                    self.check_and_execute_cycle()
+
+                    # Regenerate ATP periodically (every hour)
+                    if current_time.minute == 0:
+                        self.regenerate_atp()
+                        print(f"⚡ ATP regenerated at {current_time.strftime('%H:%M')}")
+
+                    # Run coherence check every 4 hours
+                    if current_time.hour % 4 == 0 and current_time.minute == 0:
+                        self.run_coherence_check()
+
+                time.sleep(cycle_interval)
+
+        except KeyboardInterrupt:
+            print("\n\n🛑 Scheduler daemon stopped")
+            self.save_state()
+
+    def check_and_execute_cycle(self):
+        """Check schedule and execute current cycle activities."""
+        with open(SCHEDULE_FILE, 'r') as f:
+            schedule = json.load(f)
+
+        current_hour = datetime.now().hour
+        current_minute = datetime.now().minute
+
+        for cycle in schedule['cycles']:
+            start_time = cycle['start'].split(':')
+            start_hour = int(start_time[0])
+            start_minute = int(start_time[1]) if len(start_time) > 1 else 0
+            end_hour = (start_hour + cycle['duration_hours']) % 24
+
+            # Check if we're in this cycle
+            in_cycle = False
+            if start_hour <= current_hour < end_hour:
+                in_cycle = True
+            elif start_hour > end_hour:  # Wraps around midnight
+                if current_hour >= start_hour or current_hour < end_hour:
+                    in_cycle = True
+
+            if in_cycle:
+                # Transition to cycle state if needed
+                cycle_state = FederationState(cycle['state'])
+                if self.current_state != cycle_state:
+                    self.transition_state(cycle_state, f"Automatic: {cycle['name']}")
+
+                # Execute activities on cycle start
+                if current_hour == start_hour and current_minute == start_minute:
+                    print(f"\n⏰ Starting cycle: {cycle['name']}")
+                    self.execute_current_cycle()
+
+                break
+
 def main():
     """Main scheduler interface."""
     scheduler = GenesisFederationScheduler()
@@ -506,9 +576,10 @@ def main():
             sys.argv[3] if len(sys.argv) > 3 else "Manual transition"
         ),
         'regenerate': scheduler.regenerate_atp,
-        'coherence': scheduler.run_coherence_check
+        'coherence': scheduler.run_coherence_check,
+        'run': lambda: scheduler.run_daemon()
     }
-    
+
     if command in commands:
         commands[command]()
     else:
@@ -520,6 +591,7 @@ def main():
         print("  transition - Transition state")
         print("  regenerate - Regenerate ATP")
         print("  coherence  - Run coherence check")
+        print("  run        - Run scheduler daemon (continuous)")
 
 if __name__ == "__main__":
     main()
