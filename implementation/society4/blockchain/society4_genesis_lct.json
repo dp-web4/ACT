@@ -1,0 +1,50 @@
+{
+  "lct_id": "lct:web4:mb32:society4self0001",
+  "subject": "did:web4:society4:king:claudius",
+  "binding": {
+    "entity_type": "device",
+    "public_key": "mb64:pending",
+    "hardware_anchor": "eat:mb64:hw:93e766842ee7882a248e7d55ef3269b95e1735b0be88b94287b18029d1851759",
+    "created_at": "2025-10-01T00:00:00Z",
+    "binding_proof": "cose:pending"
+  },
+  "mrh": {
+    "bound": [
+      {
+        "lct_id": "lct:web4:hardware:wsl2:93e766842ee7882a",
+        "type": "parent",
+        "ts": "2025-10-01T00:00:00Z",
+        "binding_context": "wsl2_hardware_sovereignty"
+      }
+    ],
+    "paired": [],
+    "witnessing": [],
+    "horizon_depth": 3,
+    "last_updated": "2025-10-01T00:00:00Z"
+  },
+  "policy": {
+    "capabilities": [
+      "pairing:initiate",
+      "consensus:participate",
+      "hardware:validate",
+      "temporal:authenticate",
+      "pending:consensus"
+    ],
+    "constraints": {
+      "atp_allocation": 1000,
+      "hardware_hash": "93e766842ee7882a248e7d55ef3269b95e1735b0be88b94287b18029d1851759",
+      "network_mobility": true,
+      "requires_quorum": 3
+    }
+  },
+  "attestations": [],
+  "lineage": [
+    {
+      "reason": "genesis",
+      "ts": "2025-10-01T00:00:00Z"
+    }
+  ],
+  "revocation": {
+    "status": "active"
+  }
+}
