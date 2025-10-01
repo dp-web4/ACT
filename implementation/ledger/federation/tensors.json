@@ -1,0 +1,370 @@
+{
+  "genesis": {
+    "coordinator:sage_development": {
+      "role": "coordinator",
+      "context": "sage_development",
+      "trust": {
+        "performance": 0.7,
+        "reliability": 0.7,
+        "integrity": 0.7999999999999999,
+        "cooperation": 0.6
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770941",
+      "witness_count": 0
+    },
+    "coordinator:web4_compliance": {
+      "role": "coordinator",
+      "context": "web4_compliance",
+      "trust": {
+        "performance": 0.7,
+        "reliability": 0.7,
+        "integrity": 0.7999999999999999,
+        "cooperation": 0.6
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770947",
+      "witness_count": 0
+    },
+    "coordinator:federation_governance": {
+      "role": "coordinator",
+      "context": "federation_governance",
+      "trust": {
+        "performance": 0.7,
+        "reliability": 0.7,
+        "integrity": 0.7999999999999999,
+        "cooperation": 0.6
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770950",
+      "witness_count": 0
+    },
+    "coordinator:energy_economy": {
+      "role": "coordinator",
+      "context": "energy_economy",
+      "trust": {
+        "performance": 0.7,
+        "reliability": 0.7,
+        "integrity": 0.7999999999999999,
+        "cooperation": 0.6
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770952",
+      "witness_count": 0
+    },
+    "coordinator:task_execution": {
+      "role": "coordinator",
+      "context": "task_execution",
+      "trust": {
+        "performance": 0.73,
+        "reliability": 0.68,
+        "integrity": 0.72,
+        "cooperation": 0.5900000000000001
+      },
+      "value": {
+        "energy_efficiency": 0.6000000000000001,
+        "task_impact": 0.65,
+        "innovation": 0.55,
+        "coordination": 0.55
+      },
+      "timestamp": "2025-10-01T12:12:15.771489",
+      "witness_count": 0
+    }
+  },
+  "society4": {
+    "validator:sage_development": {
+      "role": "validator",
+      "context": "sage_development",
+      "trust": {
+        "performance": 0.65,
+        "reliability": 0.65,
+        "integrity": 0.75,
+        "cooperation": 0.55
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770955",
+      "witness_count": 0
+    },
+    "validator:web4_compliance": {
+      "role": "validator",
+      "context": "web4_compliance",
+      "trust": {
+        "performance": 0.65,
+        "reliability": 0.65,
+        "integrity": 0.75,
+        "cooperation": 0.55
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770957",
+      "witness_count": 0
+    },
+    "validator:federation_governance": {
+      "role": "validator",
+      "context": "federation_governance",
+      "trust": {
+        "performance": 0.65,
+        "reliability": 0.65,
+        "integrity": 0.75,
+        "cooperation": 0.55
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770958",
+      "witness_count": 0
+    },
+    "validator:energy_economy": {
+      "role": "validator",
+      "context": "energy_economy",
+      "trust": {
+        "performance": 0.65,
+        "reliability": 0.65,
+        "integrity": 0.75,
+        "cooperation": 0.55
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770960",
+      "witness_count": 0
+    },
+    "validator:task_execution": {
+      "role": "validator",
+      "context": "task_execution",
+      "trust": {
+        "performance": 0.65,
+        "reliability": 0.65,
+        "integrity": 0.75,
+        "cooperation": 0.55
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770961",
+      "witness_count": 0
+    }
+  },
+  "society2": {
+    "integrator:sage_development": {
+      "role": "integrator",
+      "context": "sage_development",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770963",
+      "witness_count": 0
+    },
+    "integrator:web4_compliance": {
+      "role": "integrator",
+      "context": "web4_compliance",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770964",
+      "witness_count": 0
+    },
+    "integrator:federation_governance": {
+      "role": "integrator",
+      "context": "federation_governance",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770966",
+      "witness_count": 0
+    },
+    "integrator:energy_economy": {
+      "role": "integrator",
+      "context": "energy_economy",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770967",
+      "witness_count": 0
+    },
+    "integrator:task_execution": {
+      "role": "integrator",
+      "context": "task_execution",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770969",
+      "witness_count": 0
+    }
+  },
+  "sprout": {
+    "optimizer:sage_development": {
+      "role": "optimizer",
+      "context": "sage_development",
+      "trust": {
+        "performance": 0.6900000000000001,
+        "reliability": 0.54,
+        "integrity": 0.73,
+        "cooperation": 0.65
+      },
+      "value": {
+        "energy_efficiency": 0.55,
+        "task_impact": 0.7000000000000001,
+        "innovation": 0.75,
+        "coordination": 0.55
+      },
+      "timestamp": "2025-10-01T12:12:15.773168",
+      "witness_count": 0
+    },
+    "optimizer:web4_compliance": {
+      "role": "optimizer",
+      "context": "web4_compliance",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770972",
+      "witness_count": 0
+    },
+    "optimizer:federation_governance": {
+      "role": "optimizer",
+      "context": "federation_governance",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770973",
+      "witness_count": 0
+    },
+    "optimizer:energy_economy": {
+      "role": "optimizer",
+      "context": "energy_economy",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770976",
+      "witness_count": 0
+    },
+    "optimizer:task_execution": {
+      "role": "optimizer",
+      "context": "task_execution",
+      "trust": {
+        "performance": 0.6,
+        "reliability": 0.6,
+        "integrity": 0.7,
+        "cooperation": 0.5
+      },
+      "value": {
+        "energy_efficiency": 0.5,
+        "task_impact": 0.5,
+        "innovation": 0.5,
+        "coordination": 0.5
+      },
+      "timestamp": "2025-10-01T12:12:15.770977",
+      "witness_count": 0
+    }
+  }
+}

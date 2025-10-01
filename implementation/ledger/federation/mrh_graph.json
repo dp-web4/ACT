@@ -1,0 +1,384 @@
+{
+  "namespaces": {
+    "federation": "http://web4.federation/",
+    "society": "http://web4.federation/society/",
+    "task": "http://web4.federation/task/",
+    "lct": "http://web4.federation/lct/",
+    "atp": "http://web4.federation/atp/",
+    "sage": "http://web4.federation/sage/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "triples": [
+    {
+      "subject": "http://web4.federation/atp/Pool_Genesis",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Genesis"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://web4.federation/memberOf",
+      "object": "http://web4.federation/GenesisFederation"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Society2"
+    },
+    {
+      "subject": "http://web4.federation/task/ContextEncoding",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Society4"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/FederationCoordination"
+    },
+    {
+      "subject": "http://web4.federation/GenesisFederation",
+      "predicate": "http://web4.federation/atp/allocates",
+      "object": "http://web4.federation/atp/Pool_Sprout"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Society2"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/memberOf",
+      "object": "http://web4.federation/GenesisFederation"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Genesis",
+      "predicate": "amount",
+      "object": "5000"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Society"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Society2",
+      "predicate": "amount",
+      "object": "5000"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Genesis"
+    },
+    {
+      "subject": "http://web4.federation/task/TrainingLoop",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Society4"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/trusts",
+      "object": "http://web4.federation/society/Society2"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Genesis"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Society"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Society4"
+    },
+    {
+      "subject": "http://web4.federation/sage/SAGEDevelopment",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Project"
+    },
+    {
+      "subject": "http://web4.federation/task/FederationCoordination",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/task/LLMIntegration",
+      "predicate": "http://web4.federation/task/dependsOn",
+      "object": "http://web4.federation/task/AttentionOrchestrator"
+    },
+    {
+      "subject": "http://web4.federation/task/EdgeDeployment",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/task/FederationCoordination",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Sprout",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "ATPPool"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://web4.federation/memberOf",
+      "object": "http://web4.federation/GenesisFederation"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/TrainingLoop"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/ContextEncoding"
+    },
+    {
+      "subject": "http://web4.federation/task/TrainingLoop",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/task/JetsonOptimization",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/task/EdgeDeployment",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/task/ContextEncoding",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/EdgeDeployment"
+    },
+    {
+      "subject": "http://web4.federation/GenesisFederation",
+      "predicate": "http://web4.federation/atp/allocates",
+      "object": "http://web4.federation/atp/Pool_Society4"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Society4",
+      "predicate": "amount",
+      "object": "5000"
+    },
+    {
+      "subject": "http://web4.federation/task/TrainingLoop",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/GenesisFederation",
+      "predicate": "http://web4.federation/atp/allocates",
+      "object": "http://web4.federation/atp/Pool_Society2"
+    },
+    {
+      "subject": "http://web4.federation/task/ContextEncoding",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/task/AttentionOrchestrator",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Genesis"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/memberOf",
+      "object": "http://web4.federation/GenesisFederation"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/CognitiveSensor"
+    },
+    {
+      "subject": "http://web4.federation/GenesisFederation",
+      "predicate": "http://web4.federation/atp/allocates",
+      "object": "http://web4.federation/atp/Pool_Genesis"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Society4",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Society4"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Genesis"
+    },
+    {
+      "subject": "http://web4.federation/task/JetsonOptimization",
+      "predicate": "http://web4.federation/task/dependsOn",
+      "object": "http://web4.federation/task/TrainingLoop"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/task/JetsonOptimization",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/task/JetsonOptimization",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Society4"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Genesis",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "ATPPool"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/LLMIntegration"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Society4"
+    },
+    {
+      "subject": "http://web4.federation/task/LLMIntegration",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/task/CognitiveSensor",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Society2",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Society2"
+    },
+    {
+      "subject": "http://web4.federation/task/CognitiveSensor",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/task/CognitiveSensor",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Society2"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Sprout",
+      "predicate": "amount",
+      "object": "5000"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Sprout",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Society2",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "ATPPool"
+    },
+    {
+      "subject": "http://web4.federation/task/FederationCoordination",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Genesis"
+    },
+    {
+      "subject": "http://web4.federation/task/AttentionOrchestrator",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://web4.federation/witnesses",
+      "object": "http://web4.federation/society/Society2"
+    },
+    {
+      "subject": "http://web4.federation/task/LLMIntegration",
+      "predicate": "http://web4.federation/hasContext",
+      "object": "http://web4.federation/sage/SAGEDevelopment"
+    },
+    {
+      "subject": "http://web4.federation/task/AttentionOrchestrator",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Task"
+    },
+    {
+      "subject": "http://web4.federation/society/Society2",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Society"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/AttentionOrchestrator"
+    },
+    {
+      "subject": "http://web4.federation/task/EdgeDeployment",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/society/Sprout",
+      "predicate": "http://web4.federation/sage/implements",
+      "object": "http://web4.federation/task/JetsonOptimization"
+    },
+    {
+      "subject": "http://web4.federation/society/Genesis",
+      "predicate": "http://web4.federation/trusts",
+      "object": "http://web4.federation/society/Sprout"
+    },
+    {
+      "subject": "http://web4.federation/society/Society4",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "Society"
+    },
+    {
+      "subject": "http://web4.federation/atp/Pool_Society4",
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "object": "ATPPool"
+    },
+    {
+      "subject": "http://web4.federation/task/LLMIntegration",
+      "predicate": "http://web4.federation/task/assignedTo",
+      "object": "http://web4.federation/society/Society2"
+    }
+  ],
+  "metadata": {
+    "horizon_depth": 3,
+    "triple_count": 73,
+    "updated": "2025-10-01T12:12:15.833340"
+  }
+}

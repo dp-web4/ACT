@@ -1,0 +1,19 @@
+{
+  "model": {
+    "parameters": 100000000,
+    "h_level_dim": 512,
+    "l_level_dim": 256,
+    "context_window": 2048
+  },
+  "training": {
+    "batch_size": 32,
+    "learning_rate": 0.0001,
+    "epochs": 100,
+    "reward_structure": "reasoning_based"
+  },
+  "validation": {
+    "dataset": "ARC-AGI-2",
+    "target_accuracy": 0.25,
+    "check_shortcuts": true
+  }
+}
