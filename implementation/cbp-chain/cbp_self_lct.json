@@ -47,7 +47,20 @@
         ]
       }
     },
-    "attestations": [],
+    "attestations": [
+      {
+        "witness": "did:web4:sprout:edge",
+        "attestation_type": "existence",
+        "signature": "witness_signature_sprout_20250930",
+        "timestamp": "2025-09-30T19:58:23.033608",
+        "evidence": {
+          "witnessed_entity": "lct:web4:mb32:42e496c83bb19aea963fbe4daae62082",
+          "society_name": "CBP",
+          "hardware_verified": true,
+          "trust_score": 0.75
+        }
+      }
+    ],
     "lineage": [
       {
         "reason": "genesis",
@@ -57,6 +70,16 @@
     "revocation": {
       "status": "active",
       "timestamp": "2025-09-30T19:34:17.545049"
+    },
+    "birth_certificate": {
+      "citizen_role": "lct:web4:federation:act:citizen:cbp",
+      "context": "federation",
+      "birth_timestamp": "2025-09-30T19:58:23.033625",
+      "parent_entity": "lct:web4:federation:act",
+      "birth_witnesses": [
+        "did:web4:sprout:edge"
+      ],
+      "founding_purpose": "Data persistence, metrics collection, and federation bridging"
     }
   },
   "hardware_hash": "ca2d41b985c61e1d29cc4d4d5f3d26d4b9ec7637e7fb16a0df89646113b0cd44",
