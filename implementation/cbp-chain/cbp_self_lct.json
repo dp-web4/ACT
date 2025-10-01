@@ -1,0 +1,66 @@
+{
+  "lct": {
+    "lct_id": "lct:web4:mb32:42e496c83bb19aea963fbe4daae62082",
+    "subject": "did:web4:cbp:coordinator",
+    "binding": {
+      "entity_type": "device",
+      "public_key": "mb64:pending",
+      "hardware_anchor": "eat:mb64:hw:ca2d41b985c61e1d29cc4d4d5f3d26d4b9ec7637e7fb16a0df89646113b0cd44",
+      "created_at": "2025-09-30T19:34:17.545049",
+      "binding_proof": "pending"
+    },
+    "mrh": {
+      "bound": [
+        {
+          "lct_id": "lct:web4:hardware:wsl2:ca2d41b985c61e1d",
+          "relation_type": "parent",
+          "timestamp": "2025-09-30T19:34:17.545049",
+          "binding_context": "wsl2_hardware_sovereignty"
+        }
+      ],
+      "paired": [],
+      "witnessing": [],
+      "horizon_depth": 3,
+      "last_updated": "2025-09-30T19:34:17.545049"
+    },
+    "policy": {
+      "capabilities": [
+        "pairing:initiate",
+        "cache:manage",
+        "metrics:collect",
+        "federation:bridge",
+        "blockchain:witness",
+        "data:persist",
+        "consensus:participate"
+      ],
+      "constraints": {
+        "atp_allocation": 1000,
+        "hardware_hash": "ca2d41b985c61e1d29cc4d4d5f3d26d4b9ec7637e7fb16a0df89646113b0cd44",
+        "network_mobility": true,
+        "requires_quorum": 3,
+        "cache_size_mb": 1024,
+        "metrics_retention_days": 30,
+        "bridge_protocols": [
+          "web4",
+          "mcp",
+          "http"
+        ]
+      }
+    },
+    "attestations": [],
+    "lineage": [
+      {
+        "reason": "genesis",
+        "timestamp": "2025-09-30T19:34:17.545049"
+      }
+    ],
+    "revocation": {
+      "status": "active",
+      "timestamp": "2025-09-30T19:34:17.545049"
+    }
+  },
+  "hardware_hash": "ca2d41b985c61e1d29cc4d4d5f3d26d4b9ec7637e7fb16a0df89646113b0cd44",
+  "network_state": "federation_active",
+  "created_at": "2025-09-30T19:34:17.552118",
+  "version": "1.0.0"
+}
