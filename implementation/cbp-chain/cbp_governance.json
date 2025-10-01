@@ -1,0 +1,616 @@
+{
+  "laws": {
+    "LAW-GOV-001": {
+      "law_id": "LAW-GOV-001",
+      "category": "governance",
+      "title": "Queen Consensus Requirement",
+      "content": "Decisions affecting society operations require approval from 3/5 queens",
+      "rationale": "Ensures distributed decision-making while maintaining efficiency",
+      "r6_selector": "r6.decision.consensus",
+      "enforcement": "automatic",
+      "penalties": {
+        "violation": "decision_void",
+        "atp_cost": 50
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359830",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-GOV-002": {
+      "law_id": "LAW-GOV-002",
+      "category": "governance",
+      "title": "Security Queen Veto",
+      "content": "Security Queen may veto any decision with security implications",
+      "rationale": "Critical security decisions need specialized oversight",
+      "r6_selector": "r6.security.veto",
+      "enforcement": "automatic",
+      "penalties": {
+        "override": "security_breach_alert",
+        "atp_cost": 100
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359841",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-GOV-003": {
+      "law_id": "LAW-GOV-003",
+      "category": "governance",
+      "title": "Amendment Requirement",
+      "content": "Constitutional amendments require 4/5 queens approval",
+      "rationale": "Foundational changes need super-majority consensus",
+      "r6_selector": "r6.governance.amendment",
+      "enforcement": "automatic",
+      "penalties": {
+        "invalid_amendment": "rejection"
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359844",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-ECON-001": {
+      "law_id": "LAW-ECON-001",
+      "category": "economic",
+      "title": "ATP Budget Constraint",
+      "content": "Total society ATP allocation must equal exactly 1000",
+      "rationale": "Web4 energy conservation principle",
+      "r6_selector": "r6.economy.atp_total",
+      "enforcement": "automatic",
+      "penalties": {
+        "violation": "automatic_rebalancing"
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359846",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-ECON-002": {
+      "law_id": "LAW-ECON-002",
+      "category": "economic",
+      "title": "Cache Operations Priority",
+      "content": "Cache Queen receives priority ATP allocation (minimum 110)",
+      "rationale": "Cache operations are core to CBP's value proposition",
+      "r6_selector": "r6.economy.role_allocation",
+      "enforcement": "automatic",
+      "penalties": {
+        "underallocation": "performance_degradation"
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359848",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-ECON-003": {
+      "law_id": "LAW-ECON-003",
+      "category": "economic",
+      "title": "Daily Recharge Rate",
+      "content": "All roles receive 20 ATP daily recharge from ADP conversion",
+      "rationale": "Sustainable energy regeneration for continuous operation",
+      "r6_selector": "r6.economy.recharge",
+      "enforcement": "automatic",
+      "penalties": {
+        "missed_recharge": "energy_debt"
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359850",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-SEC-001": {
+      "law_id": "LAW-SEC-001",
+      "category": "security",
+      "title": "Hardware Binding Verification",
+      "content": "All entities must maintain valid hardware binding proofs",
+      "rationale": "Prevents Sybil attacks and ensures entity authenticity",
+      "r6_selector": "r6.security.hardware_check",
+      "enforcement": "automatic",
+      "penalties": {
+        "invalid_binding": "entity_suspension",
+        "atp_cost": 200
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359852",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-FED-001": {
+      "law_id": "LAW-FED-001",
+      "category": "federation",
+      "title": "Federation Protocol Compliance",
+      "content": "All federation communications must use Web4 protocol",
+      "rationale": "Ensures interoperability with other societies",
+      "r6_selector": "r6.federation.protocol",
+      "enforcement": "automatic",
+      "penalties": {
+        "protocol_violation": "communication_blocked"
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359854",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-OPER-001": {
+      "law_id": "LAW-OPER-001",
+      "category": "operational",
+      "title": "Cache Hit Rate Minimum",
+      "content": "Cache system must maintain minimum 80% hit rate",
+      "rationale": "Ensures cache effectiveness and value delivery",
+      "r6_selector": "r6.operation.cache_performance",
+      "enforcement": "manual",
+      "penalties": {
+        "underperformance": "optimization_required",
+        "atp_reduction": 10
+      },
+      "version": 2,
+      "created_at": "2025-09-30T19:56:45.359855",
+      "amended_at": "2025-09-30T19:56:45.360133",
+      "author": "cbp:coordinator",
+      "status": "active"
+    },
+    "LAW-OPER-002": {
+      "law_id": "LAW-OPER-002",
+      "category": "operational",
+      "title": "Metrics Collection Frequency",
+      "content": "Trust tensors must be updated at least every 24 hours",
+      "rationale": "Maintains accurate federation trust state",
+      "r6_selector": "r6.operation.metrics_update",
+      "enforcement": "automatic",
+      "penalties": {
+        "stale_metrics": "trust_decay",
+        "accuracy_penalty": 0.01
+      },
+      "version": 1,
+      "created_at": "2025-09-30T19:56:45.359857",
+      "amended_at": null,
+      "author": "cbp:coordinator",
+      "status": "active"
+    }
+  },
+  "amendments": {
+    "AMD-0000": {
+      "amendment_id": "AMD-0000",
+      "law_id": "LAW-OPER-001",
+      "proposer": "cbp:data_queen",
+      "changes": {
+        "content": "Cache system must maintain minimum 80% hit rate"
+      },
+      "rationale": "Higher standards needed as cache grows",
+      "votes_for": [
+        "cbp:data_queen",
+        "cbp:cache_queen",
+        "cbp:metrics_queen"
+      ],
+      "votes_against": [],
+      "status": "approved",
+      "proposed_at": "2025-09-30T19:56:45.360085",
+      "decided_at": "2025-09-30T19:56:45.360130"
+    }
+  },
+  "authorities": {
+    "cbp:coordinator": [
+      "propose_amendment",
+      "call_vote",
+      "execute_decision",
+      "allocate_resources"
+    ],
+    "cbp:security_queen": [
+      "veto_security",
+      "audit_entities",
+      "verify_hardware",
+      "enforce_penalties"
+    ],
+    "cbp:data_queen": [
+      "manage_storage",
+      "optimize_cache",
+      "allocate_data_atp",
+      "propose_data_laws",
+      "propose_amendment"
+    ],
+    "cbp:metrics_queen": [
+      "update_tensors",
+      "calculate_trust",
+      "report_metrics",
+      "propose_metric_laws"
+    ],
+    "cbp:bridge_queen": [
+      "manage_federation",
+      "translate_protocols",
+      "propose_federation_laws"
+    ],
+    "cbp:cache_queen": [
+      "manage_cache",
+      "optimize_performance",
+      "allocate_cache_atp",
+      "report_hit_rates"
+    ]
+  },
+  "events": [
+    {
+      "event_id": "eddc8061e617ee81",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-GOV-001",
+      "data": {
+        "law": {
+          "law_id": "LAW-GOV-001",
+          "category": "governance",
+          "title": "Queen Consensus Requirement",
+          "content": "Decisions affecting society operations require approval from 3/5 queens",
+          "rationale": "Ensures distributed decision-making while maintaining efficiency",
+          "r6_selector": "r6.decision.consensus",
+          "enforcement": "automatic",
+          "penalties": {
+            "violation": "decision_void",
+            "atp_cost": 50
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359830",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359899",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "9680a9b2479f3228",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-GOV-002",
+      "data": {
+        "law": {
+          "law_id": "LAW-GOV-002",
+          "category": "governance",
+          "title": "Security Queen Veto",
+          "content": "Security Queen may veto any decision with security implications",
+          "rationale": "Critical security decisions need specialized oversight",
+          "r6_selector": "r6.security.veto",
+          "enforcement": "automatic",
+          "penalties": {
+            "override": "security_breach_alert",
+            "atp_cost": 100
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359841",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359917",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "44b8c5c13bad9ea4",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-GOV-003",
+      "data": {
+        "law": {
+          "law_id": "LAW-GOV-003",
+          "category": "governance",
+          "title": "Amendment Requirement",
+          "content": "Constitutional amendments require 4/5 queens approval",
+          "rationale": "Foundational changes need super-majority consensus",
+          "r6_selector": "r6.governance.amendment",
+          "enforcement": "automatic",
+          "penalties": {
+            "invalid_amendment": "rejection"
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359844",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359929",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "d16417dd686b1a26",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-ECON-001",
+      "data": {
+        "law": {
+          "law_id": "LAW-ECON-001",
+          "category": "economic",
+          "title": "ATP Budget Constraint",
+          "content": "Total society ATP allocation must equal exactly 1000",
+          "rationale": "Web4 energy conservation principle",
+          "r6_selector": "r6.economy.atp_total",
+          "enforcement": "automatic",
+          "penalties": {
+            "violation": "automatic_rebalancing"
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359846",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359938",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "1d9a51933c743a27",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-ECON-002",
+      "data": {
+        "law": {
+          "law_id": "LAW-ECON-002",
+          "category": "economic",
+          "title": "Cache Operations Priority",
+          "content": "Cache Queen receives priority ATP allocation (minimum 110)",
+          "rationale": "Cache operations are core to CBP's value proposition",
+          "r6_selector": "r6.economy.role_allocation",
+          "enforcement": "automatic",
+          "penalties": {
+            "underallocation": "performance_degradation"
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359848",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359948",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "ddfc70490d41f4e3",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-ECON-003",
+      "data": {
+        "law": {
+          "law_id": "LAW-ECON-003",
+          "category": "economic",
+          "title": "Daily Recharge Rate",
+          "content": "All roles receive 20 ATP daily recharge from ADP conversion",
+          "rationale": "Sustainable energy regeneration for continuous operation",
+          "r6_selector": "r6.economy.recharge",
+          "enforcement": "automatic",
+          "penalties": {
+            "missed_recharge": "energy_debt"
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359850",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359957",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "81db71d54791d626",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-SEC-001",
+      "data": {
+        "law": {
+          "law_id": "LAW-SEC-001",
+          "category": "security",
+          "title": "Hardware Binding Verification",
+          "content": "All entities must maintain valid hardware binding proofs",
+          "rationale": "Prevents Sybil attacks and ensures entity authenticity",
+          "r6_selector": "r6.security.hardware_check",
+          "enforcement": "automatic",
+          "penalties": {
+            "invalid_binding": "entity_suspension",
+            "atp_cost": 200
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359852",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359965",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "fd2487265900a933",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-FED-001",
+      "data": {
+        "law": {
+          "law_id": "LAW-FED-001",
+          "category": "federation",
+          "title": "Federation Protocol Compliance",
+          "content": "All federation communications must use Web4 protocol",
+          "rationale": "Ensures interoperability with other societies",
+          "r6_selector": "r6.federation.protocol",
+          "enforcement": "automatic",
+          "penalties": {
+            "protocol_violation": "communication_blocked"
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359854",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359974",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "36c5ffcfe7cf0a91",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-OPER-001",
+      "data": {
+        "law": {
+          "law_id": "LAW-OPER-001",
+          "category": "operational",
+          "title": "Cache Hit Rate Minimum",
+          "content": "Cache system must maintain minimum 70% hit rate",
+          "rationale": "Ensures cache effectiveness and value delivery",
+          "r6_selector": "r6.operation.cache_performance",
+          "enforcement": "manual",
+          "penalties": {
+            "underperformance": "optimization_required",
+            "atp_reduction": 10
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359855",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.359982",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "8a73612be888180b",
+      "event_type": "law_created",
+      "actor": "cbp:coordinator",
+      "target": "LAW-OPER-002",
+      "data": {
+        "law": {
+          "law_id": "LAW-OPER-002",
+          "category": "operational",
+          "title": "Metrics Collection Frequency",
+          "content": "Trust tensors must be updated at least every 24 hours",
+          "rationale": "Maintains accurate federation trust state",
+          "r6_selector": "r6.operation.metrics_update",
+          "enforcement": "automatic",
+          "penalties": {
+            "stale_metrics": "trust_decay",
+            "accuracy_penalty": 0.01
+          },
+          "version": 1,
+          "created_at": "2025-09-30T19:56:45.359857",
+          "amended_at": null,
+          "author": "cbp:coordinator",
+          "status": "active"
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.360021",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "c2c4ca3bced268ef",
+      "event_type": "amendment_proposed",
+      "actor": "cbp:data_queen",
+      "target": "AMD-0000",
+      "data": {
+        "amendment": {
+          "amendment_id": "AMD-0000",
+          "law_id": "LAW-OPER-001",
+          "proposer": "cbp:data_queen",
+          "changes": {
+            "content": "Cache system must maintain minimum 80% hit rate"
+          },
+          "rationale": "Higher standards needed as cache grows",
+          "votes_for": [],
+          "votes_against": [],
+          "status": "proposed",
+          "proposed_at": "2025-09-30T19:56:45.360085",
+          "decided_at": null
+        }
+      },
+      "timestamp": "2025-09-30T19:56:45.360103",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "b9db21d402a3224e",
+      "event_type": "vote_cast",
+      "actor": "cbp:data_queen",
+      "target": "AMD-0000",
+      "data": {
+        "vote": true
+      },
+      "timestamp": "2025-09-30T19:56:45.360113",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "76884819af0caa26",
+      "event_type": "vote_cast",
+      "actor": "cbp:cache_queen",
+      "target": "AMD-0000",
+      "data": {
+        "vote": true
+      },
+      "timestamp": "2025-09-30T19:56:45.360122",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "75e4e36a677d75bf",
+      "event_type": "vote_cast",
+      "actor": "cbp:metrics_queen",
+      "target": "AMD-0000",
+      "data": {
+        "vote": true
+      },
+      "timestamp": "2025-09-30T19:56:45.360128",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "b769f402aa935b26",
+      "event_type": "law_amended",
+      "actor": "governance_system",
+      "target": "LAW-OPER-001",
+      "data": {
+        "amendment_id": "AMD-0000",
+        "new_version": 2
+      },
+      "timestamp": "2025-09-30T19:56:45.360137",
+      "block_height": null,
+      "witnesses": []
+    },
+    {
+      "event_id": "b634b61894861b71",
+      "event_type": "amendment_approved",
+      "actor": "governance_system",
+      "target": "AMD-0000",
+      "data": {
+        "votes_for": 3,
+        "votes_against": 0
+      },
+      "timestamp": "2025-09-30T19:56:45.360142",
+      "block_height": null,
+      "witnesses": []
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "compliant": "Web4 SAL specification",
+    "created_at": "2025-09-30T19:56:45.360440"
+  }
+}
