@@ -22,7 +22,8 @@ var (
 	EnergyOperationKey      = collections.NewPrefix(1)
 	RelationshipAtpTokenKey = collections.NewPrefix(2)
 	RelationshipAdpTokenKey = collections.NewPrefix(3)
-	SocietyPoolKey          = collections.NewPrefix(4)
+	SocietyTokenPoolKey     = collections.NewPrefix(4)
+	AtpTransactionKey       = collections.NewPrefix(5)
 )
 
 // Energy operation types

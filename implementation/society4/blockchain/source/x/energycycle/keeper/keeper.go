@@ -28,6 +28,10 @@ type Keeper struct {
 	RelationshipAtpTokens collections.Map[string, types.RelationshipAtpToken]
 	RelationshipAdpTokens collections.Map[string, types.RelationshipAdpToken]
 
+	// Society token pool storage
+	SocietyTokenPools collections.Map[string, types.SocietyTokenPool]
+	AtpTransactions   collections.Map[string, types.AtpTransaction]
+
 	bankKeeper        types.BankKeeper
 	lctmanagerKeeper  lctmanagertypes.LctmanagerKeeper
 	trusttensorKeeper types.TrusttensorKeeper
@@ -62,6 +66,8 @@ func NewKeeper(
 		EnergyOperations:      collections.NewMap(sb, types.EnergyOperationKey, "energy_operations", collections.StringKey, codec.CollValue[types.EnergyOperation](cdc)),
 		RelationshipAtpTokens: collections.NewMap(sb, types.RelationshipAtpTokenKey, "relationship_atp_tokens", collections.StringKey, codec.CollValue[types.RelationshipAtpToken](cdc)),
 		RelationshipAdpTokens: collections.NewMap(sb, types.RelationshipAdpTokenKey, "relationship_adp_tokens", collections.StringKey, codec.CollValue[types.RelationshipAdpToken](cdc)),
+		SocietyTokenPools:     collections.NewMap(sb, types.SocietyTokenPoolKey, "society_token_pools", collections.StringKey, codec.CollValue[types.SocietyTokenPool](cdc)),
+		AtpTransactions:       collections.NewMap(sb, types.AtpTransactionKey, "atp_transactions", collections.StringKey, codec.CollValue[types.AtpTransaction](cdc)),
 	}
 
 	schema, err := sb.Build()
