@@ -239,6 +239,75 @@ class CBPTokenPool:
 
         return recharged
 
+    def check_and_perform_daily_recharge(self) -> bool:
+        """
+        Check if daily recharge is due and perform it
+        Runs at 00:00 UTC daily per Web4 spec
+        """
+        now = datetime.now()
+
+        # Check if 24 hours have passed since last recharge
+        if hasattr(self, 'last_recharge'):
+            time_since_recharge = now - self.last_recharge
+            if time_since_recharge.total_seconds() >= 86400:  # 24 hours
+                recharged = self.daily_recharge()
+                self.save_state()
+                print(f"⚡ Daily recharge performed at {now.isoformat()}")
+                for role, amount in recharged.items():
+                    print(f"  {role}: +{amount} ATP")
+                return True
+        else:
+            # First recharge
+            self.daily_recharge()
+            self.save_state()
+            return True
+
+        return False
+
+    def add_charging_mechanism(self, role_id: str, value_created: float) -> AtpTransaction:
+        """
+        Charge ADP back to ATP based on value creation
+        Implements the missing charging cycle
+        """
+        if role_id not in self.role_allocations:
+            raise ValueError(f"Role not found: {role_id}")
+
+        # Calculate ATP to generate based on value (simplified)
+        # 1 unit of value = 0.1 ATP generated
+        atp_to_generate = min(value_created * 0.1, self.adp_balances[role_id])
+
+        if atp_to_generate > 0:
+            # Convert ADP back to ATP
+            self.adp_balances[role_id] -= atp_to_generate
+            self.role_balances[role_id] += atp_to_generate
+            self.total_adp -= atp_to_generate
+
+            # Update allocation
+            allocation = self.role_allocations[role_id]
+            allocation.current_atp = self.role_balances[role_id]
+            allocation.current_adp = self.adp_balances[role_id]
+            allocation.updated_at = datetime.now().isoformat()
+
+            # Create transaction
+            tx = AtpTransaction(
+                transaction_id=f"tx-charge-{role_id.split(':')[-1]}-{int(time.time())}",
+                society_id=self.society_id,
+                from_role=role_id,
+                amount=atp_to_generate,
+                tx_type="charge",
+                operation_id=f"value-{int(time.time())}",
+                reason=f"Value creation: {value_created} units",
+                resulting_atp=self.role_balances[role_id],
+                resulting_adp=self.adp_balances[role_id]
+            )
+
+            self.transactions.append(tx)
+            self.version += 1
+
+            return tx
+
+        return None
+
     def validate_pool_integrity(self) -> bool:
         """Validate pool integrity constraints"""
         # Check total ATP constraint
