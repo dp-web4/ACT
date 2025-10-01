@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	"time"
 
 	"cosmossdk.io/collections"
 	"cosmossdk.io/core/address"
@@ -31,6 +32,7 @@ type Keeper struct {
 	// Society token pool storage
 	SocietyTokenPools collections.Map[string, types.SocietyTokenPool]
 	AtpTransactions   collections.Map[string, types.AtpTransaction]
+	LastRechargeDay   collections.Item[time.Time]
 
 	bankKeeper        types.BankKeeper
 	lctmanagerKeeper  lctmanagertypes.LctmanagerKeeper
@@ -68,6 +70,7 @@ func NewKeeper(
 		RelationshipAdpTokens: collections.NewMap(sb, types.RelationshipAdpTokenKey, "relationship_adp_tokens", collections.StringKey, codec.CollValue[types.RelationshipAdpToken](cdc)),
 		SocietyTokenPools:     collections.NewMap(sb, types.SocietyTokenPoolKey, "society_token_pools", collections.StringKey, codec.CollValue[types.SocietyTokenPool](cdc)),
 		AtpTransactions:       collections.NewMap(sb, types.AtpTransactionKey, "atp_transactions", collections.StringKey, codec.CollValue[types.AtpTransaction](cdc)),
+		LastRechargeDay:       collections.NewItem(sb, types.LastRechargeDayKey, "last_recharge_day", collections.TimeValue),
 	}
 
 	schema, err := sb.Build()

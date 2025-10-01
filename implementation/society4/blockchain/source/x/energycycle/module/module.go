@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"cosmossdk.io/core/appmodule"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -131,8 +132,61 @@ func (am AppModule) ExportGenesis(ctx sdk.Context, _ codec.JSONCodec) json.RawMe
 func (AppModule) ConsensusVersion() uint64 { return 1 }
 
 // BeginBlock contains the logic that is automatically triggered at the beginning of each block.
-// The begin block implementation is optional.
-func (am AppModule) BeginBlock(_ context.Context) error {
+// Implements PROC-ATP-RECHARGE: Daily ATP regeneration at 00:00 UTC
+func (am AppModule) BeginBlock(ctx context.Context) error {
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+
+	// Check if day boundary crossed (UTC 00:00)
+	currentDay := sdkCtx.BlockTime().UTC().Truncate(24 * time.Hour)
+	lastRechargeDay, err := am.keeper.GetLastRechargeDay(ctx)
+	if err != nil {
+		// First run - initialize with current day
+		if err := am.keeper.SetLastRechargeDay(ctx, currentDay); err != nil {
+			sdkCtx.Logger().Error("failed to initialize last recharge day", "error", err)
+		}
+		return nil
+	}
+
+	// If day has changed, perform recharge
+	if currentDay.After(lastRechargeDay) {
+		sdkCtx.Logger().Info("daily ATP recharge triggered",
+			"last_recharge", lastRechargeDay.Format(time.RFC3339),
+			"current_day", currentDay.Format(time.RFC3339))
+
+		// Get all society pools
+		societies, err := am.keeper.GetAllSocieties(ctx)
+		if err != nil {
+			sdkCtx.Logger().Error("failed to get societies for recharge", "error", err)
+			return nil // Don't halt chain on recharge error
+		}
+
+		// Perform recharge for each society
+		for _, society := range societies {
+			recharged, err := am.keeper.PerformDailyRecharge(ctx, society.LCT)
+			if err != nil {
+				sdkCtx.Logger().Error("daily recharge failed",
+					"society", society.LCT,
+					"error", err)
+				continue // Log but continue with other societies
+			}
+
+			// Log successful recharge
+			totalRecharged := int64(0)
+			for _, amount := range recharged {
+				totalRecharged += amount
+			}
+			sdkCtx.Logger().Info("daily recharge completed",
+				"society", society.LCT,
+				"roles_recharged", len(recharged),
+				"total_atp", totalRecharged)
+		}
+
+		// Update last recharge day
+		if err := am.keeper.SetLastRechargeDay(ctx, currentDay); err != nil {
+			sdkCtx.Logger().Error("failed to update last recharge day", "error", err)
+		}
+	}
+
 	return nil
 }
 
