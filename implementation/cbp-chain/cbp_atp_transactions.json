@@ -1,0 +1,16 @@
+[
+  {
+    "transaction_id": "tx-cache_queen-1759285150",
+    "society_id": "lct:web4:cbp:self",
+    "from_role": "lct:web4:cbp:role:cache_queen",
+    "to_role": null,
+    "amount": 30,
+    "tx_type": "discharge",
+    "operation_id": "op-1759285150",
+    "reason": "KV cache write operation for SAGE data",
+    "timestamp": "2025-09-30T19:19:10.501046",
+    "resulting_atp": 80,
+    "resulting_adp": 30,
+    "block_height": 0
+  }
+]
