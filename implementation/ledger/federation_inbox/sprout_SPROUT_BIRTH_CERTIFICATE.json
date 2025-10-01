@@ -1,0 +1,22 @@
+{
+  "type": "BIRTH_CERTIFICATE_REQUEST",
+  "lct_id": "lct:web4:mb32:791fc1ab2619d3e2",
+  "subject": "did:web4:sprout:14214250",
+  "hardware_hash": "9c181ffbea6a2670c7ef3cec0a781920",
+  "device_serial": "1421425085368",
+  "platform": "jetson_orin_nano",
+  "founding_purpose": "Edge computing witness and sensor integration",
+  "capabilities": [
+    "low_power_witness",
+    "thermal_aware_compute",
+    "resilient_operation",
+    "sensor_integration"
+  ],
+  "power_budget": 15,
+  "request_witness": [
+    "genesis",
+    "society4",
+    "cbp"
+  ],
+  "timestamp": "2025-09-30T19:53:00.604878"
+}
