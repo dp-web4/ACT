@@ -1,0 +1,111 @@
+{
+  "t3_tensors": {
+    "cbp:cache_queen": {
+      "entity_id": "cbp:cache_queen",
+      "talent": {
+        "technical_skill": 0.5,
+        "innovation": 0.5,
+        "efficiency": 0.5,
+        "accuracy": 0.5,
+        "last_updated": "2025-09-30T19:40:07.810290"
+      },
+      "training": {
+        "tasks_completed": 1,
+        "success_rate": 0.1,
+        "learning_rate": 0.55,
+        "adaptation_score": 0.5,
+        "specializations": [],
+        "last_updated": "2025-09-30T19:40:07.810393"
+      },
+      "temperament": {
+        "consistency": 0.5,
+        "cooperation": 0.50625,
+        "responsiveness": 0.5,
+        "stability": 0.5,
+        "last_updated": "2025-09-30T19:40:07.810300"
+      },
+      "composite_trust": 0.44199999999999995,
+      "tensor_version": 2,
+      "created_at": "2025-09-30T19:40:07.810301",
+      "updated_at": "2025-09-30T19:40:07.810396"
+    }
+  },
+  "v3_tensors": {
+    "cbp:cache_queen": {
+      "entity_id": "cbp:cache_queen",
+      "value": {
+        "atp_generated": 1.85,
+        "cache_hits": 6,
+        "metrics_collected": 0,
+        "bridges_established": 0,
+        "utility_score": 0.5,
+        "last_updated": "2025-09-30T19:40:07.810387"
+      },
+      "veracity": {
+        "data_accuracy": 0.5,
+        "metric_precision": 0.5,
+        "false_positive_rate": 0.0,
+        "attestation_validity": 0.5,
+        "last_updated": "2025-09-30T19:40:07.810312"
+      },
+      "velocity": {
+        "transaction_rate": 6.0,
+        "response_time_ms": 420.9624404300001,
+        "throughput": 0.0,
+        "growth_rate": 0.0,
+        "last_updated": "2025-09-30T19:40:07.810388"
+      },
+      "composite_value": 0.35823667607226006,
+      "tensor_version": 11,
+      "created_at": "2025-09-30T19:40:07.810315",
+      "updated_at": "2025-09-30T19:40:07.810390"
+    }
+  },
+  "attributions": [
+    {
+      "source_entity": "cbp:cache_queen",
+      "target_entity": "cbp:data_queen",
+      "attribution_type": "direct",
+      "value_transferred": 10.0,
+      "trust_impact": 0.01,
+      "timestamp": "2025-09-30T19:40:07.810400",
+      "depth": 0
+    },
+    {
+      "source_entity": "cbp:data_queen",
+      "target_entity": "cbp:cache_queen",
+      "attribution_type": "cascading",
+      "value_transferred": 5.0,
+      "trust_impact": 0.005,
+      "timestamp": "2025-09-30T19:40:07.810407",
+      "depth": 1
+    },
+    {
+      "source_entity": "cbp:cache_queen",
+      "target_entity": "cbp:data_queen",
+      "attribution_type": "cascading",
+      "value_transferred": 2.5,
+      "trust_impact": 0.0025,
+      "timestamp": "2025-09-30T19:40:07.810412",
+      "depth": 2
+    },
+    {
+      "source_entity": "cbp:data_queen",
+      "target_entity": "cbp:cache_queen",
+      "attribution_type": "cascading",
+      "value_transferred": 1.25,
+      "trust_impact": 0.00125,
+      "timestamp": "2025-09-30T19:40:07.810416",
+      "depth": 3
+    }
+  ],
+  "summary": {
+    "entity_count": 1,
+    "average_trust": 0.44199999999999995,
+    "average_value": 0.35823667607226006,
+    "highest_trust": 0.44199999999999995,
+    "lowest_trust": 0.44199999999999995,
+    "total_attributions": 4,
+    "timestamp": "2025-09-30T19:40:07.810488"
+  }
+}
