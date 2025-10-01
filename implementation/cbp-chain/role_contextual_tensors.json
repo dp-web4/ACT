@@ -1,0 +1,288 @@
+{
+  "roles": {
+    "web4:cbp:DataQueen": {
+      "role_id": "web4:cbp:DataQueen",
+      "role_type": "queen",
+      "domain": "data",
+      "authority_level": 8,
+      "created_at": "2025-09-30T19:49:53.741586"
+    },
+    "web4:cbp:MetricsQueen": {
+      "role_id": "web4:cbp:MetricsQueen",
+      "role_type": "queen",
+      "domain": "metrics",
+      "authority_level": 8,
+      "created_at": "2025-09-30T19:49:53.741595"
+    },
+    "web4:cbp:SecurityQueen": {
+      "role_id": "web4:cbp:SecurityQueen",
+      "role_type": "queen",
+      "domain": "security",
+      "authority_level": 9,
+      "created_at": "2025-09-30T19:49:53.741597"
+    },
+    "web4:cbp:BridgeQueen": {
+      "role_id": "web4:cbp:BridgeQueen",
+      "role_type": "queen",
+      "domain": "bridge",
+      "authority_level": 7,
+      "created_at": "2025-09-30T19:49:53.741599"
+    },
+    "web4:cbp:CacheQueen": {
+      "role_id": "web4:cbp:CacheQueen",
+      "role_type": "queen",
+      "domain": "cache",
+      "authority_level": 7,
+      "created_at": "2025-09-30T19:49:53.741600"
+    },
+    "web4:cbp:Worker": {
+      "role_id": "web4:cbp:Worker",
+      "role_type": "worker",
+      "domain": "general",
+      "authority_level": 3,
+      "created_at": "2025-09-30T19:49:53.741601"
+    },
+    "web4:cbp:Coordinator": {
+      "role_id": "web4:cbp:Coordinator",
+      "role_type": "coordinator",
+      "domain": "general",
+      "authority_level": 6,
+      "created_at": "2025-09-30T19:49:53.741602"
+    }
+  },
+  "entity_role_pairs": {
+    "alice:web4:cbp:CacheQueen": {
+      "entity_id": "alice",
+      "role_id": "web4:cbp:CacheQueen",
+      "pairing_type": "permanent",
+      "t3": {
+        "entity_id": "alice",
+        "role_id": "web4:cbp:CacheQueen",
+        "talent": {
+          "technical_skill": 0.5,
+          "innovation": 0.5,
+          "efficiency": 0.9,
+          "accuracy": 0.95
+        },
+        "training": {
+          "tasks_completed": 0,
+          "success_rate": 0.0,
+          "learning_rate": 0.5,
+          "adaptation_score": 0.5,
+          "specializations": []
+        },
+        "temperament": {
+          "consistency": 0.5,
+          "cooperation": 0.5,
+          "responsiveness": 0.5,
+          "stability": 0.5
+        },
+        "composite_trust": 0.6349999999999999,
+        "last_updated": "2025-09-30T19:49:53.741654"
+      },
+      "v3": {
+        "entity_id": "alice",
+        "role_id": "web4:cbp:CacheQueen",
+        "value": {
+          "atp_generated": 0.0,
+          "role_specific_value": 0.0,
+          "operations_count": 0,
+          "utility_score": 0.5
+        },
+        "veracity": {
+          "accuracy": 0.5,
+          "precision": 0.5,
+          "false_positive_rate": 0.0,
+          "attestation_validity": 0.5
+        },
+        "velocity": {
+          "transaction_rate": 0.0,
+          "response_time_ms": 1000.0,
+          "throughput": 0.0,
+          "growth_rate": 0.0
+        },
+        "composite_value": 0.0,
+        "last_updated": "2025-09-30T19:49:53.741614"
+      },
+      "created_at": "2025-09-30T19:49:53.741617",
+      "composite_trust": 0.6349999999999999,
+      "composite_value": 0.0
+    },
+    "alice:web4:cbp:MetricsQueen": {
+      "entity_id": "alice",
+      "role_id": "web4:cbp:MetricsQueen",
+      "pairing_type": "permanent",
+      "t3": {
+        "entity_id": "alice",
+        "role_id": "web4:cbp:MetricsQueen",
+        "talent": {
+          "technical_skill": 0.75,
+          "innovation": 0.5,
+          "efficiency": 0.5,
+          "accuracy": 0.85
+        },
+        "training": {
+          "tasks_completed": 0,
+          "success_rate": 0.0,
+          "learning_rate": 0.5,
+          "adaptation_score": 0.5,
+          "specializations": []
+        },
+        "temperament": {
+          "consistency": 0.5,
+          "cooperation": 0.5,
+          "responsiveness": 0.5,
+          "stability": 0.5
+        },
+        "composite_trust": 0.5999999999999999,
+        "last_updated": "2025-09-30T19:49:53.741627"
+      },
+      "v3": {
+        "entity_id": "alice",
+        "role_id": "web4:cbp:MetricsQueen",
+        "value": {
+          "atp_generated": 0.0,
+          "role_specific_value": 0.0,
+          "operations_count": 0,
+          "utility_score": 0.5
+        },
+        "veracity": {
+          "accuracy": 0.5,
+          "precision": 0.5,
+          "false_positive_rate": 0.0,
+          "attestation_validity": 0.5
+        },
+        "velocity": {
+          "transaction_rate": 0.0,
+          "response_time_ms": 1000.0,
+          "throughput": 0.0,
+          "growth_rate": 0.0
+        },
+        "composite_value": 0.18,
+        "last_updated": "2025-09-30T19:49:53.741629"
+      },
+      "created_at": "2025-09-30T19:49:53.741632",
+      "composite_trust": 0.5999999999999999,
+      "composite_value": 0.18
+    },
+    "bob:web4:cbp:DataQueen": {
+      "entity_id": "bob",
+      "role_id": "web4:cbp:DataQueen",
+      "pairing_type": "permanent",
+      "t3": {
+        "entity_id": "bob",
+        "role_id": "web4:cbp:DataQueen",
+        "talent": {
+          "technical_skill": 0.5,
+          "innovation": 0.5,
+          "efficiency": 0.5,
+          "accuracy": 0.5
+        },
+        "training": {
+          "tasks_completed": 0,
+          "success_rate": 0.0,
+          "learning_rate": 0.5,
+          "adaptation_score": 0.5,
+          "specializations": []
+        },
+        "temperament": {
+          "consistency": 0.5,
+          "cooperation": 0.5,
+          "responsiveness": 0.5,
+          "stability": 0.5
+        },
+        "composite_trust": 0.425,
+        "last_updated": "2025-09-30T19:49:53.741637"
+      },
+      "v3": {
+        "entity_id": "bob",
+        "role_id": "web4:cbp:DataQueen",
+        "value": {
+          "atp_generated": 0.0,
+          "role_specific_value": 0.0,
+          "operations_count": 0,
+          "utility_score": 0.5
+        },
+        "veracity": {
+          "accuracy": 0.5,
+          "precision": 0.5,
+          "false_positive_rate": 0.0,
+          "attestation_validity": 0.5
+        },
+        "velocity": {
+          "transaction_rate": 0.0,
+          "response_time_ms": 1000.0,
+          "throughput": 0.0,
+          "growth_rate": 0.0
+        },
+        "composite_value": 0.3,
+        "last_updated": "2025-09-30T19:49:53.741639"
+      },
+      "created_at": "2025-09-30T19:49:53.741641",
+      "composite_trust": 0.425,
+      "composite_value": 0.3
+    },
+    "charlie:web4:cbp:SecurityQueen": {
+      "entity_id": "charlie",
+      "role_id": "web4:cbp:SecurityQueen",
+      "pairing_type": "permanent",
+      "t3": {
+        "entity_id": "charlie",
+        "role_id": "web4:cbp:SecurityQueen",
+        "talent": {
+          "technical_skill": 0.5,
+          "innovation": 0.5,
+          "efficiency": 0.5,
+          "accuracy": 0.5
+        },
+        "training": {
+          "tasks_completed": 0,
+          "success_rate": 0.0,
+          "learning_rate": 0.5,
+          "adaptation_score": 0.5,
+          "specializations": []
+        },
+        "temperament": {
+          "consistency": 0.9,
+          "cooperation": 0.5,
+          "responsiveness": 0.5,
+          "stability": 0.85
+        },
+        "composite_trust": 0.6104999999999999,
+        "last_updated": "2025-09-30T19:49:53.741644"
+      },
+      "v3": {
+        "entity_id": "charlie",
+        "role_id": "web4:cbp:SecurityQueen",
+        "value": {
+          "atp_generated": 0.0,
+          "role_specific_value": 0.0,
+          "operations_count": 0,
+          "utility_score": 0.5
+        },
+        "veracity": {
+          "accuracy": 0.5,
+          "precision": 0.5,
+          "false_positive_rate": 0.0,
+          "attestation_validity": 0.5
+        },
+        "velocity": {
+          "transaction_rate": 0.0,
+          "response_time_ms": 1000.0,
+          "throughput": 0.0,
+          "growth_rate": 0.0
+        },
+        "composite_value": 0.3,
+        "last_updated": "2025-09-30T19:49:53.741646"
+      },
+      "created_at": "2025-09-30T19:49:53.741648",
+      "composite_trust": 0.6104999999999999,
+      "composite_value": 0.3
+    }
+  },
+  "metadata": {
+    "version": "2.0",
+    "compliant": "Web4 sections 2.3, 5.1, 8.3",
+    "created_at": "2025-09-30T19:49:53.741763"
+  }
+}
