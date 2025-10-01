@@ -89,13 +89,19 @@ class EdgePolicy:
     ])
     constraints: Dict[str, Any] = field(default_factory=lambda: {
         "max_power_watts": 15,
-        "max_temp_celsius": 85,
+        "max_temp_celsius": 95,  # Jetson can handle up to 95°C
         "max_memory_mb": 512,
         "max_cache_mb": 100,
         "network_resilient": True,
         "battery_aware": False  # Jetson is DC powered
     })
-    thermal_throttle_temp: float = 75.0
+    # Dynamic thermal limits based on power state
+    thermal_limits: Dict[str, float] = field(default_factory=lambda: {
+        "max_perf": 75.0,   # Strict limit at full power
+        "balanced": 80.0,   # Moderate limit
+        "efficient": 85.0,  # Higher tolerance when efficient
+        "survival": 90.0    # Maximum tolerance in survival mode
+    })
     min_witness_interval_seconds: int = 10
 
 @dataclass
@@ -256,16 +262,18 @@ class SproutLCTManager:
             return 50.0  # Default
     
     def _determine_power_state(self) -> str:
-        """Determine current power state based on temperature"""
+        """Determine current power state based on temperature with adaptive thresholds"""
         temp = self._get_temperature()
-        if temp > 75:
-            return PowerState.SURVIVAL.value
-        elif temp > 65:
-            return PowerState.EFFICIENT.value
-        elif temp > 55:
-            return PowerState.BALANCED.value
+
+        # More aggressive thermal management at higher temps
+        if temp > 85:
+            return PowerState.SURVIVAL.value  # Emergency cooling mode
+        elif temp > 75:
+            return PowerState.EFFICIENT.value  # Reduce power consumption
+        elif temp > 60:
+            return PowerState.BALANCED.value   # Normal operation
         else:
-            return PowerState.MAX_PERF.value
+            return PowerState.MAX_PERF.value   # Full performance when cool
     
     def _generate_lct_id(self) -> str:
         """Generate unique LCT ID"""
@@ -353,12 +361,18 @@ class SproutLCTManager:
     
     def _dict_to_lct(self, data: Dict) -> EdgeLCT:
         """Reconstruct LCT from dictionary"""
+        # Handle old policy format
+        policy_data = data["policy"].copy()
+        if "thermal_throttle_temp" in policy_data:
+            # Migrate old format to new
+            del policy_data["thermal_throttle_temp"]
+
         return EdgeLCT(
             lct_id=data["lct_id"],
             subject=data["subject"],
             binding=EdgeBinding(**data["binding"]),
             mrh=EdgeMRH(**data["mrh"]),
-            policy=EdgePolicy(**data["policy"]),
+            policy=EdgePolicy(**policy_data),
             birth_certificate=EdgeBirthCert(**data["birth_certificate"]),
             attestations=[EdgeAttestation(**a) for a in data.get("attestations", [])],
             lineage=[EdgeLineage(**l) for l in data.get("lineage", [])],
@@ -437,7 +451,7 @@ class SproutLCTManager:
     def execute_r6_action(self, action: R6Action) -> R6Action:
         """Execute an R6 action with edge constraints"""
         print(f"\n🎯 Executing R6 Action: {action.action_id}")
-        
+
         # Check power budget
         current_power = self._determine_power_state()
         if current_power == PowerState.SURVIVAL.value and action.power_cost > 2:
@@ -446,13 +460,18 @@ class SproutLCTManager:
             action.result = {"error": "Power constraint violation"}
             self._log_r6_action(action)
             return action
-        
-        # Check thermal
+
+        # Check thermal with dynamic limits based on power state
         temp = self._get_temperature()
-        if temp + action.thermal_impact > self.lct.policy.thermal_throttle_temp:
+        thermal_limit = self.lct.policy.thermal_limits.get(
+            current_power,
+            self.lct.policy.thermal_limits["balanced"]
+        )
+
+        if temp + action.thermal_impact > thermal_limit:
             action.success = False
-            action.error = "Thermal limit would be exceeded"
-            action.result = {"error": "Thermal constraint violation"}
+            action.error = f"Thermal limit ({thermal_limit}°C) would be exceeded in {current_power} mode"
+            action.result = {"error": "Thermal constraint violation", "current_temp": temp, "limit": thermal_limit}
             self._log_r6_action(action)
             return action
         
