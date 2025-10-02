@@ -15,6 +15,18 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from enum import Enum
 
+# Import Web4 compliance upgrades
+try:
+    from web4_compliance_quickfix import (
+        RoleContextualT3, RoleContextualV3,
+        ATPChargingMechanism, R6ConfidenceCalculator,
+        FormalizedWitness, Web4ComplianceUpgrade
+    )
+    WEB4_COMPLIANCE_AVAILABLE = True
+except ImportError:
+    WEB4_COMPLIANCE_AVAILABLE = False
+    print("⚠️  Web4 compliance quickfix not found - using basic implementation")
+
 # ============================================================================
 # Edge-Optimized Web4 Data Structures
 # ============================================================================
@@ -228,6 +240,18 @@ class SproutLCTManager:
         self.lct = self._load_or_create_lct()
         self.trust_tensors: Dict[str, TrustTensor] = {}
         self.value_tensors: Dict[str, ValueTensor] = {}
+
+        # Initialize Web4 compliance upgrades if available
+        if WEB4_COMPLIANCE_AVAILABLE:
+            self.compliance_upgrade = Web4ComplianceUpgrade()
+            self.atp_charger = ATPChargingMechanism()
+            self.confidence_calc = R6ConfidenceCalculator()
+            self.witness_system = FormalizedWitness()
+        else:
+            self.compliance_upgrade = None
+            self.atp_charger = None
+            self.confidence_calc = None
+            self.witness_system = None
         
     def _get_hardware_hash(self) -> str:
         """Get Jetson hardware hash"""
@@ -260,6 +284,20 @@ class SproutLCTManager:
                 return int(f.read().strip()) / 1000.0
         except:
             return 50.0  # Default
+
+    def _get_available_atp(self) -> float:
+        """Get currently available ATP budget"""
+        # For edge nodes, start with modest ATP budget
+        base_atp = 100.0
+        # Adjust based on power state
+        power_state = self._determine_power_state()
+        multipliers = {
+            "max_perf": 1.0,
+            "balanced": 0.8,
+            "efficient": 0.6,
+            "survival": 0.3
+        }
+        return base_atp * multipliers.get(power_state, 0.8)
     
     def _determine_power_state(self) -> str:
         """Determine current power state based on temperature with adaptive thresholds"""
@@ -387,8 +425,20 @@ class SproutLCTManager:
     # Trust and Value Tensor Management
     # ========================================================================
     
-    def update_trust(self, entity_id: str, positive: bool = True):
-        """Update trust tensor for an entity"""
+    def update_trust(self, entity_id: str, positive: bool = True, role: str = "edge_witness"):
+        """Update trust tensor for an entity with role context"""
+        # Use role-contextual T3 tensor if available
+        if WEB4_COMPLIANCE_AVAILABLE and self.compliance_upgrade:
+            if entity_id not in self.compliance_upgrade.role_t3:
+                # Create new role-contextual T3
+                self.compliance_upgrade.role_t3[entity_id] = RoleContextualT3(entity_id=entity_id)
+
+            # Update T3 based on interaction result
+            dimension = "training" if positive else "temperament"
+            delta = 0.1 if positive else -0.1
+            self.compliance_upgrade.role_t3[entity_id].update_role_trust(role, dimension, delta)
+
+        # Legacy compatibility - update old trust tensor too
         if entity_id not in self.trust_tensors:
             self.trust_tensors[entity_id] = TrustTensor(
                 entity_id=entity_id,
@@ -396,7 +446,7 @@ class SproutLCTManager:
                 interaction_count=0,
                 last_interaction=datetime.now().isoformat()
             )
-        
+
         self.trust_tensors[entity_id].update(positive)
         self._save_trust_tensors()
     
@@ -408,8 +458,21 @@ class SproutLCTManager:
                 f, indent=2
             )
     
-    def update_value(self, entity_id: str, atp_delta: float = 0, adp_delta: float = 0):
-        """Update value tensor for an entity"""
+    def update_value(self, entity_id: str, atp_delta: float = 0, adp_delta: float = 0, role: str = "edge_witness"):
+        """Update value tensor for an entity with role context"""
+        # Use role-contextual V3 tensor if available
+        if WEB4_COMPLIANCE_AVAILABLE and self.compliance_upgrade:
+            if entity_id not in self.compliance_upgrade.role_v3:
+                self.compliance_upgrade.role_v3[entity_id] = RoleContextualV3(entity_id=entity_id)
+
+            # Update V3 based on value creation
+            v3_update = {
+                "valuation": atp_delta * 0.1,  # ATP creates valuation
+                "validity": 0.05 if atp_delta > 0 else 0.0  # Valid transfers increase validity
+            }
+            self.compliance_upgrade.role_v3[entity_id].update_role_value(role, v3_update)
+
+        # Legacy compatibility - update old value tensor too
         if entity_id not in self.value_tensors:
             self.value_tensors[entity_id] = ValueTensor(
                 entity_id=entity_id,
@@ -420,7 +483,7 @@ class SproutLCTManager:
                 value_consumed=0,
                 efficiency=1.0
             )
-        
+
         vt = self.value_tensors[entity_id]
         vt.atp_balance += atp_delta
         vt.adp_balance += adp_delta
@@ -448,11 +511,60 @@ class SproutLCTManager:
     # R6 Action Framework
     # ========================================================================
     
+    def charge_atp_from_value(self, producer_id: str, adp_amount: float, value_proof: Dict[str, Any]) -> Dict[str, Any]:
+        """Charge ATP from ADP through proven value creation"""
+        if not WEB4_COMPLIANCE_AVAILABLE or not self.atp_charger:
+            return {"success": False, "error": "ATP charging not available"}
+        return self.atp_charger.charge_atp(producer_id, adp_amount, value_proof)
+
+    def create_witness_attestation(self, witness_id: str, role: str, subject: str, claims: Dict[str, Any]) -> Dict[str, Any]:
+        """Create formal witness attestation"""
+        if not WEB4_COMPLIANCE_AVAILABLE or not self.witness_system:
+            # Create basic attestation
+            return {
+                "witness": witness_id,
+                "role": role,
+                "subject": subject,
+                "timestamp": datetime.now().isoformat(),
+                "claims": claims,
+                "event_hash": hashlib.sha256(
+                    f"{subject}:{json.dumps(claims, sort_keys=True)}".encode()
+                ).hexdigest(),
+                "trust_weight": 0.5
+            }
+        return self.witness_system.create_attestation(witness_id, role, subject, claims)
+
     def execute_r6_action(self, action: R6Action) -> R6Action:
-        """Execute an R6 action with edge constraints"""
+        """Execute an R6 action with enhanced confidence calculation"""
         print(f"\n🎯 Executing R6 Action: {action.action_id}")
 
-        # Check power budget
+        # Calculate confidence using upgraded system if available
+        if WEB4_COMPLIANCE_AVAILABLE and self.compliance_upgrade:
+            confidence_data = self.compliance_upgrade.calculate_action_confidence(
+                entity_id=self.lct.subject,
+                role=action.role,
+                action_request={
+                    "type": action.request.get("type", "unknown"),
+                    "atp_required": action.resource.get("atp", 0),
+                    "atp_available": self._get_available_atp(),
+                    "failure_cost": action.power_cost * 10,
+                    "success_reward": action.power_cost * 50
+                }
+            )
+
+            print(f"📊 Action confidence: {confidence_data['overall_confidence']:.2f} ({confidence_data['recommendation']})")
+
+            # Abort if confidence too low
+            if confidence_data["recommendation"] == "abort":
+                action.success = False
+                action.error = f"Low confidence ({confidence_data['overall_confidence']:.2f})"
+                action.result = {"error": "Confidence check failed", "confidence": confidence_data}
+                self._log_r6_action(action)
+                return action
+        else:
+            print("📊 Using basic confidence calculation")
+
+        # Existing power and thermal checks
         current_power = self._determine_power_state()
         if current_power == PowerState.SURVIVAL.value and action.power_cost > 2:
             action.success = False
@@ -706,12 +818,64 @@ def main():
         manager.update_value(entity_id, atp_delta, adp_delta)
         print(f"✅ Updated value tensor for {entity_id}")
     
+    elif command == "witness":
+        if len(sys.argv) < 4:
+            print("Usage: sprout_web4_lct.py witness <role> <subject>")
+            sys.exit(1)
+        role = sys.argv[2]
+        subject = sys.argv[3]
+
+        # Create witness attestation
+        claims = {
+            "timestamp": datetime.now().isoformat(),
+            "nonce": hashlib.sha256(str(time.time()).encode()).hexdigest()[:8],
+            "observed_at": "edge_location",
+            "method": "direct_observation"
+        }
+
+        attestation = manager.create_witness_attestation(
+            witness_id=manager.lct.subject,
+            role=role,
+            subject=subject,
+            claims=claims
+        )
+        print(f"✅ Created {role} witness attestation for {subject}")
+        print(f"Event hash: {attestation['event_hash'][:16]}...")
+        print(f"Trust weight: {attestation['trust_weight']}")
+
+    elif command == "charge":
+        if len(sys.argv) < 3:
+            print("Usage: sprout_web4_lct.py charge <adp_amount>")
+            sys.exit(1)
+        adp_amount = float(sys.argv[2])
+
+        # Create value proof for charging
+        value_proof = {
+            "type": "sensor_data",
+            "evidence": f"edge_sensor_reading_{int(time.time())}",
+            "witness": manager.lct.subject,
+            "timestamp": datetime.now().isoformat(),
+            "claims": {"sensor_readings": 1, "data_quality": "high"}
+        }
+
+        result = manager.charge_atp_from_value(
+            producer_id=manager.lct.subject,
+            adp_amount=adp_amount,
+            value_proof=value_proof
+        )
+
+        if result["success"]:
+            print(f"✅ Charged {result['atp_generated']:.2f} ATP from {adp_amount} ADP")
+            print(f"Charge rate: {result['charging_event']['charge_rate']*100:.0f}%")
+        else:
+            print(f"❌ Charging failed: {result['error']}")
+
     elif command == "r6":
-        # Execute a test R6 action
+        # Execute a test R6 action with enhanced confidence
         action = R6Action(
             action_id="test_action_" + str(int(time.time())),
             rules=["test_rule"],
-            role="edge_node",
+            role="edge_witness",
             request={"type": "witness", "target": "test_entity"},
             resource={"atp": 5},
             power_cost=0.5,
@@ -727,11 +891,12 @@ def main():
         print("\nCommands:")
         print("  status  - Show LCT and system status")
         print("  birth   - Create birth certificate request")
-        print("  witness - Witness another entity's birth")
+        print("  witness <role> <subject> - Create formal witness attestation")
         print("  trust   - Update trust tensor")
         print("  value   - Update value tensor")
-        print("  r6      - Execute test R6 action")
-        print("\nOptimized for Jetson Orin Nano (15W)")
+        print("  charge  <adp_amount> - Charge ATP from ADP through value proof")
+        print("  r6      - Execute test R6 action with confidence calculation")
+        print("\nWeb4 Compliant | Optimized for Jetson Orin Nano (15W)")
 
 if __name__ == "__main__":
     main()
