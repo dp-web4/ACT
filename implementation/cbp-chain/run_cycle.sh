@@ -90,11 +90,36 @@ EOF
 python3 /tmp/cbp_todo_handler.py 2>&1 | tee -a "$LOG_FILE"
 
 # ==================== PHASE 2: FEDERATION MONITORING ====================
-log "\n${YELLOW}PHASE 2: Federation Activity Check${NC}"
+log "\n${YELLOW}PHASE 2: Federation Repository Updates${NC}"
 
-# Pull latest changes
-log "Pulling latest from repository..."
-git pull 2>&1 | tail -5 | tee -a "$LOG_FILE"
+# Define federation repositories
+AI_AGENTS_BASE="/mnt/c/exe/projects/ai-agents"
+FEDERATION_REPOS=(
+    "$ACT_ROOT"
+    "$AI_AGENTS_BASE/web4/web4-standard"
+    "$AI_AGENTS_BASE/HRM"
+    "$AI_AGENTS_BASE/Synchronism"
+    "$AI_AGENTS_BASE/ModuleCPU"
+    "$AI_AGENTS_BASE/CellCPU"
+)
+
+# Pull all federation repositories
+for REPO in "${FEDERATION_REPOS[@]}"; do
+    if [ -d "$REPO/.git" ]; then
+        REPO_NAME=$(basename "$REPO")
+        log "Pulling $REPO_NAME..."
+        cd "$REPO"
+        git pull 2>&1 | tail -3 | sed 's/^/  /' | tee -a "$LOG_FILE"
+    else
+        log "  Skipping $REPO (not a git repository)"
+    fi
+done
+
+# Return to ACT directory
+cd "$ACT_ROOT"
+
+# ==================== PHASE 3: FEDERATION BUSINESS MONITORING ====================
+log "\n${YELLOW}PHASE 3: Federation Business Monitoring${NC}"
 
 # Check federation inbox
 log "\nChecking federation inbox..."
@@ -102,12 +127,74 @@ if [ -d "implementation/ledger/federation_inbox" ]; then
     INBOX_COUNT=$(ls implementation/ledger/federation_inbox/*.md 2>/dev/null | wc -l)
     log "  Messages in inbox: $INBOX_COUNT"
 
-    # Show latest message
-    LATEST=$(ls -t implementation/ledger/federation_inbox/*.md 2>/dev/null | head -1)
-    if [ -f "$LATEST" ]; then
-        log "  Latest message: $(basename $LATEST)"
-        head -10 "$LATEST" | sed 's/^/    /' | tee -a "$LOG_FILE"
-    fi
+    # Show last 3 messages
+    log "  Recent messages:"
+    ls -t implementation/ledger/federation_inbox/*.md 2>/dev/null | head -3 | while read MSG; do
+        log "    - $(basename $MSG)"
+    done
+fi
+
+# Check for new RFCs
+log "\nChecking for new RFCs..."
+if [ -d "$AI_AGENTS_BASE/web4/web4-standard/rfcs" ]; then
+    RFC_COUNT=$(ls "$AI_AGENTS_BASE/web4/web4-standard/rfcs"/*.md 2>/dev/null | wc -l)
+    log "  Total RFCs: $RFC_COUNT"
+    log "  Recent RFCs:"
+    ls -t "$AI_AGENTS_BASE/web4/web4-standard/rfcs"/*.md 2>/dev/null | head -3 | while read RFC; do
+        log "    - $(basename $RFC)"
+    done
+fi
+
+# Check SAGE development status
+log "\nChecking SAGE development status..."
+if [ -d "$AI_AGENTS_BASE/HRM" ]; then
+    log "  Recent HRM updates:"
+    cd "$AI_AGENTS_BASE/HRM"
+    git log --oneline -3 2>/dev/null | sed 's/^/    /' | tee -a "$LOG_FILE"
+    cd "$ACT_ROOT"
+fi
+
+# Check federation compliance
+log "\nChecking federation compliance status..."
+if [ -f "implementation/ledger/WEB4_COMPLIANCE_REPORT.md" ]; then
+    COMPLIANCE=$(grep -m1 "Overall Compliance" implementation/ledger/WEB4_COMPLIANCE_REPORT.md 2>/dev/null | grep -o "[0-9]*%" || echo "Unknown")
+    log "  Current compliance: $COMPLIANCE"
+fi
+
+# Check ATP/ADP status
+log "\nChecking federation energy status..."
+if [ -f "implementation/ledger/federation/tracker_state.json" ]; then
+    python3 -c "
+import json
+with open('implementation/ledger/federation/tracker_state.json', 'r') as f:
+    state = json.load(f)
+    total = sum(s.get('atp_balance', 0) for s in state.get('societies', {}).values())
+    print(f'  Total federation ATP: {total}')
+    print('  Society balances:')
+    for name, data in state.get('societies', {}).items():
+        print(f'    - {name}: {data.get(\"atp_balance\", 0)} ATP')
+" 2>/dev/null || log "  Unable to read ATP status"
+fi
+
+# Check trust tensor status
+log "\nChecking federation trust metrics..."
+if [ -f "implementation/ledger/federation/tensors.json" ]; then
+    python3 -c "
+import json
+with open('implementation/ledger/federation/tensors.json', 'r') as f:
+    data = json.load(f)
+    coherence = data.get('federation_coherence', 0)
+    print(f'  Federation coherence: {coherence:.1%}')
+    print('  Trust leaderboard:')
+    scores = []
+    for entity, tensors in data.get('entity_tensors', {}).items():
+        if 'genesis' in entity.lower() or 'society' in entity.lower() or 'sprout' in entity.lower():
+            trust = tensors.get('trust_tensor', {}).get('aggregate', 0)
+            scores.append((entity.split(':')[-1], trust))
+    scores.sort(key=lambda x: x[1], reverse=True)
+    for name, score in scores[:4]:
+        print(f'    - {name}: {score:.3f}')
+" 2>/dev/null || log "  Unable to read trust metrics"
 fi
 
 # Check recent society activity
@@ -127,8 +214,8 @@ if [ -f "implementation/ledger/voting_tracker.py" ]; then
     python3 implementation/ledger/voting_tracker.py 2>/dev/null | head -20 | tee -a "$LOG_FILE" || log "  No voting tracker available"
 fi
 
-# ==================== PHASE 3: TODO GENERATION ====================
-log "\n${YELLOW}PHASE 3: Generating New Tasks${NC}"
+# ==================== PHASE 4: TODO GENERATION ====================
+log "\n${YELLOW}PHASE 4: Generating New Tasks${NC}"
 
 # Create Python script for todo generation
 cat > /tmp/cbp_todo_generator.py << 'EOF'
