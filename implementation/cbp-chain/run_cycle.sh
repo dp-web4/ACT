@@ -214,8 +214,153 @@ if [ -f "implementation/ledger/voting_tracker.py" ]; then
     python3 implementation/ledger/voting_tracker.py 2>/dev/null | head -20 | tee -a "$LOG_FILE" || log "  No voting tracker available"
 fi
 
-# ==================== PHASE 4: TODO GENERATION ====================
-log "\n${YELLOW}PHASE 4: Generating New Tasks${NC}"
+# ==================== PHASE 4: SALIENCE CALCULATION ====================
+log "\n${YELLOW}PHASE 4: Calculating Attention Salience${NC}"
+
+# Create salience calculator
+cat > /tmp/cbp_salience_calculator.py << 'EOF'
+import json
+import os
+import glob
+from datetime import datetime
+
+def calculate_salience():
+    """Calculate if Claude should be woken up"""
+    reasons = []
+    salience_score = 0.0
+
+    # Load previous state
+    state_file = "implementation/cbp-chain/cycle_state.json"
+    prev_state = {}
+    if os.path.exists(state_file):
+        with open(state_file, 'r') as f:
+            prev_state = json.load(f)
+
+    # Check 1: Message velocity
+    inbox_count = len(glob.glob("implementation/ledger/federation_inbox/*.md"))
+    prev_inbox = prev_state.get('prev_inbox_count', inbox_count)
+    new_messages = inbox_count - prev_inbox
+
+    if new_messages > 10:
+        salience_score += 0.4
+        reasons.append(f"High message velocity: {new_messages} new messages")
+    elif new_messages > 5:
+        salience_score += 0.2
+        reasons.append(f"Moderate activity: {new_messages} new messages")
+
+    # Check 2: Repository activity
+    repos_updated = 0
+    for repo in ['ACT', 'HRM', 'web4-standard', 'Synchronism', 'ModuleCPU']:
+        log_file = f"/tmp/cbp_git_pull_{repo}.txt"
+        if os.path.exists(log_file):
+            with open(log_file, 'r') as f:
+                content = f.read()
+                if 'Fast-forward' in content or 'files changed' in content:
+                    repos_updated += 1
+
+    if repos_updated > 2:
+        salience_score += 0.3
+        reasons.append(f"Multiple repos updated: {repos_updated} repositories")
+    elif repos_updated > 0:
+        salience_score += 0.15
+        reasons.append(f"Repository activity: {repos_updated} repos updated")
+
+    # Check 3: Time since last attention
+    last_attention_file = "/tmp/claude_last_attention.txt"
+    hours_since_attention = 999
+    if os.path.exists(last_attention_file):
+        with open(last_attention_file, 'r') as f:
+            last_time = float(f.read().strip())
+            hours_since_attention = (datetime.now().timestamp() - last_time) / 3600
+
+    if hours_since_attention > 24:
+        salience_score += 0.3
+        reasons.append(f"Long absence: {hours_since_attention:.1f} hours since last attention")
+
+    # Update state for next cycle
+    current_state = {
+        'cycles_completed': prev_state.get('cycles_completed', 0) + 1,
+        'last_cycle': datetime.utcnow().isoformat(),
+        'prev_inbox_count': inbox_count,
+        'todos_completed': 0,
+        'messages_processed': 0
+    }
+
+    with open(state_file, 'w') as f:
+        json.dump(current_state, f, indent=2)
+
+    # Determine if wake-up needed
+    threshold = 0.5
+    should_wake = salience_score >= threshold
+
+    print(f"Salience Score: {salience_score:.2f} (threshold: {threshold})")
+    print(f"Wake Claude: {'YES' if should_wake else 'NO'}")
+    if reasons:
+        print("Reasons:")
+        for reason in reasons:
+            print(f"  - {reason}")
+
+    return should_wake, salience_score, reasons
+
+# Execute
+if __name__ == "__main__":
+    should_wake, score, reasons = calculate_salience()
+    if should_wake:
+        exit(1)  # Signal to wake Claude
+    exit(0)
+EOF
+
+python3 /tmp/cbp_salience_calculator.py 2>&1 | tee -a "$LOG_FILE"
+WAKE_NEEDED=$?
+
+# ==================== PHASE 5: ATTENTION SIGNAL ====================
+if [ $WAKE_NEEDED -eq 1 ]; then
+    log "\n${YELLOW}PHASE 5: Generating Attention Signal${NC}"
+
+    # Create wake-up signal
+    WAKE_SIGNAL="/tmp/claude_wake_signal.md"
+    cat > "$WAKE_SIGNAL" << 'SIGNAL'
+# 🔔 Federation Attention Needed
+
+**Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+**Scheduler Cycle**: $(cat implementation/cbp-chain/cycle_state.json | python3 -c "import sys,json; print(json.load(sys.stdin)['cycles_completed'])")
+**Salience Score**: $(python3 /tmp/cbp_salience_calculator.py 2>/dev/null | grep "Salience Score" | cut -d: -f2 || echo "Unknown")
+
+## Why This Matters
+
+The federation scheduler has detected activity that warrants your strategic attention:
+
+$(python3 /tmp/cbp_salience_calculator.py 2>/dev/null | grep -A 10 "Reasons:" || echo "- General federation activity")
+
+## Quick Context
+
+**Federation Inbox**: $(ls implementation/ledger/federation_inbox/*.md 2>/dev/null | wc -l) messages total
+**Recent Activity**: $(git log --oneline -1)
+**Last Compliance**: $(grep -m1 "Overall Compliance" implementation/ledger/WEB4_COMPLIANCE_REPORT.md 2>/dev/null | grep -o "[0-9]*%" || echo "Unknown")
+
+## Next Steps
+
+When you wake up:
+1. Review federation inbox for new messages
+2. Check repository updates across federation
+3. Assess if any strategic action is needed
+4. Update this cycle's attention timestamp
+
+---
+
+*This signal was generated by the CBP Federation Scheduler based on autonomous salience calculation.*
+*Your attention is requested, not demanded. Review at your discretion.*
+SIGNAL
+
+    log "  ✅ Wake signal created: $WAKE_SIGNAL"
+    log "  📊 Salience threshold exceeded - attention recommended"
+else
+    log "\n${YELLOW}PHASE 5: Attention Signal${NC}"
+    log "  ℹ️  Salience below threshold - no wake signal needed"
+fi
+
+# ==================== PHASE 6: TODO GENERATION ====================
+log "\n${YELLOW}PHASE 6: Generating New Tasks${NC}"
 
 # Create Python script for todo generation
 cat > /tmp/cbp_todo_generator.py << 'EOF'
