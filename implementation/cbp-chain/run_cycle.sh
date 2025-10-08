@@ -338,13 +338,28 @@ $(python3 /tmp/cbp_salience_calculator.py 2>/dev/null | grep -A 10 "Reasons:" ||
 **Recent Activity**: $(git log --oneline -1)
 **Last Compliance**: $(grep -m1 "Overall Compliance" implementation/ledger/WEB4_COMPLIANCE_REPORT.md 2>/dev/null | grep -o "[0-9]*%" || echo "Unknown")
 
+## Specific Action Items
+
+**New Messages Requiring Response:**
+$(ls -t implementation/ledger/federation_inbox/*.md 2>/dev/null | head -5 | while read file; do
+    sender=$(basename "$file" | cut -d_ -f1)
+    subject=$(grep -m1 "^# " "$file" 2>/dev/null | sed 's/^# //' || basename "$file")
+    echo "- [$sender] $subject"
+done)
+
+**Recent Federation Commits:**
+$(git log --oneline --since="24 hours ago" | head -3 | sed 's/^/- /')
+
+**Pending Questions/Decisions:**
+$(grep -h "Question.*:" implementation/ledger/federation_inbox/*.md 2>/dev/null | head -3 | sed 's/^/- /')
+
 ## Next Steps
 
 When you wake up:
-1. Review federation inbox for new messages
-2. Check repository updates across federation
-3. Assess if any strategic action is needed
-4. Update this cycle's attention timestamp
+1. **Review specific messages above** - these need CBP response
+2. **Check for votes/proposals** - deadlines may be approaching
+3. **Assess strategic actions** - what requires CBP engagement?
+4. **Update attention timestamp** - mark cycle as reviewed
 
 ---
 
