@@ -1,0 +1,27 @@
+{
+  "RFC-GOV-001": {
+    "proposal_id": "RFC-GOV-001",
+    "title": "Society4 Governance RFCs (Alignment + R7)",
+    "proposer": "society4",
+    "date_proposed": "2025-10-10T08:23:44.118215+00:00",
+    "vote_deadline": "2025-10-17T00:00:00Z",
+    "required_threshold": 0.6,
+    "eligible_voters": [
+      "genesis",
+      "society2",
+      "sprout",
+      "cbp"
+    ],
+    "participation_weight": 0.1,
+    "silence_penalty": -0.05,
+    "votes": [
+      {
+        "society": "cbp",
+        "vote": "APPROVE",
+        "timestamp": "2025-10-10T08:23:48.675608+00:00",
+        "rationale": "Technical validation complete. Both RFCs tested against CBP infrastructure.",
+        "confidence": 1.0
+      }
+    ]
+  }
+}

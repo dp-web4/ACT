@@ -1,0 +1,46 @@
+{
+  "genesis": {
+    "society": "genesis",
+    "proposals_received": 0,
+    "votes_cast": 0,
+    "responses_given": 0,
+    "avg_response_days": 0.0,
+    "missed_deadlines": 0,
+    "governance_reputation": 1.0,
+    "voting_weight": 1.0,
+    "inclusion_threshold": 0.3
+  },
+  "society2": {
+    "society": "society2",
+    "proposals_received": 0,
+    "votes_cast": 0,
+    "responses_given": 0,
+    "avg_response_days": 0.0,
+    "missed_deadlines": 0,
+    "governance_reputation": 1.0,
+    "voting_weight": 1.0,
+    "inclusion_threshold": 0.3
+  },
+  "sprout": {
+    "society": "sprout",
+    "proposals_received": 0,
+    "votes_cast": 0,
+    "responses_given": 0,
+    "avg_response_days": 0.0,
+    "missed_deadlines": 0,
+    "governance_reputation": 1.0,
+    "voting_weight": 1.0,
+    "inclusion_threshold": 0.3
+  },
+  "cbp": {
+    "society": "cbp",
+    "proposals_received": 1,
+    "votes_cast": 1,
+    "responses_given": 1,
+    "avg_response_days": 5.27478125e-05,
+    "missed_deadlines": 0,
+    "governance_reputation": 1.0,
+    "voting_weight": 1.0,
+    "inclusion_threshold": 0.3
+  }
+}
