@@ -346,13 +346,18 @@ class FederationGovernance:
             elif vote.vote == "ABSTAIN":
                 abstain_weight += weight
 
+        # Total weight of those who ACTUALLY voted (not eligible voters)
+        total_voted_weight = approve_weight + reject_weight + abstain_weight
+
+        # Total possible if everyone voted
         total_possible_weight = sum(
             self.reputations.get(s, SocietyReputation(society=s)).voting_weight
             for s in proposal.eligible_voters
         )
 
-        # Calculate if threshold met
-        approval_rate = approve_weight / total_possible_weight if total_possible_weight > 0 else 0
+        # Calculate approval rate based on ACTUAL VOTERS, not eligible voters
+        # If only one votes, that one decides. Non-participation is not a veto.
+        approval_rate = approve_weight / total_voted_weight if total_voted_weight > 0 else 0
         threshold_met = approval_rate >= proposal.required_threshold
 
         # Who hasn't voted
@@ -377,6 +382,7 @@ class FederationGovernance:
             "approve_weight": approve_weight,
             "reject_weight": reject_weight,
             "abstain_weight": abstain_weight,
+            "total_voted_weight": total_voted_weight,
             "total_possible_weight": total_possible_weight,
             "approval_rate": approval_rate,
             "threshold_met": threshold_met,
@@ -473,13 +479,14 @@ if __name__ == "__main__":
         print(f"{'='*80}")
         print(f"Status: {status['status']}")
         print(f"Deadline: {status['deadline']} ({status['days_remaining']:.1f} days remaining)")
-        print(f"Threshold: {status['required_threshold']*100:.0f}%")
+        print(f"Threshold: {status['required_threshold']*100:.0f}% of ACTUAL VOTERS (not eligible)")
         print(f"Current Approval: {status['approval_rate']*100:.1f}%")
         print(f"")
-        print(f"Votes: {status['votes_cast']}/{status['votes_needed']}")
+        print(f"Voting Weight Distribution:")
         print(f"  ✅ Approve: {status['approve_weight']:.2f}")
         print(f"  ❌ Reject: {status['reject_weight']:.2f}")
         print(f"  ⚪ Abstain: {status['abstain_weight']:.2f}")
+        print(f"  📊 Total Voted: {status['total_voted_weight']:.2f} / {status['total_possible_weight']:.2f} possible")
         print(f"")
 
         if status['silent_societies']:
