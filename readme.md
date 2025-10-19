@@ -302,6 +302,17 @@ ACT is the missing piece that makes Web4 accessible to humans. By providing a us
 - **Trust building**: Reputation that matters
 - **Interoperability**: Work with any MCP server
 
+### Society-Centric Resource Pools: Hardware Precedent
+
+The ModBatt battery management system demonstrates society-centric resource allocation in production hardware—a physical precedent for ACT's ATP treasury model. Released October 2025 under AGPL-3.0, these repositories show how distributed energy (physical ATP) flows through hierarchical systems without individual accumulation:
+
+- **[CellCPU](https://github.com/dp-web4/CellCPU)** - Individual cells contribute to module pools, not personal reserves
+- **[ModuleCPU](https://github.com/dp-web4/ModuleCPU)** - Modules coordinate energy distribution based on pack-level needs
+- **[Pack-Controller](https://github.com/dp-web4/Pack-Controller-EEPROM)** - System-level energy management with society (pack) ownership model
+- **[modbatt-CAN](https://github.com/dp-web4/modbatt-CAN)** - Monitoring and configuration of distributed energy economics
+
+Just as battery cells don't "own" energy but participate in system-wide energy flow, ACT citizens don't accumulate ATP but draw from society-managed pools based on contribution and need. The hardware validates the economic model.
+
 ## 🔨 What's Needed (Contributors Welcome!)
 
 ### Immediate Priorities
