@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "ACT: Agentic Context Tool - Web4 Reference Implementation"
+abstract: "Complete implementation of Web4's Agentic Context Protocol (ACP) enabling humans to interact with AI agents through Linked Context Tokens. Demonstrates society-centric resource pools, ATP/ADP energy economy, autonomous agent operation with human oversight, and trust-based reputation systems. Bridges human intent and autonomous execution in trust-native computing."
+authors:
+  - family-names: "Palatov"
+    given-names: "Dennis"
+    orcid: "https://orcid.org/0009-0006-5510-6445"
+    affiliation: "Metalinxx Inc."
+repository-code: "https://github.com/dp-web4/ACT"
+url: "https://github.com/dp-web4/ACT"
+keywords:
+  - web4
+  - agentic-context-protocol
+  - acp
+  - linked-context-tokens
+  - lct
+  - atp-economy
+  - society-governance
+  - autonomous-agents
+  - human-ai-collaboration
+  - trust-tensors
+  - mcp-bridges
+  - blockchain
+  - cosmos-sdk
+  - reference-implementation
+  - distributed-intelligence
+  - agency-delegation
+  - fractal-swarm
+  - synthon-consciousness
+  - alignment-philosophy
+  - society-centric
+  - resource-pools
+  - model-context-protocol
+  - proof-of-agency
+license: AGPL-3.0-or-later
+license-url: "https://github.com/dp-web4/ACT/blob/main/LICENSE"
+version: "0.65.0"
+date-released: "2025-01-01"
+references:
+  - type: software
+    title: "Web4: Trust-Native Internet Architecture"
+    repository-code: "https://github.com/dp-web4/web4"
+  - type: software
+    title: "Synchronism Framework"
+    repository-code: "https://github.com/dp-web4/Synchronism"
+  - type: software
+    title: "Claude-Flow (Swarm Architecture Attribution)"
+    repository-code: "https://github.com/ruvnet/claude-flow"
+    license: MIT
+identifiers:
+  - type: url
+    value: "https://github.com/dp-web4/ACT"
+    description: "GitHub Repository"
+  - type: other
+    value: "US11477027B1"
+    description: "US Patent 11,477,027: LCT technology"
+  - type: other
+    value: "US12278913B1"
+    description: "US Patent 12,278,913: LCT implementation"
