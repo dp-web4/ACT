@@ -1,0 +1,230 @@
+syntax = "proto3";
+package racecarweb.energycycle.v1;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// EnergySourceType defines types of energy sources
+enum EnergySourceType {
+  ENERGY_SOURCE_TYPE_UNSPECIFIED = 0;
+  ENERGY_SOURCE_TYPE_SOLAR = 1;
+  ENERGY_SOURCE_TYPE_COMPUTE = 2;
+  ENERGY_SOURCE_TYPE_GRID = 3;
+  ENERGY_SOURCE_TYPE_HUMAN = 4;
+  ENERGY_SOURCE_TYPE_BATTERY = 5;
+  ENERGY_SOURCE_TYPE_WIND = 6;
+  ENERGY_SOURCE_TYPE_NUCLEAR = 7;
+}
+
+// EnergyCapacityProof is a proof of real energy capacity backing ATP
+// This is the core innovation from Session #36 - ATP must be backed by real energy
+message EnergyCapacityProof {
+  string proof_id = 1;
+  EnergySourceType source_type = 2;
+  string source_identifier = 3;  // e.g., "solar:panel_serial" or "compute:gpu_id"
+  string capacity_watts = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string validation_method = 5;  // How capacity was verified
+  google.protobuf.Timestamp timestamp = 6 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  int64 validity_period_seconds = 7;  // How long this proof is valid
+
+  // Source-specific details (stored as JSON for flexibility)
+  string source_details = 8;
+
+  // Verification status
+  bool verified = 9;
+  string verifier_lct = 10;  // Who verified this proof
+  google.protobuf.Timestamp verified_at = 11 [(gogoproto.stdtime) = true];
+}
+
+// SolarPanelDetails contains solar panel specific information
+message SolarPanelDetails {
+  string panel_serial = 1;
+  string rated_watts = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string panel_model = 3;
+  google.protobuf.Timestamp installation_date = 4 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  string degradation_factor = 5 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // 0.95 = 5% degraded
+  string latitude = 6;
+  string longitude = 7;
+}
+
+// ComputeResourceDetails contains compute resource specific information
+message ComputeResourceDetails {
+  string device_type = 1;  // "gpu", "cpu", "tpu", "fpga"
+  string device_model = 2;  // "RTX4090", "Jetson Orin NX"
+  string device_id = 3;     // Serial, UUID, or hardware ID
+  string tdp_watts = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // Thermal Design Power
+  string utilization_factor = 5 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // 0.8 = 80% utilization
+  string idle_power_watts = 6 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+// GridConnectionDetails contains grid electricity allocation information
+message GridConnectionDetails {
+  string meter_id = 1;
+  string allocated_watts = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string utility_provider = 3;
+  string account_number = 4;
+  repeated int32 peak_hours = 5;  // Hours when capacity is reduced
+  string peak_reduction_factor = 6 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+// HumanLaborDetails contains human labor capacity information
+message HumanLaborDetails {
+  string human_lct = 1;
+  string metabolic_rate_watts = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // ~100W average
+  string available_hours_per_day = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string skill_multiplier = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // 1.0 = baseline, 2.0 = 2x effective
+}
+
+// BatteryStorageDetails contains battery capacity information
+message BatteryStorageDetails {
+  string battery_id = 1;
+  string capacity_wh = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // Watt-hours of storage
+  string current_charge_wh = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string max_discharge_rate_watts = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string chemistry = 5;  // "lithium-ion", "lead-acid", etc.
+  int64 cycles_remaining = 6;
+}
+
+// EnergyCapacityRegistry tracks all energy sources for a society
+message EnergyCapacityRegistry {
+  string society_lct = 1;
+  repeated string proof_ids = 2;  // IDs of EnergyCapacityProof messages
+  string total_capacity_watts = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 last_updated_block = 4;
+  int32 source_count = 5;
+}
+
+// ChargedATP extends RelationshipAtpToken with energy backing (Session #36)
+message ChargedATP {
+  string id = 1;
+  string amount = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  google.protobuf.Timestamp charged_at = 3 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp expiration = 4 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  string energy_source_identifier = 5;  // Which energy source backed this
+  string society_lct = 6;
+  string charging_context = 7;  // Optional context
+
+  // Lifecycle tracking
+  bool is_expired = 8;
+  bool is_allocated = 9;  // Reserved for work
+  string work_ticket_id = 10;  // If allocated to work
+}
+
+// WorkTicket tracks ATP allocated to specific work (Session #36)
+message WorkTicket {
+  string id = 1;
+  string society_lct = 2;
+  string worker_lct = 3;
+  string description = 4;
+
+  // ATP allocation
+  string atp_allocated = 5 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  repeated string atp_batch_ids = 6;  // Which ChargedATP batches used
+
+  // Status
+  WorkStatus status = 7;
+  google.protobuf.Timestamp allocated_at = 8 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp deadline = 9 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+
+  // Results (filled when completed)
+  google.protobuf.Timestamp completed_at = 10 [(gogoproto.stdtime) = true];
+  string quality_score = 11 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string adp_generated = 12 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+enum WorkStatus {
+  WORK_STATUS_UNSPECIFIED = 0;
+  WORK_STATUS_ALLOCATED = 1;     // ATP reserved, work not started
+  WORK_STATUS_IN_PROGRESS = 2;   // Work being performed
+  WORK_STATUS_COMPLETED = 3;     // Work done, ATP discharged to ADP
+  WORK_STATUS_FAILED = 4;        // Work failed, ATP returned to pool
+  WORK_STATUS_EXPIRED = 5;       // Work took too long, ATP expired
+}
+
+// WorkRequest in priority queue (Session #36 - trust affects priority, not price)
+message WorkRequest {
+  string id = 1;
+  string requester_lct = 2;
+  string description = 3;
+  string atp_needed = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+
+  // Priority (from trust score)
+  RequestPriority priority = 5;
+  string trust_score = 6 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+
+  // Timing
+  google.protobuf.Timestamp submitted_at = 7 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp deadline = 8 [(gogoproto.stdtime) = true];
+
+  // Status
+  bool allocated = 9;
+  google.protobuf.Timestamp allocated_at = 10 [(gogoproto.stdtime) = true];
+  string work_ticket_id = 11;
+  int32 queue_position = 12;
+}
+
+enum RequestPriority {
+  REQUEST_PRIORITY_UNSPECIFIED = 0;
+  REQUEST_PRIORITY_CRITICAL = 1;    // Emergency/critical work
+  REQUEST_PRIORITY_HIGH = 2;        // High trust entities (≥ 0.9)
+  REQUEST_PRIORITY_ELEVATED = 3;    // Elevated trust (≥ 0.7)
+  REQUEST_PRIORITY_NORMAL = 4;      // Normal trust (≥ 0.5)
+  REQUEST_PRIORITY_LOW = 5;         // Low trust (≥ 0.3)
+  REQUEST_PRIORITY_DEFERRED = 6;    // Very low trust (< 0.3)
+}
+
+// EnergyBackedIdentityBond from Session #36 (capacity commitment, not currency stake)
+message EnergyBackedIdentityBond {
+  string society_lct = 1;
+  google.protobuf.Timestamp created_at = 2 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+
+  // Energy capacity commitment (replaces ATP stake)
+  string committed_capacity_watts = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  repeated string energy_source_ids = 4;  // Source identifiers
+
+  // Lock period
+  int64 lock_period_days = 5;
+
+  // Status
+  BondStatus status = 6;
+
+  // Reputation at risk (forfeit if violated)
+  string reputation_at_risk = 7 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // 0.5 = 50% penalty
+
+  // Tracking
+  google.protobuf.Timestamp last_verified = 8 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  repeated string violations = 9;
+}
+
+enum BondStatus {
+  BOND_STATUS_UNSPECIFIED = 0;
+  BOND_STATUS_ACTIVE = 1;      // Bond active, capacity maintained
+  BOND_STATUS_FULFILLED = 2;   // Lock period complete, bond released
+  BOND_STATUS_VIOLATED = 3;    // Capacity not maintained
+  BOND_STATUS_ABANDONED = 4;   // Identity abandoned early
+}
+
+// EnergyBackedVouch from Session #36 (energy allocation, not stake)
+message EnergyBackedVouch {
+  string voucher_lct = 1;
+  string newcomer_lct = 2;
+  google.protobuf.Timestamp created_at = 3 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+
+  // Energy allocation commitment (portion of voucher's budget)
+  string allocated_energy_watts = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 bootstrap_period_days = 5;
+
+  // Reputation at risk
+  string reputation_at_risk = 6 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // 0.3 = 30% penalty
+
+  // Status
+  bool active = 7;
+  bool successful = 8;
+  bool violated = 9;
+
+  // Tracking
+  string energy_allocated_total = 10 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  repeated string newcomer_violations = 11;
+}

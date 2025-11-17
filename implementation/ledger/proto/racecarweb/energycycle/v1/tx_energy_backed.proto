@@ -1,0 +1,237 @@
+syntax = "proto3";
+
+package racecarweb.energycycle.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "racecar-web/x/energycycle/types";
+
+// MsgEnergyBacked defines transaction messages for Session #36 energy-backed ATP operations
+service MsgEnergyBacked {
+  option (cosmos.msg.v1.service) = true;
+
+  // RegisterEnergyCapacityProof registers proof of energy capacity
+  rpc RegisterEnergyCapacityProof(MsgRegisterEnergyCapacityProof) returns (MsgRegisterEnergyCapacityProofResponse);
+
+  // ChargeATPWithEnergyProof charges ATP backed by energy capacity proof
+  rpc ChargeATPWithEnergyProof(MsgChargeATPWithEnergyProof) returns (MsgChargeATPWithEnergyProofResponse);
+
+  // AllocateATPToWork allocates ATP to a work ticket
+  rpc AllocateATPToWork(MsgAllocateATPToWork) returns (MsgAllocateATPToWorkResponse);
+
+  // CompleteWork marks work as complete and discharges ATP to ADP
+  rpc CompleteWork(MsgCompleteWork) returns (MsgCompleteWorkResponse);
+
+  // SubmitWorkRequest submits work request to trust-based priority queue
+  rpc SubmitWorkRequest(MsgSubmitWorkRequest) returns (MsgSubmitWorkRequestResponse);
+
+  // ProcessWorkQueue processes next request in priority queue
+  rpc ProcessWorkQueue(MsgProcessWorkQueue) returns (MsgProcessWorkQueueResponse);
+
+  // RegisterIdentityBond registers energy-backed identity bond
+  rpc RegisterIdentityBond(MsgRegisterIdentityBond) returns (MsgRegisterIdentityBondResponse);
+
+  // ValidateIdentityBond validates that capacity is maintained
+  rpc ValidateIdentityBond(MsgValidateIdentityBond) returns (MsgValidateIdentityBondResponse);
+
+  // RegisterVouch registers energy-backed vouch for newcomer
+  rpc RegisterVouch(MsgRegisterVouch) returns (MsgRegisterVouchResponse);
+
+  // CompleteVouch completes vouching period
+  rpc CompleteVouch(MsgCompleteVouch) returns (MsgCompleteVouchResponse);
+
+  // CleanupExpiredATP removes expired ATP tokens
+  rpc CleanupExpiredATP(MsgCleanupExpiredATP) returns (MsgCleanupExpiredATPResponse);
+}
+
+// MsgRegisterEnergyCapacityProof registers proof of energy capacity
+message MsgRegisterEnergyCapacityProof {
+  option (cosmos.msg.v1.signer) = "society_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgRegisterEnergyCapacityProof";
+
+  string society_lct = 1;
+  string source_type = 2;  // "solar", "compute", "grid", "human", "battery"
+  string source_identifier = 3;
+  string capacity_watts = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string validation_method = 5;
+  string source_details_json = 6;  // JSON-encoded source-specific details
+}
+
+message MsgRegisterEnergyCapacityProofResponse {
+  string proof_id = 1;
+  bool verified = 2;
+  string capacity_watts = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+// MsgChargeATPWithEnergyProof charges ATP backed by energy proof
+message MsgChargeATPWithEnergyProof {
+  option (cosmos.msg.v1.signer) = "society_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgChargeATPWithEnergyProof";
+
+  string society_lct = 1;
+  string amount = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string energy_source_identifier = 3;
+  int64 lifetime_days = 4;  // Default: 7 days
+  string context = 5;  // Optional context
+}
+
+message MsgChargeATPWithEnergyProofResponse {
+  string atp_id = 1;
+  string amount = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 expiration_block = 3;
+  string energy_source_identifier = 4;
+}
+
+// MsgAllocateATPToWork allocates ATP to work
+message MsgAllocateATPToWork {
+  option (cosmos.msg.v1.signer) = "society_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgAllocateATPToWork";
+
+  string society_lct = 1;
+  string worker_lct = 2;
+  string description = 3;
+  string atp_amount = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 deadline_hours = 5;  // Default: 24 hours
+}
+
+message MsgAllocateATPToWorkResponse {
+  string work_ticket_id = 1;
+  string atp_allocated = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 deadline_block = 3;
+}
+
+// MsgCompleteWork marks work complete and discharges ATP to ADP
+message MsgCompleteWork {
+  option (cosmos.msg.v1.signer) = "worker_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgCompleteWork";
+
+  string worker_lct = 1;
+  string work_ticket_id = 2;
+  string quality_score = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];  // 0.0 to 1.0
+}
+
+message MsgCompleteWorkResponse {
+  string adp_id = 1;
+  string adp_amount = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string reputation_earned = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string worker_lct = 4;
+}
+
+// MsgSubmitWorkRequest submits work to priority queue
+message MsgSubmitWorkRequest {
+  option (cosmos.msg.v1.signer) = "requester_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgSubmitWorkRequest";
+
+  string requester_lct = 1;
+  string description = 2;
+  string atp_needed = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  bool critical = 4;  // Override priority to CRITICAL
+  int64 deadline_hours = 5;  // Optional deadline
+}
+
+message MsgSubmitWorkRequestResponse {
+  string request_id = 1;
+  string priority = 2;  // "HIGH", "NORMAL", "LOW", etc.
+  int32 queue_position = 3;
+  string trust_score = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+// MsgProcessWorkQueue processes next request in queue
+message MsgProcessWorkQueue {
+  option (cosmos.msg.v1.signer) = "processor_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgProcessWorkQueue";
+
+  string processor_lct = 1;
+  string society_lct = 2;
+}
+
+message MsgProcessWorkQueueResponse {
+  string request_id = 1;
+  string work_ticket_id = 2;
+  bool allocated = 3;
+  string atp_allocated = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+// MsgRegisterIdentityBond registers energy-backed identity bond
+message MsgRegisterIdentityBond {
+  option (cosmos.msg.v1.signer) = "society_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgRegisterIdentityBond";
+
+  string society_lct = 1;
+  repeated string energy_source_ids = 2;
+  int64 lock_period_days = 3;  // Default: 30 days
+}
+
+message MsgRegisterIdentityBondResponse {
+  string bond_id = 1;
+  string committed_capacity_watts = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 expiration_block = 3;
+}
+
+// MsgValidateIdentityBond validates bond capacity
+message MsgValidateIdentityBond {
+  option (cosmos.msg.v1.signer) = "validator_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgValidateIdentityBond";
+
+  string validator_lct = 1;
+  string society_lct = 2;
+}
+
+message MsgValidateIdentityBondResponse {
+  bool valid = 1;
+  string violation_reason = 2;
+  string reputation_penalty = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string current_capacity_watts = 4 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+}
+
+// MsgRegisterVouch registers energy-backed vouch
+message MsgRegisterVouch {
+  option (cosmos.msg.v1.signer) = "voucher_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgRegisterVouch";
+
+  string voucher_lct = 1;
+  string newcomer_lct = 2;
+  string allocated_energy_watts = 3 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 bootstrap_period_days = 4;  // Default: 30 days
+}
+
+message MsgRegisterVouchResponse {
+  string vouch_id = 1;
+  string allocated_energy_watts = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  int64 expiration_block = 3;
+}
+
+// MsgCompleteVouch completes vouching period
+message MsgCompleteVouch {
+  option (cosmos.msg.v1.signer) = "voucher_lct";
+  option (amino.name) = "racecarweb/x/energycycle/MsgCompleteVouch";
+
+  string voucher_lct = 1;
+  string vouch_id = 2;
+  bool newcomer_established = 3;
+}
+
+message MsgCompleteVouchResponse {
+  bool success = 1;
+  string reputation_penalty = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  string voucher_lct = 3;
+  string newcomer_lct = 4;
+}
+
+// MsgCleanupExpiredATP removes expired ATP tokens
+message MsgCleanupExpiredATP {
+  option (cosmos.msg.v1.signer) = "executor";
+  option (amino.name) = "racecarweb/x/energycycle/MsgCleanupExpiredATP";
+
+  string executor = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string society_lct = 2;  // Optional: clean specific society's ATP
+}
+
+message MsgCleanupExpiredATPResponse {
+  int32 tokens_cleaned = 1;
+  string total_expired_amount = 2 [(gogoproto.customtype) = "cosmossdk.io/math.LegacyDec", (gogoproto.nullable) = false];
+  repeated string expired_token_ids = 3;
+}
