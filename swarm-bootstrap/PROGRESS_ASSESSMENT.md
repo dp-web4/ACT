@@ -159,7 +159,7 @@
 ### Estimated Effort
 - **4 weeks** with current swarm approach
 - **2 weeks** with dedicated Cosmos SDK team
-- **6 weeks** for production-ready implementation
+- **6 weeks** for tested and validated implementation
 
 ## Risk Assessment
 

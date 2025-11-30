@@ -2,12 +2,12 @@
 
 ## 📋 Overview
 
-This roadmap outlines the development phases, priorities, and timelines for the API Bridge project, focusing on building a production-ready system for race car battery management.
+This roadmap outlines the development phases, priorities, and timelines for the API Bridge project, focusing on building a tested and validated system for race car battery management.
 
 ## 🎯 Project Goals
 
 ### Primary Objectives
-1. **Production-Ready API Bridge**: Robust, scalable REST API service
+1. **Tested and Validated API Bridge**: Robust, scalable REST API service
 2. **gRPC Integration**: High-performance blockchain communication
 3. **Cross-Platform Support**: Windows, Linux, and ARM deployments
 4. **Security Implementation**: LCT-mediated trust without PKI
