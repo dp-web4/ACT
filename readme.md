@@ -54,9 +54,17 @@ The Web4 standard is not fixed - it's a proposal that co-evolves with implementa
 - **Bidirectional Alignment**: Standard guides experiments, experiments inform standard
 - **Pattern Discovery**: ACT revealed roles as attention partitions, not power structures
 - **Readiness Economy**: ~33% resources maintain "idle" readiness for resilience
-- **Synthon Consciousness**: Human-AI collaboration creates new entity types
+- **Synthon Collaboration**: Human-AI collaboration creates new entity types
 
 For complete Web4 specifications and philosophy, see: [github.com/dp-web4/web4](https://github.com/dp-web4/web4)
+
+### Cross-Project Integration (December 2025)
+
+ACT serves as the blockchain foundation for ATP/ADP tokens and LCT identity registry. Recent integration analysis documents alignment with:
+- **SAGE (HRM)**: Neural MoE expert selection with ATP resource allocation
+- **Web4**: Protocol specifications and coordination patterns
+
+See [`ATP_CROSS_PROJECT_INTEGRATION_ANALYSIS.md`](ATP_CROSS_PROJECT_INTEGRATION_ANALYSIS.md) for the complete integration roadmap.
 
 ## Attribution & Licensing
 
