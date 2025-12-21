@@ -1,0 +1,16 @@
+{
+  "test_id": "quality-inflation-byzantine-v1",
+  "num_attackers": 10,
+  "num_generations": 90,
+  "attack_success_rate": 0.0,
+  "avg_quality_inflation": 0.01844810827403666,
+  "attacks_detected": 9,
+  "attacks_prevented": 9,
+  "false_positives": 0,
+  "total_consensus_attempts": 90,
+  "quorum_reached_pct": 100.0,
+  "outliers_detected_pct": 3.3333333333333335,
+  "session76_attack_success": 0.236,
+  "improvement_pct": 100.0,
+  "passed": true
+}
