@@ -86,3 +86,15 @@ hardware_attestation.json
 implementation/cbp-chain/cycle_state.json
 implementation/cbp-chain/todo_state.json
 implementation/ledger/federation_outbox/cbp_heartbeat_*.txt
+
+# Build artifacts and backups
+*.backup
+ignite_*.tar.gz
+*.tar.gz
+
+# Blockchain data directories (all locations)
+society/data/
+implementation/ledger/data/
+data/
+__pycache__/
+*.pyc
