@@ -1,0 +1,147 @@
+# ACT Repository Index
+# Machine-readable metadata for AI agent discovery
+# Schema version: 1.0
+
+metadata:
+  name: ACT
+  full_name: "ACT: Agentic Context Tool"
+  description: "Cosmos SDK blockchain implementing Web4 protocol - LCT identity, ATP economy, trust tensors"
+  type: library
+  domain:
+    - blockchain
+    - identity
+    - trust
+    - cosmos-sdk
+    - distributed-ledger
+  license: AGPL-3.0
+  last_updated: "2026-02-08"
+
+status:
+  phase: experimental
+  maturity: 0.65
+  production_ready: false
+  active_development: true
+  security_warning: "Known vulnerabilities - do not use with real value"
+
+metrics:
+  lines_of_code: 81000
+  go_source_files: 273
+  cosmos_modules: 8
+  python_bridge_lines: 1400
+
+technology:
+  cosmos_sdk: "v0.53.x"
+  cometbft: "v0.38.x"
+  go: "1.24+"
+  ignite_cli: "v29.4+"
+  chain_id: "act-web4"
+
+modules:
+  lctmanager:
+    path: "implementation/ledger/x/lctmanager"
+    purpose: "Linked Context Token registry"
+    status: working
+  energycycle:
+    path: "implementation/ledger/x/energycycle"
+    purpose: "ATP/ADP energy economy"
+    status: working
+  trusttensor:
+    path: "implementation/ledger/x/trusttensor"
+    purpose: "T3/V3 trust calculations"
+    status: working
+  mrh:
+    path: "implementation/ledger/x/mrh"
+    purpose: "Markov Relevancy Horizon"
+    status: working
+  pairing:
+    path: "implementation/ledger/x/pairing"
+    purpose: "Device pairing authentication"
+    status: working
+  pairingqueue:
+    path: "implementation/ledger/x/pairingqueue"
+    purpose: "Pairing queue management"
+    status: working
+  componentregistry:
+    path: "implementation/ledger/x/componentregistry"
+    purpose: "Component tracking"
+    status: working
+  societytodo:
+    path: "implementation/ledger/x/societytodo"
+    purpose: "Society task delegation"
+    status: working
+
+entry_points:
+  discovery: "AGENTS.md"
+  readme: "README.md"
+  quick_start: "README.md#quick-start"
+  modules: "implementation/ledger/x/"
+  python_bridge: "implementation/ledger/genesis_*.py"
+  web4_docs: "https://github.com/dp-web4/web4/tree/main/ledgers/act-chain"
+
+genesis_entities:
+  - name: "Genesis Queen"
+    initial_atp: 30000
+    daily_recharge: 3000
+    role: "Federation lead"
+  - name: "Genesis Council"
+    initial_atp: 20000
+    daily_recharge: 2000
+    role: "Governance"
+  - name: "Coherence Guru"
+    initial_atp: 15000
+    daily_recharge: 1500
+    role: "Quality assurance"
+  - name: "Federation Bridge"
+    initial_atp: 10000
+    daily_recharge: 1000
+    role: "Cross-federation"
+
+endpoints:
+  tendermint_rpc: "http://localhost:26657"
+  rest_api: "http://localhost:1317"
+  grpc: "http://localhost:9090"
+  faucet: "http://localhost:4500"
+
+security_issues:
+  - "Hardware binding uses static placeholders"
+  - "Missing TPM/Secure Enclave integration"
+  - "Identity verification lacks cryptographic proof"
+  - "Federation trust needs piecewise verification"
+
+related_repos:
+  - name: web4
+    url: "https://github.com/dp-web4/web4"
+    relationship: "Parent protocol"
+  - name: Hardbound
+    url: "https://github.com/dp-web4/hardbound"
+    relationship: "Enterprise product layer"
+  - name: HRM
+    url: "https://github.com/dp-web4/HRM"
+    relationship: "SAGE integration"
+
+token_budget:
+  minimal:
+    files: ["AGENTS.md"]
+    tokens: 400
+    purpose: "Relevance assessment"
+  standard:
+    files: ["AGENTS.md", "README.md"]
+    tokens: 3000
+    purpose: "Usage decision"
+  modules:
+    files: ["implementation/ledger/x/*/README.md"]
+    tokens: 10000
+    purpose: "Module understanding"
+  full:
+    files: ["implementation/ledger/"]
+    tokens: 100000
+    purpose: "Full implementation"
+
+commands:
+  build: "cd implementation/ledger && ignite chain build --skip-proto"
+  init: "racecar-webd init mynode --chain-id act-web4"
+  start: "racecar-webd start --api.enable --grpc.enable"
+
+contact:
+  maintainer: "dp@metalinxx.io"
+  issues: "https://github.com/dp-web4/ACT/issues"
