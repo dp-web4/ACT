@@ -4,6 +4,8 @@
 ![Status: Experimental](https://img.shields.io/badge/Status-Experimental-orange.svg)
 ![Progress: 65%](https://img.shields.io/badge/Progress-65%25-yellow.svg)
 
+> **Ledger Documentation**: Canonical ledger specifications and reference implementations are now maintained in [web4/ledgers/](https://github.com/dp-web4/web4/tree/main/ledgers). This repository contains the Cosmos SDK implementation; see web4 for architecture docs and terminology guide.
+
 ## 🚧 Development Status
 
 **This repository is now PUBLIC but remains in EXPERIMENTAL/DEVELOPMENT stage.** The Web4 reference implementation is approximately 65% complete. Core protobuf definitions are finalized, keeper implementations are functional, but proto generation and module wiring are still in progress. Expect breaking changes as we iterate toward production readiness.

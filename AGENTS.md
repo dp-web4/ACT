@@ -4,15 +4,15 @@
 
 ## TL;DR (50 words)
 
-ACT (Agentic Context Tool) is a Cosmos SDK blockchain implementing Web4 protocol. Provides LCT identity registry, ATP/ADP energy economy, trust tensors, and society governance. 81,000+ lines of Go. Root chain for permanent records. Use if you need: distributed identity, on-chain trust, or Web4 blockchain integration.
+ACT (Agentic Context Tool) is a Cosmos SDK distributed ledger implementing Web4 protocol. Provides LCT identity registry, ATP/ADP energy economy, trust tensors, and society governance. 81,000+ lines of Go. Root chain for permanent records. Use if you need: distributed identity, on-chain trust, or Web4 ledger integration.
 
 ## Quick Assessment
 
 | Question | Answer |
 |----------|--------|
-| What is this? | Cosmos SDK blockchain for Web4 |
+| What is this? | Cosmos SDK distributed ledger for Web4 |
 | Is it production-ready? | 65% complete, experimental |
-| Primary language | Go (blockchain), TypeScript (tools) |
+| Primary language | Go (ledger), TypeScript (tools) |
 | Lines of code | 81,000+ |
 | Active development? | Yes |
 | License | AGPL-3.0 |
