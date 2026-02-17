@@ -41,6 +41,16 @@ The production implementation will include:
 
 ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
 
+### The Web4 Equation
+
+```
+Web4 = MCP + RDF + LCT + T3/V3*MRH + ATP/ADP
+```
+
+Where: `/` = "verified by", `*` = "contextualized by", `+` = "augmented with"
+
+Web4 is an **ontology** — a formal structure of typed relationships. ACT already uses RDF (N3.js) for MRH graphs. RDF is the ontological backbone through which all trust relationships, LCT identities, and semantic connections are expressed as typed triples.
+
 ### Web4 Society Integration
 
 ACT implements the foundational Web4 Society concept, where all entities (humans, agents, services) are citizens of self-governing digital societies. Each society maintains:
