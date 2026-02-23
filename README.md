@@ -4,6 +4,8 @@
 ![Status: Experimental](https://img.shields.io/badge/Status-Experimental-orange.svg)
 ![Progress: 65%](https://img.shields.io/badge/Progress-65%25-yellow.svg)
 
+> **Ledger Documentation**: Canonical ledger specifications and reference implementations are now maintained in [web4/ledgers/](https://github.com/dp-web4/web4/tree/main/ledgers). This repository contains the Cosmos SDK implementation; see web4 for architecture docs and terminology guide.
+
 ## 🚧 Development Status
 
 **This repository is now PUBLIC but remains in EXPERIMENTAL/DEVELOPMENT stage.** The Web4 reference implementation is approximately 65% complete. Core protobuf definitions are finalized, keeper implementations are functional, but proto generation and module wiring are still in progress. Expect breaking changes as we iterate toward production readiness.
@@ -38,6 +40,16 @@ The production implementation will include:
 ## Overview
 
 ACT is the human interface to Web4 - a complete implementation of the Agentic Context Protocol (ACP) that enables humans to interact with MCP servers through their Linked Context Tokens (LCTs). ACT bridges the gap between human intent and autonomous agent execution in the Web4 ecosystem.
+
+### The Web4 Equation
+
+```
+Web4 = MCP + RDF + LCT + T3/V3*MRH + ATP/ADP
+```
+
+Where: `/` = "verified by", `*` = "contextualized by", `+` = "augmented with"
+
+Web4 is an **ontology** — a formal structure of typed relationships. ACT already uses RDF (N3.js) for MRH graphs. RDF is the ontological backbone through which all trust relationships, LCT identities, and semantic connections are expressed as typed triples.
 
 ### Web4 Society Integration
 
