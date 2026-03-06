@@ -61,9 +61,9 @@ func (suite *Phase1TestSuite) TestLCTCreationWithEd25519() {
 		ID:             lctID,
 		EntityType:     lctTypes.EntityTypeHuman,
 		PublicKey:      pubKey,
-		T3Competence:   0.5,
-		T3Reliability:  0.5,
-		T3Transparency: 1.0,
+		T3Talent:      0.5,
+		T3Training:    0.5,
+		T3Temperament: 1.0,
 		Status:         lctTypes.StatusActive,
 		SocietyID:      "soc:web4:act:demo",
 	}
@@ -332,33 +332,33 @@ func (suite *Phase1TestSuite) TestTrustTensorCalculations() {
 
 	testCases := []struct {
 		name           string
-		competence     float64
-		reliability    float64
-		transparency   float64
+		talent         float64
+		training       float64
+		temperament    float64
 		expectedMass   float64 // Approximate
 		expectedRadius float64 // Approximate
 	}{
 		{
 			name:           "Perfect trust",
-			competence:     1.0,
-			reliability:    1.0,
-			transparency:   1.0,
+			talent:         1.0,
+			training:       1.0,
+			temperament:    1.0,
 			expectedMass:   1.0,
 			expectedRadius: 10.0,
 		},
 		{
 			name:           "Medium trust",
-			competence:     0.7,
-			reliability:    0.6,
-			transparency:   0.8,
+			talent:         0.7,
+			training:       0.6,
+			temperament:    0.8,
 			expectedMass:   0.6, // Approximate geometric mean
 			expectedRadius: 6.0, // Approximate
 		},
 		{
 			name:           "Low trust",
-			competence:     0.3,
-			reliability:    0.2,
-			transparency:   0.4,
+			talent:         0.3,
+			training:       0.2,
+			temperament:    0.4,
 			expectedMass:   0.28, // Approximate
 			expectedRadius: 2.8,  // Approximate
 		},
@@ -367,9 +367,9 @@ func (suite *Phase1TestSuite) TestTrustTensorCalculations() {
 	for _, tc := range testCases {
 		suite.Run(tc.name, func() {
 			lct := &lctTypes.Web4LCT{
-				T3Competence:   tc.competence,
-				T3Reliability:  tc.reliability,
-				T3Transparency: tc.transparency,
+				T3Talent:      tc.talent,
+				T3Training:    tc.training,
+				T3Temperament: tc.temperament,
 			}
 
 			lct.CalculateTrustMass()

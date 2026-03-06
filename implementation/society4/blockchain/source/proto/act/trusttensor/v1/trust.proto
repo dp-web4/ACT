@@ -6,48 +6,48 @@ import "cosmos_proto/cosmos.proto";
 
 option go_package = "github.com/dp-web4/act/x/trusttensor/types";
 
-// TrustTensor represents T3 (Trust) dimensions
+// TrustTensor represents T3 (Trust) dimensions per Web4 canonical spec
 message TrustTensor {
-  // Competence (formerly Talent)
-  string competence = 1 [
+  // Talent — innate or role-specific capability
+  string talent = 1 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  
-  // Reliability (formerly Training)
-  string reliability = 2 [
+
+  // Training — learned skills and demonstrated growth
+  string training = 2 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  
-  // Transparency (formerly Temperament)
-  string transparency = 3 [
+
+  // Temperament — consistency, ethics, behavioral stability
+  string temperament = 3 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
 }
 
-// ValueTensor represents V3 (Value) dimensions
+// ValueTensor represents V3 (Value) dimensions per Web4 canonical spec
 message ValueTensor {
-  // Economic value
-  string economic = 1 [
+  // Valuation — economic or utility value
+  string valuation = 1 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  
-  // Social value
-  string social = 2 [
+
+  // Veracity — truthfulness and accuracy
+  string veracity = 2 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  
-  // Knowledge value
-  string knowledge = 3 [
+
+  // Validity — logical soundness and applicability
+  string validity = 3 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false

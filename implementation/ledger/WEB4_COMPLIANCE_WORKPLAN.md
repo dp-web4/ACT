@@ -40,7 +40,7 @@ This work plan outlines the modifications needed to adapt the existing ModBatt b
 
 #### 3. Trust Tensor Alignment (MEDIUM PRIORITY)
 **Current**: Uses Talent/Training/Temperament (T3)
-**Required**: Web4 T3 (Competence/Reliability/Transparency)
+**Required**: Web4 T3 (Talent/Training/Temperament)
 - Rename tensor dimensions
 - Add V3 (Value tensor) implementation
 - Implement trust-as-gravity calculations
@@ -109,9 +109,9 @@ type LCT struct {
     ContextDepth uint32    // Fractal depth
     
     // Trust Tensors
-    T3Competence    float64
-    T3Reliability   float64
-    T3Transparency  float64
+    T3Talent      float64
+    T3Training    float64
+    T3Temperament float64
     V3Value         float64
     
     // Relationships

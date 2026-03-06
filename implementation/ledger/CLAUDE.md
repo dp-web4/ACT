@@ -1,65 +1,31 @@
 # Claude Context for ACT Web4 Blockchain
 
-## Project Context System
+## What This Is
 
-**IMPORTANT**: A comprehensive context system exists at `/mnt/c/projects/ai-agents/misc/context-system/`
+ACT is a deployable blockchain reference build for Web4. Built on Cosmos SDK v0.53.0, it implements Web4's ontology on-chain: LCT identity, T3/V3 trust tensors, ATP/ADP energy economy, and MRH context boundaries.
 
-Quick access:
-```bash
-# Get overview of this project's role
-cd /mnt/c/projects/ai-agents/misc/context-system
-python3 query_context.py project web4-modbatt
+**Design**: Offline-first, portable, settlement on demand. Any Web4 entity can instantiate its own copy.
 
-# See blockchain integration plans
-python3 query_context.py search "digital twin"
+## Modules (in `x/`)
 
-# Find related projects
-cat /mnt/c/projects/ai-agents/misc/context-system/relationships/blockchain-bridge.md
-```
+| Module | Status | Key Files |
+|--------|--------|-----------|
+| `lctmanager` | Complete | keeper/, types/, genesis.go |
+| `energycycle` | Complete | keeper/, types/, genesis.go |
+| `trusttensor` | Complete | keeper/, types/, genesis.go |
+| `componentregistry` | Complete | keeper/, types/, genesis.go |
+| `pairing` | Complete | keeper/, types/, genesis.go |
+| `pairingqueue` | Complete | keeper/, types/, genesis.go |
+| `mrh` | Partial | 6 files, needs graph implementation |
+| `societytodo` | Partial | Law oracle, governance rules |
 
-## This Project's Role
-
-ACT Web4 blockchain implements the Artificial Communication Transport protocol:
-- Built on Cosmos SDK v0.53.0 with custom modules
-- Implements Web4 protocol with LCT (Linked Context Tokens)
-- Features ATP/ADP energy economy with discharge/recharge mechanics
-- Provides T3/V3 tensor attributions for trust and value
-
-## Key Modules
-- `lctmanager`: Manages Linked Context Tokens (LCTs) - core Web4 identity
-- `energycycle`: ATP/ADP energy trading with discharge/recharge mechanics
-- `trusttensor`: T3/V3 trust and value tensor calculations
-- `mrh`: Markov Relevancy Horizon for context boundaries
-- `pairing`: Device pairing and authentication
-- `componentregistry`: Component tracking and verification
-- `pairingqueue`: Queue management for pairing operations
-
-## Current Status (Jan 17, 2025) - 🎉 FULLY OPERATIONAL
-
-### ✅ All Issues Resolved
-- Fixed Go 1.24 compatibility with sonic library replace directives
-- Fixed module registration in all codec.go files
-- Fixed import paths (racecarweb → racecar-web)
-- Fixed WSL2 memory issues (12GB RAM + 32GB Swap)
-- Installed all protoc plugins
-- **Blockchain running successfully!**
-
-### 🚀 Running Services
-- **Tendermint RPC**: http://0.0.0.0:26657
-- **REST API**: http://0.0.0.0:1317
-- **Token Faucet**: http://0.0.0.0:4500
-
-### 💰 Test Accounts
-- **Alice**: cosmos1pmnw5epy2zflns3lrmzxgcm86zsly7nr24jqrp (100M stake + 20k tokens)
-- **Bob**: cosmos1m8jcll5nn036hpgktn7pcndljqe5jhc8ujznjk (100M stake + 10k tokens)
-
-## Quick Commands
+## Build & Run
 
 ```bash
-# Build blockchain
+# Build (protos are pre-compiled)
 ignite chain build --skip-proto
 
-# Initialize and start (after build)
+# Initialize and start
 racecar-webd init mynode --chain-id racecarweb
 racecar-webd keys add alice --keyring-backend test
 racecar-webd genesis add-genesis-account alice 1000000000stake --keyring-backend test
@@ -68,17 +34,42 @@ racecar-webd genesis collect-gentxs
 racecar-webd start --api.enable --grpc.enable
 ```
 
-## Historical Note
-Successfully ran on July 13, 2025 with Ignite, showing alice/bob accounts operational.
+Services: Tendermint RPC `:26657`, REST API `:1317`, Faucet `:4500`
 
 ## Build Requirements
+
 - Go 1.24.0 (with sonic replace directives in go.mod)
 - Ignite CLI v29.4.0-dev
 - Cosmos SDK v0.53.0
 
-## Key Files Modified Today
-- All module codec.go files (fixed RegisterInterfaces)
-- go.mod (added sonic replace directives)
-- x/mrh/keeper/*.go (fixed import paths)
+## Web4 Ontological Context
 
-See BUILD_STATUS.md for detailed issue tracking and solutions.
+```
+Web4 = MCP + RDF + LCT + T3/V3*MRH + ATP/ADP
+```
+
+- `/` = "verified by", `*` = "contextualized by", `+` = "augmented with"
+- Web4 is an **ontology**, not architecture or infrastructure
+- Canonical T3 dimensions: **Talent / Training / Temperament** (per Web4 spec)
+- Canonical V3 dimensions: **Valuation / Veracity / Validity**
+
+## Integration Context
+
+ACT is the **ledger of record** in the dp-web4 stack:
+- **Web4** (spec) defines what ACT implements
+- **SAGE** (cognition) registers identity and settles ATP on ACT
+- **Hardbound** (oversight) records coherence attestations on ACT
+
+Ecosystem integration plan: `private-context/plans/ecosystem-integration-plan.md`
+
+## Key Issues
+
+- T3 dimension names in `act/trusttensor/` proto use Competence/Reliability/Transparency instead of canonical Talent/Training/Temperament. The `racecarweb/` layer uses correct names. Phase 0 alignment pending.
+- MRH module is partial — needs typed graph structure (`bound[]`, `paired[]`, `witnessing[]`, `broadcast[]`)
+- Society 2 (democratic) blockchain doesn't build yet
+
+## Push Command
+
+```bash
+grep GITHUB_PAT /mnt/c/projects/ai-agents/.env | cut -d= -f2 | xargs -I {} git push https://dp-web4:{}@github.com/dp-web4/ACT.git
+```

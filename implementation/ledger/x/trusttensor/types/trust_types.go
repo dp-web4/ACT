@@ -16,11 +16,11 @@ type T3Tensor struct {
 	Temperament float64 `json:"temperament"`
 }
 
-// V3Tensor - Veracity, Validity, Value
+// V3Tensor - Valuation, Veracity, Validity
 type V3Tensor struct {
-	Veracity float64 `json:"veracity"`
-	Validity float64 `json:"validity"`
-	Value    float64 `json:"value"`
+	Valuation float64 `json:"valuation"`
+	Veracity  float64 `json:"veracity"`
+	Validity  float64 `json:"validity"`
 }
 
 // Outcome represents the result of an action
