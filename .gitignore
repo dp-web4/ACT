@@ -63,6 +63,7 @@ desktop.ini
 /racecar-webd
 implementation/ledger/racecarwebd
 implementation/ledger/racecar-webd
+implementation/cbp-chain/racecarwebd
 # Society blockchain data directories in ledger/
 implementation/ledger/society[0-9]*/
 *.log

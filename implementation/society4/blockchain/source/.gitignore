@@ -1,6 +1,6 @@
 # Binaries and executables
 society4chaind
-racecarwebd
+/racecarwebd
 *.exe
 *.dll
 *.so
