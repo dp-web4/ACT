@@ -98,3 +98,5 @@ implementation/ledger/data/
 data/
 __pycache__/
 *.pyc
+.gitnexus
+.claude/skills/gitnexus/
