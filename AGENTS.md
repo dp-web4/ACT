@@ -105,7 +105,7 @@ See `repo-index.yaml` for structured data.
 <!-- gitnexus:keep -->
 # GitNexus — Code Knowledge Graph
 
-Indexed as **ACT** (23446 symbols, 46488 relationships, 195 execution flows). MCP tools available via `mcp__gitnexus__*`.
+Indexed as **ACT** (27454 symbols, 56377 relationships, 216 execution flows). MCP tools available via `mcp__gitnexus__*`.
 
 **Do not reindex.** The supervisor handles GitNexus indexing. If the index is stale, note it in session context.
 
